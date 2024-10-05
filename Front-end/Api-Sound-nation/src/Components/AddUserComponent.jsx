@@ -21,9 +21,8 @@ export const AddUserComponent = () => {
             if(response.data.status){
                 setMessage(response.data.message);
                 setIsSuccess(true);
-                //TODO rediriger vers la page d'accueil
                 setTimeout(() => {
-                    navigate('/');
+                    navigate('/Accueil');
                 }, 2000);
             }else{
                 setMessage(response.data.message);
@@ -54,7 +53,7 @@ export const AddUserComponent = () => {
         </div>
 
         {message && (
-                <p className={`flex justify-center w-[80%] p-3 text-white ${isSuccess ? 'bg-green-500' : 'bg-red-600'}`}>
+                <p className={`flex justify-center w-[80%] p-3 text-white ${isSuccess ? 'bg-green-500' : 'bg-red-600'} md:w-[15em]`}>
                     {message}
                 </p>
             )}
