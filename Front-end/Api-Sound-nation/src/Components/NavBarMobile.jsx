@@ -3,7 +3,8 @@ import { useState } from "react";
 import {NavLink} from "react-router-dom";
 
 
-export const NavBarMobile = () => {
+// Menu de navigation pour les écrans inférieurs à 640px
+export const NavBarMobile = ({setActiveDiv}) => {
     const [burgerClass, setBurgerClass] = useState("burger-bar unclicked");
     const [menuClass, setMenuClass] = useState('menu');
     const [isMenuClicked, setIsMenuClicked] = useState(false);
@@ -19,6 +20,19 @@ export const NavBarMobile = () => {
         setIsMenuClicked(!isMenuClicked);
     }
 
+    const handleclick = (number) => {
+        switch(number){
+            case 1:
+                return () => setActiveDiv(1);
+            case 2:
+                return () => setActiveDiv(2);
+            case 3:
+                return () => setActiveDiv(3);
+            default:
+                return () => setActiveDiv(0);
+        }
+    };
+
 
 
     return (
@@ -32,10 +46,11 @@ export const NavBarMobile = () => {
         </nav>
 
         <div className={`flex flex-col items-center ${menuClass}`}>
-            {/* TODO ajouter le lien des pages */}
-            <NavLink className='text-white w-[100%] flex justify-center pb-2 pt-2 text-[1.3rem]'>Groupes</NavLink>
-            <NavLink className='text-white  w-[100%] flex justify-center pb-2 pt-2 text-[1.3rem]'>Partenaires</NavLink>
-            <NavLink className='text-white  w-[100%] flex justify-center pb-2 pt-2 text-[1.3rem]'>Carte</NavLink>
+            {/* TODO ajouter la fonction pour se déconnecter */}
+            <NavLink onClick={handleclick(1)} className='text-white w-[100%] flex justify-center pb-2 pt-2 text-[1.3rem]'>Groupes</NavLink>
+            <NavLink onClick={handleclick(2)} className='text-white  w-[100%] flex justify-center pb-2 pt-2 text-[1.3rem]'>Partenaires</NavLink>
+            <NavLink onClick={handleclick(3)} className='text-white  w-[100%] flex justify-center pb-2 pt-2 text-[1.3rem]'>Carte</NavLink>
+            <NavLink className='text-white  w-[100%] flex justify-center pb-2 pt-2 text-[1.3rem]'>Se déconnecter</NavLink>
         </div>
 
     </div>)
