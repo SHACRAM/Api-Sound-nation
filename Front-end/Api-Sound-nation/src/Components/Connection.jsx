@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 //Composant page de connexion
 export const Connection = () => {  
@@ -8,6 +9,7 @@ export const Connection = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,7 +20,9 @@ export const Connection = () => {
             if(response.data.status){
                 setMessage(response.data.message);
                 setIsSuccess(true);
-                //TODO : Rediriger vers la page d'accueil
+                setTimeout(() => {
+                    navigate('/Accueil');
+                }, 2000);
                 //TODO : Stocker le token dans les cookies ou le local storage
                 //TODO : Stocker l'utilisateur dans le local storage ou les cookies
 
@@ -48,13 +52,13 @@ export const Connection = () => {
                     </div>
                     <div className="flex flex-col items-start gap-1">
                         <label className="text-white" htmlFor="password">mot de passe</label>
-                        <input onChange={(e)=>setPassword(e.target.value)} className="rounded-md bg-[#71A984]" type="text" id="password" name="password" required />
+                        <input onChange={(e)=>setPassword(e.target.value)} className="rounded-md bg-[#71A984]" type="password" id="password" name="password" required />
                     </div>  
                 </form>
                 <button onClick={handleSubmit} type="submit" className="bg-[#71A984] text-white rounded-md w-[8em] ml-6 p-1 hover:opacity-70">Se connecter</button>
             </div>
             {message && (
-                <p className={`flex justify-center w-[80%] p-3 text-white ${isSuccess ? 'bg-green-500' : 'bg-red-600'}`}>
+                <p className={`flex justify-center w-[80%] p-3 text-white ${isSuccess ? 'bg-green-500' : 'bg-red-600'} md:w-[15em]`}>
                     {message}
                 </p>
             )}
