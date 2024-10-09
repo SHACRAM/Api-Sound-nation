@@ -21,7 +21,7 @@ export const DisplayMainContent = () => {
         <div>
             <Header setActiveDiv={setActiveDiv}/>
         </div>
-        <div className="flex justify-center">
+        <div className="">
             <div className="sm:w-[12em] h-[100vh] bg-[#5D5D5D] absolute left-0 border-t border-black">
             </div>
             {pages[activeDiv]}
