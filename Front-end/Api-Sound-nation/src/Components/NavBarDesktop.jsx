@@ -29,9 +29,9 @@ export const NavBarDesktop = ({setActiveDiv}) => {
         </div>
 
         <div className='bg-black flex gap-[4em] justify-center h-[11em] items-end pb-2 ml-[10em]'>
-            <NavLink onClick={handleclick(1)} className='text-white text-[1.5rem] p-2 hover:bg-[#023E33] rounded-md'>Groupes</NavLink>
-            <NavLink onClick={handleclick(2)} className='text-white text-[1.5rem] p-2 hover:bg-[#023E33] rounded-md'>Partenaires</NavLink>
-            <NavLink onClick={handleclick(3)} className='text-white text-[1.5rem] p-2 hover:bg-[#023E33] rounded-md'>Carte</NavLink>
+            <NavLink onClick={handleclick(1)} className='text-white text-[1.5rem] p-2 hover:bg-[#023E33] focus:bg-[#023E33] rounded-md'>Groupes</NavLink>
+            <NavLink onClick={handleclick(2)} className='text-white text-[1.5rem] p-2 hover:bg-[#023E33] rounded-md focus:bg-[#023E33]'>Partenaires</NavLink>
+            <NavLink onClick={handleclick(3)} className='text-white text-[1.5rem] p-2 hover:bg-[#023E33] rounded-md focus:bg-[#023E33]'>Carte</NavLink>
         </div>
         
 
