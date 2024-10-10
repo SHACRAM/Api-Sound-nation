@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { DisplayMainContent } from "../Pages/DisplayMainContent";
 
 //Composant page de connexion
 export const Connection = () => {  
@@ -21,7 +22,7 @@ export const Connection = () => {
                 setMessage(response.data.message);
                 setIsSuccess(true);
                 setTimeout(() => {
-                    navigate('/Accueil');
+                    navigate('/DisplayMainContent');
                 }, 2000);
                 //TODO : Stocker le token dans les cookies ou le local storage
                 //TODO : Stocker l'utilisateur dans le local storage ou les cookies

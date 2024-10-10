@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
+import { DisplayMainContent } from "../Pages/DisplayMainContent";
 import axios from 'axios';
 
 
@@ -22,7 +23,7 @@ export const AddUserComponent = () => {
                 setMessage(response.data.message);
                 setIsSuccess(true);
                 setTimeout(() => {
-                    navigate('/Accueil');
+                    navigate('/DisplayMainContent');
                 }, 2000);
             }else{
                 setMessage(response.data.message);

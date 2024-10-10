@@ -7,33 +7,36 @@ import { ModifyGroupe } from "./ModifyGroupe";
 import { DeleteGroupe } from "./DeleteGroupe";
 
 export const DisplayPageGroup = () => {
-    const [activeDiv, setActiveDiv] = useState(0);
+    const [activeComponent, setActiveComponent] = useState(0);
 
     const handleClick = (number) => {
-        setActiveDiv(number);
+        setActiveComponent(number);
     };
 
     const pagesGroupe =[
         <DisplayAllGroupe/>,
-        <AddNewGroupe />,
+        <AddNewGroupe setActiveComponent={setActiveComponent}/>,
         <ModifyGroupe/>,
         <DeleteGroupe/>
 
     ];
 
-
-
-    return(<div className="flex flex-col items-center w-[100vw]">
+    return(<div className="flex flex-col items-center">
         <div className="ml-2 mb-1 ">
-            <h1  onClick={() => handleClick(0)}className="text-white text-[1.5rem]">Groupes</h1>
+            <h1  onClick={() => handleClick(0)}className="text-white text-[1.5rem] sm:hidden">Groupes</h1>
         </div>
-        <div className="bg-[#5D5D5D] w-[100%] flex justify-around p-2 ">
+        <div className="bg-[#5D5D5D] w-[100vw] flex justify-around p-2 sm:hidden ">
             <NavLink onClick={() => handleClick(1)} className='text-white'>Ajouter</NavLink>
             <NavLink onClick={() => handleClick(2)} className='text-white'>Modifier</NavLink>
             <NavLink onClick={() => handleClick(3)} className='text-white'> Supprimer</NavLink>
         </div>
+        <div className="flex flex-col absolute left-0 gap-[3em] ml-[2em] mt-[3em] text-[1.2rem] opacity-0 sm:opacity-100">
+                <NavLink onClick={() => handleClick(1)} className='text-white flex justify-start rounded focus:bg-[#858383] w-[8em] pl-1'>Ajouter</NavLink>
+                <NavLink onClick={() => handleClick(2)} className='text-white flex justify-start rounded focus:bg-[#858383] w-[8em] pl-1'>Modifier</NavLink>
+                <NavLink onClick={() => handleClick(3)} className='text-white flex justify-start rounded focus:bg-[#858383] w-[8em] pl-1'> Supprimer</NavLink>
+        </div>
         <div className="w-[100%]"> 
-            {pagesGroupe[activeDiv]} 
+            {pagesGroupe[activeComponent]} 
 
         </div>
         
