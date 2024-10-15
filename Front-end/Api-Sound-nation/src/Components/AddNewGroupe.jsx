@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { set } from "../../../../Back-end/app";
 
-export const AddNewGroupe = ({ setActiveComponent }) => {
+// Permet d'ajouter un nouveau groupe
+export const AddNewGroupe = () => {
     const [imageGroupe, setImageGroupe] = useState(null);
     const [name, setName] = useState("");
     const [hour, setHour] = useState();
     const [date, setDate] = useState("");
     const [scene, setScene] = useState("");
     const [alt, setAlt] = useState("");
-    const [message, setMessage] = useState("");
+    const [messageAddGroupe, setMessageAddGroupe] = useState("");
     
 
     const handleFileChange = (e) => {
@@ -39,17 +39,15 @@ export const AddNewGroupe = ({ setActiveComponent }) => {
                 }
             });
             if (response.data.status) {
-                setMessage(response.data.message);
+                setMessageAddGroupe(response.data.message);
                 setTimeout(() => {
-                    setActiveComponent(0);
+                    setActiveComponentGroupe(0);
                 }, 2000);
-                setIsSuccess(true);
             } else {
-                setMessage(response.data.message);
-                setIsSuccess(false);
+                setMessageAddGroupe(response.data.message);
             }
         } catch (error) {
-            setMessage('Erreur serveur merci d\'essayer plus tard');
+            setMessageAddGroupe('Erreur serveur merci d\'essayer plus tard');
         }
     };
 
@@ -109,7 +107,7 @@ export const AddNewGroupe = ({ setActiveComponent }) => {
                     <button type="submit" className="text-white bg-[#023E33] hover:opacity-80 p-2 w-[7em] rounded-md sm:text-[1.2rem]">Ajouter</button>
                 </div>
             </form>
-            {message && <p className="text-white">{message}</p>}
+            {messageAddGroupe && <p className="text-white">{messageAddGroupe}</p>}
         </div>
     );
 };

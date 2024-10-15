@@ -1,11 +1,12 @@
 const express = require('express');
-
+const path = require('path');
 const userRouter = require('./Routes/user');
 const authenticationRouter = require('./Routes/Authentication');
 const groupeRouter = require('./Routes/groupe');
 const app = express();
 const cors = require('cors');
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(cors());
 

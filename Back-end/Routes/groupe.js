@@ -25,4 +25,26 @@ router.post('/addGroupe', multer.single('imageGroupe'), async (req,res)=>{
     })
 })
 
+
+
+// Récupérer tous les groupes du festival
+router.get('/getAllGroupe', (req, res)=>{
+    const sql = 'SELECT * FROM Groupe'
+
+    mysqlClient.query(sql, (error, result)=>{
+        if(error){
+            res.status(500).json({status : false, message: 'Erreur serveur, merci d\'essayer ultérieurement'})
+        } else{
+            res.status(200).json({status: true, data: result})
+        }
+    })
+})
+
+
+
+
+
+
+
+
 module.exports = router;

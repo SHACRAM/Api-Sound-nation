@@ -47,7 +47,7 @@ export const Header = ({setActiveDiv}) => {
             </div>
         </div>
         <div className="hidden sm:block">
-            <NavBarDesktop setActiveDiv={setActiveDiv} />
+            <NavBarDesktop setActiveDiv={setActiveDiv}/>
         </div>
 
 
