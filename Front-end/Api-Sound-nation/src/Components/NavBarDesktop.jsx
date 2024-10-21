@@ -9,22 +9,22 @@ export const NavBarDesktop = ({setActiveDiv}) => {
     const handleclick = (number) => {
         switch(number){
             case 0:
-                return () => setActiveDiv(0);
+                return () => {setActiveDiv(0);};
             case 1:
-                return () => setActiveDiv(1);
+                return () => {setActiveDiv(1);}
             case 2:
-                return () => setActiveDiv(2);
+                return () => {setActiveDiv(2);}
             case 3:
-                return () => setActiveDiv(3);
+                return () => {setActiveDiv(3);}
             default:
-                return () => setActiveDiv(0);
+                return () => {setActiveDiv(0);}
         }
     };
 
 
 
     return(<div>
-        <div className='bg-[#5D5D5D] h-fit p-8 w-fit absolute left-0'>
+        <div className='bg-[#5D5D5D] h-fit p-8 w-fit fixed left-0'>
         <NavLink onClick={handleclick(0)} to="/DisplayMainContent"><img src="src/images/Logo.png" alt="Image du logo du festival" className="w-[5em] sm:w-[8em]" /></NavLink>
         </div>
 

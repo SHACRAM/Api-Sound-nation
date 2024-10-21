@@ -43,11 +43,11 @@ export const Header = ({setActiveDiv}) => {
                 <NavLink onClick={handleclick(0)} to="/DisplayMainContent"><img src="src/images/Logo.png" alt="Image du logo du festival" className="w-[5em] m-2"/></NavLink>
             </div>
             <div>
-                <NavBarMobile setActiveDiv={setActiveDiv} burgerClass={burgerClass} menuClass={menuClass} updateMenu={updateMenu} handleclick={handleclick}/>
+                <NavBarMobile burgerClass={burgerClass} menuClass={menuClass} updateMenu={updateMenu} handleclick={handleclick}/>
             </div>
         </div>
         <div className="hidden sm:block">
-            <NavBarDesktop setActiveDiv={setActiveDiv} />
+            <NavBarDesktop setActiveDiv={setActiveDiv}/>
         </div>
 
 

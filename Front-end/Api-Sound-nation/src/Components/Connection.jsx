@@ -2,12 +2,13 @@ import React from "react";
 import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { DisplayMainContent } from "../Pages/DisplayMainContent";
 
 //Composant page de connexion
 export const Connection = () => {  
     const [identifiant, setIdentifiant] = useState('');
     const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
+    const [messageConnect, setMessageConnect] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
     const navigate = useNavigate();
 
@@ -18,21 +19,21 @@ export const Connection = () => {
             const response = await axios.post('http://localhost:3000/api/authentication/signin', {identifiant, password});
 
             if(response.data.status){
-                setMessage(response.data.message);
+                setMessageConnect(response.data.message);
                 setIsSuccess(true);
                 setTimeout(() => {
-                    navigate('/Accueil');
+                    navigate('/DisplayMainContent');
                 }, 2000);
                 //TODO : Stocker le token dans les cookies ou le local storage
                 //TODO : Stocker l'utilisateur dans le local storage ou les cookies
 
             }else{
-                setMessage(response.data.message);
+                setMessageConnect(response.data.message);
                 setIsSuccess(false);
             }
 
         }catch (error){
-            setMessage('Erreur de connexion');
+            setMessageConnect('Erreur de connexion');
             console.error('There is an error:', error);
         }
     };
@@ -57,9 +58,9 @@ export const Connection = () => {
                 </form>
                 <button onClick={handleSubmit} type="submit" className="bg-[#71A984] text-white rounded-md w-[8em] ml-6 p-1 hover:opacity-70">Se connecter</button>
             </div>
-            {message && (
+            {messageConnect && (
                 <p className={`flex justify-center w-[80%] p-3 text-white ${isSuccess ? 'bg-green-500' : 'bg-red-600'} md:w-[15em]`}>
-                    {message}
+                    {messageConnect}
                 </p>
             )}
             
