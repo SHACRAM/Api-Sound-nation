@@ -13,7 +13,8 @@ app.use(cors());
 
 app.use('/api/user', userRouter);
 app.use('/api/authentication', authenticationRouter);
-app.use('/api/groupe', groupeRouter);
+app.use('/api/groupes', groupeRouter);
+
 
 
 

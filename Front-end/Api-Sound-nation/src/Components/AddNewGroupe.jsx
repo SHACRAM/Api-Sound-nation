@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 // Permet d'ajouter un nouveau groupe
-export const AddNewGroupe = () => {
+export const AddNewGroupe = ({setActiveComponentGroupe}) => {
     const [imageGroupe, setImageGroupe] = useState(null);
     const [name, setName] = useState("");
     const [hour, setHour] = useState();
@@ -33,7 +33,7 @@ export const AddNewGroupe = () => {
         formData.append('alt', alt);
 
         try {
-            const response = await axios.post('http://localhost:3000/api/groupe/addGroupe', formData, {
+            const response = await axios.post('http://localhost:3000/api/groupes/addGroupe', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
