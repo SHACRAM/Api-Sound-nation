@@ -3,8 +3,8 @@ import { DisplayAccueil } from "../Components/DisplayAccueil";
 import { Header } from "../Components/Header";
 import { useState } from "react";
 import { DisplayPageGroup } from "../Components/DisplayPageGroup";
-import { DisplayPagePartenaire } from "../Components/DisplayPagePartenaire";
 import { DisplayPageCarte } from "../Components/DisplayPageCarte";
+import { DisplayPagePartner } from "../Components/DisplayPagePartner";
 //Composant qui permet d'afficher le contenu des différentes pages du site
 export const DisplayMainContent = () => {
     const [activeDiv, setActiveDiv] = useState(0);
@@ -14,7 +14,7 @@ export const DisplayMainContent = () => {
     const pages = [
         <div className="sm:ml-[12em]"><DisplayAccueil/></div>,
         <div className="sm:ml-[12em]"><DisplayPageGroup /></div>,
-        <div className="sm:ml-[12em]"><DisplayPagePartenaire/></div>,
+        <div className="sm:ml-[12em]"><DisplayPagePartner/></div>,
         <div className="sm:ml-[12em]"><DisplayPageCarte/></div>
     ];
 
