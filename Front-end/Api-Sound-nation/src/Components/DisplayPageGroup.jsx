@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { AddNewGroupe } from "./AddNewGroupe";
 import { DisplayAllGroupe } from "./DisplayAllGroupe";
 import { ModifyGroupe } from "./ModifyGroupe";
-import { DeleteGroupe } from "./DeleteGroupe";
+
 
 // Page qui permet d'afficher les différentes fonctionnalités liées aux groupes
 export const DisplayPageGroup = ({}) => {
