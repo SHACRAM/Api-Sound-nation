@@ -77,11 +77,11 @@ export const AddNewPartner = ({setActiveComponentPartner})=>{
             <form className="border border-white p-5 flex flex-col gap-5 mt-5 mb-5 sm:w-[90%] sm:flex-row sm:flex-wrap sm:gap-[4em]" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="name" className="text-white sm:text-[1.3rem]">Nom du partenaire</label>
-                    <input className="rounded bg-[#B6B6B6] pl-1 sm:w-[15em] sm:h-7 " type="text" id="name" onChange={(e) => setName(e.target.value)} required />
+                    <input className="rounded bg-white pl-1 sm:w-[15em] sm:h-7 " type="text" id="name" onChange={(e) => setName(e.target.value)} required />
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="category" className="text-white sm:text-[1.3rem]">Catégorie</label>
-                    <select className="rounded bg-[#B6B6B6] sm:w-[15em] sm:h-7" id="category" onChange={(e) => {setCategory(e.target.value); handleCategoryChange(e)}} required>
+                    <select className="rounded bg-white sm:w-[15em] sm:h-7" id="category" onChange={(e) => {setCategory(e.target.value); handleCategoryChange(e)}} required>
                         <option value="">Choisir une catégorie</option>
                         <option value="Banque">Banque</option>
                         <option value="Alimentaire">Alimentaire</option>
@@ -93,20 +93,20 @@ export const AddNewPartner = ({setActiveComponentPartner})=>{
                 {selectedCategory && 
                     <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="newCat" className="text-white sm:text-[1.3rem]">Nom de la nouvelle catégorie</label>
-                    <input className="rounded bg-[#B6B6B6] pl-1 sm:w-[15em] sm:h-7" type="text" id="newCat" onChange={(e) => handleNewCategoryChange(e)} required />
+                    <input className="rounded bg-white pl-1 sm:w-[15em] sm:h-7" type="text" id="newCat" onChange={(e) => handleNewCategoryChange(e)} required />
                 </div>}
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="site" className="text-white sm:text-[1.3rem]">Site internet</label>
-                    <input className="rounded bg-[#B6B6B6] pl-1 sm:w-[15em] sm:h-7" type="text" id="site" onChange={(e) => setSite(e.target.value)} required />
+                    <input className="rounded bg-white pl-1 sm:w-[15em] sm:h-7" type="text" id="site" onChange={(e) => setSite(e.target.value)} required />
                 </div>
                
                 <div className="flex flex-col gap-2 sm:w-[25em]">
                     <label htmlFor="image" className="text-white sm:text-[1.3rem]">Image du partenaire</label>
-                    <input className="rounded bg-[#B6B6B6] sm:w-[25em] sm:h-7" type="file" id="image" accept="image/*" onChange={handleFileChange} required />
+                    <input className="rounded bg-white sm:w-[25em] sm:h-7" type="file" id="image" accept="image/*" onChange={handleFileChange} required />
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="alt" className="text-white sm:text-[1.3rem]">Texte alternatif</label>
-                    <input className="rounded bg-[#B6B6B6] pl-1 sm:w-[15em] sm:h-7" type="text" id="alt" onChange={(e) => setAlt(e.target.value)} required />
+                    <input className="rounded bg-white pl-1 sm:w-[15em] sm:h-7" type="text" id="alt" onChange={(e) => setAlt(e.target.value)} required />
                 </div>
                 <div className="flex justify-center">
                     <button type="submit" className="text-white bg-[#023E33] hover:opacity-80 p-2 w-[7em] rounded-md sm:text-[1.2rem]">Ajouter</button>

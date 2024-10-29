@@ -1,15 +1,20 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import { AddNewPlace } from "./AddNewPlace";
 import { DisplayAllPlace } from "./DisplayAllPlace";
 import { ModifyPlace } from "./ModifyPlace";
+import axios from "axios";
 
 
 // Page qui permet d'afficher les différentes fonctionnalités liées aux lieux
 export const DisplayPageCarte = ({}) => {
     const [activeComponentPlace, setActiveComponentPlace] = useState(0);
-    // const [infoForModifyGroupe, setInfoForModifyGroupe] = useState({});
+    const [infoForModifyPlace, setInfoForModifyPlace] = useState({});
+    const [dataPlace, setDataPlace] = useState([]);
+    const [messageDisplayPlace, setMessageDisplayPlace] = useState("");
+    const [placeCategory, setPlaceCategory] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(true);
     
     
 
@@ -17,16 +22,48 @@ export const DisplayPageCarte = ({}) => {
         setActiveComponentPlace(number);
     };
 
-    // const setInfoModifyPlace = (groupe) => {
-    //     setInfoForModifyGroupe(groupe);
-    //     handleClickGroupe(2);
-    // }
+    const setInfoModifyPlace = (place) => {
+        setInfoForModifyPlace(place);
+        handleClickPlace(2);
+    }
     
     
+    
+
+   
+    
+    const handleAllPlace = useCallback( async ()=>{
+        try{
+            const tempdataPlace = [];
+            const response = await axios.get("http://localhost:3000/api/places");
+            if(response.data.status){
+                setDataPlace(response.data.data);
+                response.data.data.forEach((data)=>{
+                    tempdataPlace.push(data.place_category);
+                });
+                setPlaceCategory([...new Set(tempdataPlace)]);
+
+            } else{
+                setMessageDisplayPlace(response.data.message);
+                isLoaded(false);
+            }
+
+        }catch (error){
+            setMessageDisplayPlace("Erreur serveur lors de la récupération des lieux");
+            isLoaded(false);
+
+        }
+    }, []);
+
+    useEffect(()=>{
+        handleAllPlace();
+    },[handleAllPlace]);
+ 
+   
     const pagesPlace =[
-        <DisplayAllPlace/>,
-        <AddNewPlace />,
-        <ModifyPlace />
+        <DisplayAllPlace dataPlace={dataPlace} placeCategory={placeCategory} messageDisplayPlace={messageDisplayPlace} isLoaded={isLoaded} handleAllPlace={handleAllPlace} setInfoModifyPlace={setInfoModifyPlace} />,
+        <AddNewPlace setActiveComponentPlace={setActiveComponentPlace} placeCategory={placeCategory} handleAllPlace={handleAllPlace} />,
+        <ModifyPlace infoForModifyPlace={infoForModifyPlace} setActiveComponentPlace={setActiveComponentPlace} placeCategory={placeCategory} handleAllPlace={handleAllPlace}/>
     ];
 
     return(<div className="flex flex-col items-center">
