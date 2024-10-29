@@ -4,6 +4,7 @@ const userRouter = require('./Routes/user');
 const authenticationRouter = require('./Routes/Authentication');
 const groupeRouter = require('./Routes/groupe');
 const partnerRouter = require('./Routes/partner');
+const placeRouter = require('./Routes/place');
 const app = express();
 const cors = require('cors');
 
@@ -16,6 +17,7 @@ app.use('/api/user', userRouter);
 app.use('/api/authentication', authenticationRouter);
 app.use('/api/groupes', groupeRouter);
 app.use('/api/partners', partnerRouter);
+app.use('/api/places', placeRouter);
 
 
 
