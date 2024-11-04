@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { DisplayAllGroupeByDay } from "./DisplayAllGroupeByDay";
 
+
 //Permet d'afficher tous les groupes en fonction du jour de leur concert
 export const DisplayAllGroupe = ({setInfoModifyGroupe}) => {
     const [messageAllGroupe, setMessageAllGroupe] = useState("");

@@ -4,6 +4,7 @@ import axios from "axios";
 import { DisplayAllPartnersByCategory } from "./DisplayAllPartnersByCategory";
 
 
+
 // Composant qui affiche tous les partenaires
 export const AllPartners = ({setInfoModifyPartner})=>{
     const [dataPartners, setDataPartners] = useState([]);

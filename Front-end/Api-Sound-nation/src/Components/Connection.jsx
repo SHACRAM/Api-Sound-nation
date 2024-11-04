@@ -16,16 +16,14 @@ export const Connection = () => {
         e.preventDefault();
 
         try{
-            const response = await axios.post('http://localhost:3000/api/authentication/signin', {identifiant, password});
+            const response = await axios.post('http://localhost:3000/api/authentication/signin', {identifiant, password}, { withCredentials: true });
 
             if(response.data.status){
                 setMessageConnect(response.data.message);
                 setIsSuccess(true);
                 setTimeout(() => {
-                    navigate('/DisplayMainContent');
+                    navigate('/DisplayMainContent', {state: {userName: response.data.name}});
                 }, 2000);
-                //TODO : Stocker le token dans les cookies ou le local storage
-                //TODO : Stocker l'utilisateur dans le local storage ou les cookies
 
             }else{
                 setMessageConnect(response.data.message);

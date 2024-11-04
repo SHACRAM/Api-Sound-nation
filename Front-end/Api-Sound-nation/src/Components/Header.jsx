@@ -3,12 +3,31 @@ import { useState } from "react";
 import { NavBarMobile } from "./NavBarMobile";
 import { NavLink } from "react-router-dom";
 import { NavBarDesktop } from "./NavBarDesktop";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 //Composant qui gère l'affichage des différents éléments de la barre de navigation en version mobile et desktop
-export const Header = ({setActiveDiv}) => {
-
+export const Header = ({setActiveDiv, isAuthenticated, setIsAuthenticated, userName}) => {
+    const navigate = useNavigate();
     const [burgerClass, setBurgerClass] = useState("burger-bar unclicked");
     const [menuClass, setMenuClass] = useState('menu');
     const [isMenuClicked, setIsMenuClicked] = useState(false);
+    const [disconnectMesssage, setDisconnectMessage] = useState('');
+
+    const handleLogOut = async()=>{
+
+        const response = await axios.get('http://localhost:3000/api/authentication/logOut', { withCredentials: true });
+        if(response.data.status){
+            setIsAuthenticated(false);
+            setDisconnectMessage(response.data.message);
+            setMenuClass('menu'); 
+            setBurgerClass('burger-bar unclicked');
+            setTimeout(()=>{
+                navigate('/');
+            }, 2000);
+        } else {
+            setDisconnectMessage(response.data.message);
+        }
+    }
 
     const updateMenu = ()=>{
         if(!isMenuClicked){
@@ -43,11 +62,11 @@ export const Header = ({setActiveDiv}) => {
                 <NavLink onClick={handleclick(0)} to="/DisplayMainContent"><img src="src/images/Logo.png" alt="Image du logo du festival" className="w-[5em] m-2"/></NavLink>
             </div>
             <div>
-                <NavBarMobile burgerClass={burgerClass} menuClass={menuClass} updateMenu={updateMenu} handleclick={handleclick}/>
+                <NavBarMobile burgerClass={burgerClass} menuClass={menuClass} updateMenu={updateMenu} handleclick={handleclick} isAuthenticated={isAuthenticated} handleLogOut={handleLogOut}/>
             </div>
         </div>
         <div className="hidden sm:block">
-            <NavBarDesktop setActiveDiv={setActiveDiv}/>
+            <NavBarDesktop setActiveDiv={setActiveDiv} userName={userName} handleLogOut={handleLogOut} isAuthenticated={isAuthenticated}/>
         </div>
 
 

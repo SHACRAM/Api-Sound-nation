@@ -2,9 +2,10 @@ const mysqlClient = require('../Config/dbConfig');
 const express = require("express");
 const router = express.Router();
 const multer = require('../Middleware/multerConfig');
+const auth = require('../Middleware/auth');
 
 // Route qui permet d'ajouter un partenaire en base de données
-router.post('/addPartner', multer.single('imagePartner'), async (req,res)=>{
+router.post('/addPartner',auth, multer.single('imagePartner'), async (req,res)=>{
 
     if (!req.file) {
         return res.status(400).json({ status: false, message: 'Aucune image envoyée' });
@@ -41,7 +42,7 @@ router.get('/', (req,res)=>{
 
 
 // Route qui permet de modifier un partenaire
-router.post('/modifyPartner', multer.single('imagePartner'), async (req,res)=>{
+router.post('/modifyPartner',auth, multer.single('imagePartner'), async (req,res)=>{
     const {id, name, site, category, alt} = req.body;
 
     if(!req.file){

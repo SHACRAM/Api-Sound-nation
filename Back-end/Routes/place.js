@@ -2,10 +2,11 @@ const mysqlClient = require('../Config/dbConfig');
 const express = require("express");
 const router = express.Router();
 const multer = require('../Middleware/multerConfig');
+const auth = require('../Middleware/auth');
 
 
 // Route qui permet d'ajouter un lieu en base de données
-router.post('/addPlace', multer.fields([{name: 'images', maxCount: 2}]), async (req, res)=>{
+router.post('/addPlace',auth, multer.fields([{name: 'images', maxCount: 2}]), async (req, res)=>{
 
 
 if(!req.files || req.files['images'].length < 2){
@@ -33,7 +34,7 @@ mysqlClient.query(sql, [name, category, latitude, longitude, markerDiametre, col
 
 
 // Route qui permet de récupérer l'ensemble des lieux en base de données
-router.get('/', (req,res)=>{
+router.get('/',auth, (req,res)=>{
 
     const sql= 'SELECT * FROM Lieu';
 
@@ -48,7 +49,7 @@ router.get('/', (req,res)=>{
 
 
 // Route qui permet de supprimer un lieu en base de données
-router.post('/deletePlace', (req, res)=>{
+router.post('/deletePlace',auth, (req, res)=>{
 
     const {id}= req.body;
 
@@ -68,7 +69,7 @@ router.post('/deletePlace', (req, res)=>{
 
 
 // Route qui permet de modifier un lieu en base de données
-router.post('/modifyPlace', multer.fields([{name: 'images', maxCount: 2}]), async (req, res)=>{
+router.post('/modifyPlace',auth, multer.fields([{name: 'images', maxCount: 2}]), async (req, res)=>{
 
     if(!req.files || req.files['images'].length < 2){
         return res.status(400).json({status: false, message: 'Aucune image envoyée'});

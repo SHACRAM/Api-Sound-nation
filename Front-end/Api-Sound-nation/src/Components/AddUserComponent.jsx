@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import { DisplayMainContent } from "../Pages/DisplayMainContent";
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 
 export const AddUserComponent = () => {
@@ -15,23 +16,36 @@ export const AddUserComponent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        try{
-            const response = await axios.post('http://localhost:3000/api/user/signup', {identifiant, password});
-
-            if(response.data.status){
+    
+        if (!identifiant || !password) {
+            setMessage("Veuillez remplir tous les champs.");
+            setIsSuccess(false);
+            return;
+        }
+    
+        try {
+            const response = await axios.post('http://localhost:3000/api/user/signup', 
+                { identifiant, password },
+                { headers: { 'Content-Type': 'application/json' }}
+            );
+    
+            if (response.data.status) {
                 setMessage(response.data.message);
                 setIsSuccess(true);
                 setTimeout(() => {
                     navigate('/DisplayMainContent');
                 }, 2000);
-            }else{
+            } else {
                 setMessage(response.data.message);
                 setIsSuccess(false);
             }
-        } catch (error){
-            console.error('There is an error:', error);
-            setMessage('Erreur serveur, merci de réessayer ultérieurement');
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                setMessage(error.response.data.message);
+            } else {
+                setMessage('Erreur serveur, merci de réessayer ultérieurement');
+            }
+            setIsSuccess(false);
         }
     };
 

@@ -3,13 +3,15 @@ const express = require("express");
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const auth = require('../Middleware/auth');
 
 //Création d'un jeton JWT à partir des données fournies
 const createTokenFromJson = (jsonData) => {
     try {
         //TODO enregistrer la clé secrète dans un fichier de configuration
       const secretKey = "secretKey";
-      const token = jwt.sign(jsonData, secretKey);
+      const expirationTime = 60 * 60 * 24;
+      const token = jwt.sign(jsonData, secretKey, { expiresIn: expirationTime });
       return token;
     } catch (error) {
       console.log("error :", error.message);
@@ -41,29 +43,43 @@ router.post('/signin', async (req, res) => {
             }
 
             const jsonData = {
-                name: user.user_name
+                name: user.user_name,
+                userId: user.id
             };
 
             const token = createTokenFromJson(jsonData);
 
-            if (token) {
-                return res.status(200).json({
-                    status: true,
-                    message: 'Connexion réussie',
-                    token: token,
-                    name: user.user_name,
-                });
-            } else {
-                return res.status(401).json({
-                    status: false,
-                    message: 'Identifiants inconnus',
-                });
-            }
+            res.cookie('auth_token', token, 
+                {httpOnly: true,
+                secure: false,
+                sameSite: 'Lax',
+                maxAge: 24 * 60 * 60 * 1000,
+                path: '/' 
+                }
+            )
+
+            res.status(200).json({status: true, message : 'Connexion réussie', name : user.user_name});
+
         });
     } catch (error) {
         return res.status(500).json({ status: false, message: 'Erreur serveur, merci d\'essayer ultérieurement' });
     }
 });
+
+// Route qui vérifie l'authentification
+router.get('/verify-auth', auth, (req, res) => {
+    res.status(200).json({ status: true, message: 'Utilisateur authentifié' });
+});
+
+// Route de déconnexion d'un utilisateur
+router.get('/logOut', (req,res)=>{
+    res.clearCookie('auth_token');
+    res.status(200).json({status: true, message: 'Déconnexion réussie'})
+})
+
+
+
+
 
 module.exports = router;
 

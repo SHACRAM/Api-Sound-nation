@@ -1,11 +1,13 @@
 const mysqlClient = require('../Config/dbConfig');
 const express = require("express");
-const router = express.Router();
 const multer = require('../Middleware/multerConfig');
+const auth = require('../Middleware/auth');
+const router = express.Router();
+
 
 
 //Route qui permet d'ajouter un groupe en base de données
-router.post('/addGroupe', multer.single('imageGroupe'), async (req,res)=>{
+router.post('/addGroupe',auth, multer.single('imageGroupe'), async (req,res)=>{
     const {name, hour, date, scene, alt} = req.body;
 
     if (!req.file) {
@@ -42,7 +44,7 @@ router.get('/', (req, res)=>{
 
 
 //Route qui permet de modifier un groupe
-router.post('/modifyGroupe', multer.single('imageGroupe'), async (req,res)=>{
+router.post('/modifyGroupe',auth, multer.single('imageGroupe'), async (req,res)=>{
     const {id, name, hour, date, scene, alt} = req.body;
 
     if(!req.file){
@@ -65,7 +67,7 @@ router.post('/modifyGroupe', multer.single('imageGroupe'), async (req,res)=>{
 
 
 //Route qui permet de supprimer un groupe
-router.post('/deleteGroupe', (req, res)=>{
+router.post('/deleteGroupe',auth, (req, res)=>{
     const {id} = req.body;
 
     const sql = 'Delete FROM Groupe WHERE id =?';
