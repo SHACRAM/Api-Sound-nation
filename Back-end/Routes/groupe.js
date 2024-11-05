@@ -83,6 +83,21 @@ router.post('/deleteGroupe',auth, (req, res)=>{
 
 })
 
+//Route qui permet de récupérer un groupe par son id
+router.get('/:id', (req, res)=>{
+    const id = req.params.id;
+
+    const sql = 'SELECT * FROM Groupe WHERE id = ?';
+
+    mysqlClient.query(sql, [id], (error, result)=>{
+        if(error){
+            res.status(400).json({status: false, message: 'Erreur lors de la récupération du groupe'})
+        } else{
+            res.status(200).json({status: true, data: result})
+        }
+    })
+})
+
 
 
 
