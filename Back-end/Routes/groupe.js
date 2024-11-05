@@ -8,7 +8,7 @@ const router = express.Router();
 
 //Route qui permet d'ajouter un groupe en base de données
 router.post('/addGroupe',auth, multer.single('imageGroupe'), async (req,res)=>{
-    const {name, hour, date, scene, alt} = req.body;
+    const {name, hour, date, scene, alt, bio} = req.body;
 
     if (!req.file) {
         return res.status(400).json({ status: false, message: 'Aucune image envoyée' });
@@ -17,8 +17,8 @@ router.post('/addGroupe',auth, multer.single('imageGroupe'), async (req,res)=>{
     const imageName = req.file.originalname;
     const imagePath = req.file.path;
 
-    const sql = 'INSERT INTO Groupe (groupe_name, groupe_hour, groupe_date, groupe_scene, groupe_image_name, groupe_image_path, groupe_image_alt) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    mysqlClient.query(sql, [name, hour, date, scene, imageName, imagePath, alt], (error, result)=>{
+    const sql = 'INSERT INTO Groupe (groupe_name, groupe_hour, groupe_date, groupe_scene, groupe_image_name, groupe_image_path, groupe_image_alt, groupe_bio) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    mysqlClient.query(sql, [name, hour, date, scene, imageName, imagePath, alt, bio], (error, result)=>{
         if(error){
             res.status(400).json({status: false, message: 'Merci de vérifier les informations saisies'});
         } else{
@@ -45,7 +45,7 @@ router.get('/', (req, res)=>{
 
 //Route qui permet de modifier un groupe
 router.post('/modifyGroupe',auth, multer.single('imageGroupe'), async (req,res)=>{
-    const {id, name, hour, date, scene, alt} = req.body;
+    const {id, name, hour, date, scene, alt, bio} = req.body;
 
     if(!req.file){
         return res.status(400).json({status : false, message : 'Aucune image envoyée'})
@@ -54,9 +54,9 @@ router.post('/modifyGroupe',auth, multer.single('imageGroupe'), async (req,res)=
     const imageName = req.file.originalname;
     const imagePath = req.file.path;
     
-    const sql = 'UPDATE Groupe SET groupe_name = ?, groupe_hour =?, groupe_date=?, groupe_scene=?, groupe_image_name=?, groupe_image_path=?, groupe_image_alt=? WHERE id = ?';
+    const sql = 'UPDATE Groupe SET groupe_name = ?, groupe_hour =?, groupe_date=?, groupe_scene=?, groupe_image_name=?, groupe_image_path=?, groupe_image_alt=?, groupe_bio=? WHERE id = ?';
 
-    mysqlClient.query(sql, [name, hour, date, scene, imageName, imagePath, alt, id], (error, result)=>{
+    mysqlClient.query(sql, [name, hour, date, scene, imageName, imagePath, alt,bio,  id], (error, result)=>{
         if(error){
             res.status(400).json({status:false, message: 'Merci de vérifier les informations saisies'})
         } else {

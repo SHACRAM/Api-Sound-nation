@@ -9,6 +9,7 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
     const [date, setDate] = useState("");
     const [scene, setScene] = useState("");
     const [alt, setAlt] = useState("");
+    const [bio, setBio] = useState("");
     const [messageAddGroupe, setMessageAddGroupe] = useState("");
     
 
@@ -31,6 +32,7 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
         formData.append('scene', scene);
         formData.append('imageGroupe', imageGroupe);
         formData.append('alt', alt);
+        formData.append('bio', bio);
 
         try {
             const response = await axios.post('http://localhost:3000/api/groupes/addGroupe', formData, {
@@ -101,10 +103,14 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="alt" className="text-white sm:text-[1.3rem]">Texte alternatif</label>
-                    <input className="rounded bg-white pl-1 sm:w-[15em] sm:h-7" type="text" id="alt" value={alt} onChange={(e) => setAlt(e.target.value)} required />
+                    <textarea className="rounded bg-white pl-1 h-[5em] sm:w-[15em] sm:h-[10em]" type="text" id="alt" value={alt} onChange={(e) => setAlt(e.target.value)} required />
                 </div>
-                <div className="flex justify-center">
-                    <button type="submit" className="text-white bg-[#023E33] hover:opacity-80 p-2 w-[7em] rounded-md sm:text-[1.2rem]">Ajouter</button>
+                <div className="flex flex-col gap-2 sm:w-[15em]">
+                    <label htmlFor="bio" className="text-white sm:text-[1.3rem]">Biographie</label>
+                    <textarea className="rounded bg-white pl-1 h-[5em] sm:w-[15em] sm:h-[10em]" type="text" id="bio" value={bio} onChange={(e) => setBio(e.target.value)} required />
+                </div>
+                <div className="flex justify-center items-end">
+                    <button type="submit" className="text-white bg-[#023E33] hover:opacity-80 p-2 w-[7em] h-[3em] rounded-md sm:text-[1.2rem]">Ajouter</button>
                 </div>
             </form>
             {messageAddGroupe && <p className="text-white">{messageAddGroupe}</p>}
