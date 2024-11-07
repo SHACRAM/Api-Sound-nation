@@ -11,6 +11,7 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
     const [date, setDate] = useState(groupeData.groupe_date);
     const [scene, setScene] = useState(groupeData.groupe_scene);
     const [alt, setAlt] = useState(groupeData.groupe_image_alt);
+    const [bio, setBio] = useState(groupeData.groupe_bio);
     const [messageModifyGroupe, setMessageModifyGroupe] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);
 
@@ -36,6 +37,7 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
         formData.append('scene', scene);
         formData.append('imageGroupe', imageGroupe);
         formData.append('alt', alt);
+        formData.append('bio', bio);
 
         try {
             const response = await axios.post('http://localhost:3000/api/groupes/modifyGroupe', formData, {
@@ -112,7 +114,11 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="alt" className="text-white sm:text-[1.3rem]">Texte alternatif</label>
-                    <input className="rounded bg-[#B6B6B6] pl-1 sm:w-[15em] sm:h-7" type="text" id="alt" value={alt} onChange={(e) => setAlt(e.target.value)} required/>
+                    <textarea className="rounded bg-white pl-1 h-[5em] sm:w-[15em] sm:h-[10em]" type="text" id="alt" value={alt} onChange={(e) => setAlt(e.target.value)} required />
+                </div>
+                <div className="flex flex-col gap-2 sm:w-[15em]">
+                    <label htmlFor="bio" className="text-white sm:text-[1.3rem]">Biographie</label>
+                    <textarea className="rounded bg-white pl-1 h-[5em] sm:w-[15em] sm:h-[10em]" type="text" id="bio" value={bio} onChange={(e) => setBio(e.target.value)} required />
                 </div>
                 <div className="flex justify-center">
                     <button type="submit" className="text-white bg-[#023E33] hover:opacity-80 p-2 w-[7em] rounded-md sm:text-[1.2rem]">Modifier</button>

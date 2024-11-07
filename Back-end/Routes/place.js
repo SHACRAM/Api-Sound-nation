@@ -34,7 +34,7 @@ mysqlClient.query(sql, [name, category, latitude, longitude, markerDiametre, col
 
 
 // Route qui permet de récupérer l'ensemble des lieux en base de données
-router.get('/',auth, (req,res)=>{
+router.get('/', (req,res)=>{
 
     const sql= 'SELECT * FROM Lieu';
 
