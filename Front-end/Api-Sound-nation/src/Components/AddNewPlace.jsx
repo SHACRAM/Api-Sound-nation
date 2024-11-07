@@ -17,6 +17,7 @@ export const AddNewPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
     const [altLogo, setAltLogo] = useState("");
     const [imagePlace, setImagePlace] = useState(null);
     const [altImage, setAltImage] = useState("");
+    const [info, setInfo] = useState("");
 
     const handleCategoryChange = (e) => {
         const selectedValue = e.target.value;
@@ -70,6 +71,7 @@ export const AddNewPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
         formData.append("altLogo", altLogo);
         formData.append("images", imagePlace);
         formData.append("altImage", altImage);
+        formData.append("info", info);
 
 
 
@@ -167,6 +169,10 @@ export const AddNewPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="altImage" className="text-white sm:text-[1.3rem]">Texte alternatif de l'image</label>
                     <input type="text" id="altImage" className="rounded bg-white sm:w-[15em] sm:h-7" onChange={(e)=>setAltImage(e.target.value)} required />
+                </div>
+                <div className="flex flex-col gap-2 sm:w-[15em]">
+                    <label htmlFor="info" className="text-white sm:text-[1.3rem]">Informations du popup</label>
+                    <input type="text" id="info" className="rounded bg-white sm:w-[15em] sm:h-7" onChange={(e)=>setInfo(e.target.value)} required />
                 </div>
                 <div className="flex justify-center w-[100%]">
                     <button type="submit" className="text-white bg-[#023E33] hover:opacity-80 p-2 w-[7em] rounded-md sm:text-[1.2rem]">Ajouter</button>

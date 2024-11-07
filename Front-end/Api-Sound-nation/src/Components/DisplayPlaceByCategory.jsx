@@ -64,7 +64,7 @@ export const DisplayPlaceByCategory = ({dataPlace, placeCategory, handleAllPlace
                                 if(place.place_category === category){
                                     return(
                                     <div key={index} className="border flex flex-col p-2 gap-4">
-                                        <div className="md:flex md:flex-row md:gap-[5em]">
+                                        <div className="md:flex md:flex-row md:gap-[4em]">
                                             <div className="flex gap-4">
                                                 <div className="flex flex-col gap-3">
                                                     <h3 className="text-white"><strong>Nom:</strong></h3>
@@ -84,7 +84,7 @@ export const DisplayPlaceByCategory = ({dataPlace, placeCategory, handleAllPlace
                                                 </div>
                                             </div>
                                             
-                                            <div className="flex flex-col gap-4">
+                                            <div className="flex flex-col gap-4 mt-5">
                                                 <div className="flex flex-col gap-3 md:flex-row md:items-center">
                                                     <img src={`http://localhost:3000/${place.place_logo_path}`} alt={place.place_logo_alt} className="w-[3em] h-[3em] md:w-[6em] md:h-[6em]"/>
                                                     <p className="text-white"><strong>Texte alternatif du logo: </strong> {place.place_logo_alt}</p>
@@ -93,6 +93,10 @@ export const DisplayPlaceByCategory = ({dataPlace, placeCategory, handleAllPlace
                                                     <img src={`http://localhost:3000/${place.place_image_path}`} alt={place.place_image_alt} className="w-[3em] h-[3em] md:w-[6em] md:h-[6em]"/>
                                                     <p className="text-white"><strong>Texte alternatif de l'image: </strong>{place.place_image_alt}</p>
                                                 </div>
+                                            </div>
+                                            <div className="mt-5 flex flex-col gap-2">
+                                                <p className="text-white"><strong>Informations du popup:</strong></p>
+                                                <p className="text-white">{place.place_info_popup}</p>
                                             </div>
                                         </div>
                                         

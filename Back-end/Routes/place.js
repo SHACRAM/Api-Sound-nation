@@ -13,16 +13,16 @@ if(!req.files || req.files['images'].length < 2){
     return res.status(400).json({status: false, message: 'Aucune image envoyée'});
 }
 
-const {name, category, latitude, longitude, markerDiametre, color, altLogo, altImage}= req.body;
+const {name, category, latitude, longitude, markerDiametre, color, altLogo, altImage, info}= req.body;
 
 const logoName = req.files['images'][0].originalname;
 const logoPath = req.files['images'][0].path;
 const imageName = req.files['images'][1].originalname;
 const imagePath = req.files['images'][1].path;
 
-const sql = 'INSERT INTO Lieu (place_name, place_category, place_latitude, place_longitude, place_marker_diametre, place_marker_color, place_logo_name, place_logo_path, place_logo_alt, place_image_name, place_image_path, place_image_alt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+const sql = 'INSERT INTO Lieu (place_name, place_category, place_latitude, place_longitude, place_marker_diametre, place_marker_color, place_logo_name, place_logo_path, place_logo_alt, place_image_name, place_image_path, place_image_alt, place_info_popup) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-mysqlClient.query(sql, [name, category, latitude, longitude, markerDiametre, color, logoName, logoPath, altLogo, imageName, imagePath, altImage], (error, result)=>{
+mysqlClient.query(sql, [name, category, latitude, longitude, markerDiametre, color, logoName, logoPath, altLogo, imageName, imagePath, altImage, info], (error, result)=>{
     if(error){
         res.status(400).json({status : false, message : 'Merci de vérifier les informations saisies'})
     } else {
@@ -75,16 +75,16 @@ router.post('/modifyPlace',auth, multer.fields([{name: 'images', maxCount: 2}]),
         return res.status(400).json({status: false, message: 'Aucune image envoyée'});
     }
 
-    const {id, name, category, latitude, longitude, markerDiametre, color, altLogo, altImage}= req.body;
+    const {id, name, category, latitude, longitude, markerDiametre, color, altLogo, altImage, info}= req.body;
 
     const logoName = req.files['images'][0].originalname;
     const logoPath = req.files['images'][0].path;
     const imageName = req.files['images'][1].originalname;
     const imagePath = req.files['images'][1].path;
 
-    const sql = 'UPDATE Lieu SET place_name=?, place_category=?, place_latitude=?, place_longitude=?, place_marker_diametre=?, place_marker_color=?, place_logo_name=?, place_logo_path=?, place_logo_alt=?, place_image_name=?, place_image_path=?, place_image_alt=? WHERE id=?';
+    const sql = 'UPDATE Lieu SET place_name=?, place_category=?, place_latitude=?, place_longitude=?, place_marker_diametre=?, place_marker_color=?, place_logo_name=?, place_logo_path=?, place_logo_alt=?, place_image_name=?, place_image_path=?, place_image_alt=?, place_info_popup=? WHERE id=?';
 
-    mysqlClient.query(sql, [name, category, latitude, longitude, markerDiametre, color, logoName, logoPath, altLogo, imageName, imagePath, altImage, id], (error, result)=>{
+    mysqlClient.query(sql, [name, category, latitude, longitude, markerDiametre, color, logoName, logoPath, altLogo, imageName, imagePath, altImage, info, id], (error, result)=>{
 
         if(error){
             res.status(400).json({status: false, message: 'Erreur lors de la modification du lieu'})
