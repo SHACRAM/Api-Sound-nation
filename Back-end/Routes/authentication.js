@@ -22,17 +22,17 @@ const createTokenFromJson = (jsonData) => {
 
 //Route de connexion d'un utilisateur
 router.post('/signin', async (req, res) => {
-    const { identifiant, password } = req.body;
-    const sql = 'SELECT * FROM Users WHERE user_name = ?';
+    const { email, identifiant, password, role } = req.body;
+    const sql = 'SELECT * FROM Users WHERE user_email = ?';
 
     try {
-        mysqlClient.query(sql, [identifiant], async (error, result) => {
+        mysqlClient.query(sql, [email], async (error, result) => {
             if (error) {
                 return res.status(500).json({ status: false, message: 'Erreur serveur, merci d\'essayer ultérieurement' });
             }
 
-            if (result.length === 0) {
-                return res.status(401).json({ status: false, message: 'Compte inconnu' });
+            if (result.length === 0 || result[0].user_role !== 'admin') {
+                return res.status(401).json({ status: false, message: 'Compte inconnu ou non autorisé' });
             }
 
             const user = result[0];

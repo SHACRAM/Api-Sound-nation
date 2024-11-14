@@ -26,10 +26,10 @@ export const DisplayAllGroupe = ({setInfoModifyGroupe}) => {
                         case "Vendredi 22 juillet":
                             tempVendredi.push(data);
                             break;
-                        case "Samedi 23 Juillet":
+                        case "Samedi 23 juillet":
                             tempSamedi.push(data);
                             break;
-                        case "Dimanche 24 Juillet":
+                        case "Dimanche 24 juillet":
                             tempDimanche.push(data);
                             break;
                         default:

@@ -93,8 +93,8 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
                     <select className="rounded bg-[#B6B6B6] sm:w-[15em] sm:h-7" id="date" onChange={(e) => setDate(e.target.value)} required value={date}>
                         <option value="">Choisir une date</option>
                         <option value="Vendredi 22 juillet">Vendredi 22 juillet</option>
-                        <option value="Samedi 23 Juillet">Samedi 23 Juillet</option>
-                        <option value="Dimanche 24 Juillet">Dimanche 24 Juillet</option>
+                        <option value="Samedi 23 juillet">Samedi 23 Juillet</option>
+                        <option value="Dimanche 24 juillet">Dimanche 24 Juillet</option>
                     </select>
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">

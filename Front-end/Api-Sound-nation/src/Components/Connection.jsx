@@ -6,8 +6,10 @@ import { DisplayMainContent } from "../Pages/DisplayMainContent";
 
 //Composant page de connexion
 export const Connection = () => {  
+    const [email, setEmail] = useState('');
     const [identifiant, setIdentifiant] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('');
     const [messageConnect, setMessageConnect] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
     const navigate = useNavigate();
@@ -16,7 +18,7 @@ export const Connection = () => {
         e.preventDefault();
 
         try{
-            const response = await axios.post('http://localhost:3000/api/authentication/signin', {identifiant, password}, { withCredentials: true });
+            const response = await axios.post('http://localhost:3000/api/authentication/signin', {email, identifiant, password, role}, { withCredentials: true });
 
             if(response.data.status){
                 setMessageConnect(response.data.message);
@@ -45,6 +47,10 @@ export const Connection = () => {
             <div className="flex flex-col border p-5 rounded-md gap-6">
                 <h1 className="text-white text-[1.5rem]">Connexion</h1>
                 <form className="flex flex-col gap-4">
+                    <div className="flex flex-col items-start gap-1">
+                        <label className="text-white" htmlFor="email">Email</label>
+                        <input onChange={(e)=>setEmail(e.target.value)} className="bg-[#71A984] rounded-md" type="email" id="email" required />
+                    </div>
                     <div className="flex flex-col items-start gap-1">
                         <label className="text-white" htmlFor="identifiant">Identifiant</label>
                         <input onChange={(e)=>setIdentifiant(e.target.value)} className="rounded-md bg-[#71A984]" type="text" id="identifiant" name="identifiant" required />

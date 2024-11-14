@@ -7,17 +7,19 @@ axios.defaults.withCredentials = true;
 
 
 export const AddUserComponent = () => {
+    const [email, setEmail] = useState('');
     const [identifiant, setIdentifiant] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
     const navigate = useNavigate();
+    const role = "admin";
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        if (!identifiant || !password) {
+        if (!identifiant || !password || !email) {
             setMessage("Veuillez remplir tous les champs.");
             setIsSuccess(false);
             return;
@@ -25,7 +27,7 @@ export const AddUserComponent = () => {
     
         try {
             const response = await axios.post('http://localhost:3000/api/user/signup', 
-                { identifiant, password },
+                { email, identifiant, password, role },
                 { headers: { 'Content-Type': 'application/json' }}
             );
     
@@ -55,6 +57,10 @@ export const AddUserComponent = () => {
         <h1 className="text-white text-[1.5rem]">Ajouter un utilisateur</h1>
         <div className="border rounded-md w-fit p-5 flex flex-col">
             <form className="flex flex-col gap-5 items-center">
+                <div className="flex flex-col items-start gap-1">
+                    <label className="text-white" htmlFor="email">Email</label>
+                    <input onChange={(e)=>setEmail(e.target.value)} className="bg-[#71A984] rounded-md" type="email" id="email" required />
+                </div>
                 <div className="flex flex-col items-start gap-1">
                     <label className="text-white" htmlFor="identifiant">Identifiant</label>
                     <input onChange={(e)=>setIdentifiant(e.target.value)} className="bg-[#71A984] rounded-md" type="text" id="identifiant" required />
