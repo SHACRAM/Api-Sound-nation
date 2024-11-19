@@ -18,7 +18,7 @@ app.use(cors({
 }));
 
 
-app.use('/api/user', userRouter);
+app.use('/api/users', userRouter);
 app.use('/api/authentication', authenticationRouter);
 app.use('/api/groupes', groupeRouter);
 app.use('/api/partners', partnerRouter);

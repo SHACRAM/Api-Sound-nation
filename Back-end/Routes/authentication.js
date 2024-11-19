@@ -5,66 +5,63 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const auth = require('../Middleware/auth');
 
-//Création d'un jeton JWT à partir des données fournies
+// Création d'un jeton JWT à partir des données fournies
 const createTokenFromJson = (jsonData) => {
     try {
-        //TODO enregistrer la clé secrète dans un fichier de configuration
-      const secretKey = "secretKey";
-      const expirationTime = 60 * 60 * 24;
-      const token = jwt.sign(jsonData, secretKey, { expiresIn: expirationTime });
-      return token;
+        // TODO enregistrer la clé secrète dans un fichier de configuration
+        const secretKey = "secretKey";
+        const expirationTime = 60 * 60 * 24;
+        const token = jwt.sign(jsonData, secretKey, { expiresIn: expirationTime });
+        return token;
     } catch (error) {
-      console.log("error :", error.message);
-      return null;
+        console.log("error :", error.message);
+        return null;
     }
-  };
+};
 
-
-//Route de connexion d'un utilisateur
 router.post('/signin', async (req, res) => {
-    const { email, identifiant, password, role } = req.body;
+    const { email, password } = req.body;
+
     const sql = 'SELECT * FROM Users WHERE user_email = ?';
 
     try {
-        mysqlClient.query(sql, [email], async (error, result) => {
-            if (error) {
-                return res.status(500).json({ status: false, message: 'Erreur serveur, merci d\'essayer ultérieurement' });
-            }
+        const [rows] = await mysqlClient.query(sql, [email]);
 
-            if (result.length === 0 || result[0].user_role !== 'admin') {
-                return res.status(401).json({ status: false, message: 'Compte inconnu ou non autorisé' });
-            }
+        if (rows.length === 0) {
+            return res.status(401).json({ status: false, message: 'Erreur, merci de vérifier vos identifiants' });
+        }
 
-            const user = result[0];
-            const passwordMatch = await bcrypt.compare(password, user.user_password);
+        const user = rows[0];
 
-            if (!passwordMatch) {
-                return res.status(401).json({ status: false, message: 'Mot de passe  incorrects' });
-            }
+        const passwordMatch = await bcrypt.compare(password, user.user_password);
 
-            const jsonData = {
-                name: user.user_name,
-                userId: user.id
-            };
+        if (!passwordMatch) {
+            return res.status(401).json({ status: false, message: 'Mot de passe incorrect' });
+        }
 
-            const token = createTokenFromJson(jsonData);
+        const jsonData = {
+            user_name: user.user_name,
+            user_email: user.user_email, 
+        };
 
-            res.cookie('auth_token', token, 
-                {httpOnly: true,
-                secure: false,
-                sameSite: 'Lax',
-                maxAge: 24 * 60 * 60 * 1000,
-                path: '/' 
-                }
-            )
+        const token = createTokenFromJson(jsonData);
 
-            res.status(200).json({status: true, message : 'Connexion réussie', name : user.user_name});
-
+        res.cookie('auth_token', token, { 
+            httpOnly: true,
+            secure: false,
+            sameSite: 'Lax',
+            maxAge: 24 * 60 * 60 * 1000,
+            path: '/'
         });
+
+        res.status(200).json({ status: true, message: 'Connexion réussie', data: user });
     } catch (error) {
+        console.log('Erreur dans le try-catch:', error.message);
         return res.status(500).json({ status: false, message: 'Erreur serveur, merci d\'essayer ultérieurement' });
     }
 });
+
+
 
 // Route qui vérifie l'authentification
 router.get('/verify-auth', auth, (req, res) => {
@@ -82,7 +79,7 @@ router.get('/logOut', (req,res)=>{
 
 
 module.exports = router;
-
+ 
 
 
 

@@ -1,21 +1,27 @@
-const mysql = require('mysql');
+const mysql = require('mysql2/promise');
 //Connexion à la base de données
-const db = mysql.createConnection({
+const db = mysql.createPool({
     host: 'localhost',
     user : 'root',
     password: 'root',
     database : 'Sound-nation',
-    socketPath : '/Applications/MAMP/tmp/mysql/mysql.sock'
+    socketPath : '/Applications/MAMP/tmp/mysql/mysql.sock',
+    waitForConnections: true, 
+    connectionLimit: 10,      
+    queueLimit: 0
 });
 
-db.connect((err)=>{
-    if(err){
-        console.error('Erreur lors de la connexion à la base de données' + err.stack)
-        return
+(async () => {
+    try {
+        const connection = await db.getConnection();
+        console.log('Connexion à la base de données réussie');
+        connection.release(); 
+    } catch (err) {
+        console.error('Erreur lors de la connexion à la base de données :', err);
     }
-    console.log('Connexion à la base de données réussie')
-})
+})();
 
 module.exports = db;
 
 
+ 
