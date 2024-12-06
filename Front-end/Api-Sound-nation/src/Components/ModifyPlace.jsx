@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 // Composant qui permet de modifier un lieu
@@ -19,6 +20,7 @@ export const ModifyPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
     const [altImage, setAltImage] = useState(infoForModifyPlace.place_image_alt);
     const [placeId, setPlaceId] = useState(infoForModifyPlace.id);
     const [info, setInfo] = useState(infoForModifyPlace.place_info_popup);
+    const navigate = useNavigate();
 
     const handleCategoryChange = (e) => {
         const selectedValue = e.target.value;
@@ -78,7 +80,7 @@ export const ModifyPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
 
 
         try{
-            const response = await axios.post ("http://localhost:3000/api/places/modifyPlace", formData, {
+            const response = await axios.post (`${import.meta.env.VITE_API_URL}/api/places/modifyPlace`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -86,7 +88,7 @@ export const ModifyPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
             if(response.data.status){
                 setMessageModifyPlace(response.data.message);
                 setTimeout(() => {
-                    setActiveComponentPlace(0);
+                    navigate('/Carte');
                     handleAllPlace();
                 }, 2000);
             } else{

@@ -26,7 +26,7 @@ export const DisplayPageGroup = ({}) => {
     const pagesGroupe =[
         <DisplayAllGroupe setInfoModifyGroupe={setInfoModifyGroupe} setActiveComponentGroupe={setActiveComponentGroupe} />,
         <AddNewGroupe setActiveComponentGroupe={setActiveComponentGroupe}/>,
-        <ModifyGroupe groupeData = {infoForModifyGroupe} setActiveComponentGroupe={setActiveComponentGroupe}/>
+        // <ModifyGroupe groupeData = {infoForModifyGroupe} setActiveComponentGroupe={setActiveComponentGroupe}/>
     ];
 
     return(<div className="flex flex-col items-center">

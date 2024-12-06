@@ -11,7 +11,7 @@ export const DisplayMainContent = () => {
     
     const checkAuth = async () => {
         try {
-            await axios.get("http://localhost:3000/api/authentication/verify-auth", { withCredentials: true });
+            await axios.get(`${import.meta.env.VITE_API_URL}/api/authentication/verify-auth`, { withCredentials: true });
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 navigate("/");
@@ -23,7 +23,7 @@ export const DisplayMainContent = () => {
         checkAuth();
         const interval = setInterval(checkAuth, 120000);
         return () => clearInterval(interval);
-    }, [navigate]);
+    }, [navigate, Header]);
 
 
     return (

@@ -6,7 +6,7 @@ const auth = (req, res, next)=>{
 
     if(!token) return res.status(401).json({status: false, message: 'Vous n\'êtes pas autorisé à accéder à cette ressource'});
 
-    jwt.verify(token, 'secretKey', (error, user)=>{
+    jwt.verify(token, process.env.TOKEN_SECRET, (error, user)=>{
         if(error) return res.status(403).json({status : false, message : 'Token invalide'});
         req.user = user;
         next();

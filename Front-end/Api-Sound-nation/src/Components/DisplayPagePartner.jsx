@@ -1,14 +1,44 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useCallback, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { AddNewPartner } from "./AddNewPartner";
 import { AllPartners } from "./AllPartners";
 import { ModifyPartner } from "./ModifyPartner";
+import axios from "axios";
 
 // Composant qui affiche les pages de gestion des partenaires
 export const DisplayPagePartner = () => {
     const [activeComponentPartner, setActiveComponentPartner] = useState(0);
     const [infoForModifyPartner, setInfoForModifyPartner] = useState({});
+    const [dataPartners, setDataPartners] = useState([]);
+    const [message, setMessage]= useState("");
+    const [categoryPartner, setCategoryPartner] = useState([]);
+
+
+
+    const handleAllPartners = useCallback( async ()=>{
+        try{
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/partners`);
+            if(response.data.status){
+                const tempData = [];
+                response.data.data.forEach((partner)=>{
+                    tempData.push(partner.partner_category);
+                })
+                setCategoryPartner([...new Set(tempData)]);
+                setDataPartners(response.data.data);
+
+            }else{
+                setMessage(response.data.message);
+            }
+
+        }catch (error){
+            setMessage("Erreur serveur, impossible d'afficher le contenu de la page");
+        }
+    }, []);
+
+    useEffect(()=>{
+        handleAllPartners();
+    },[handleAllPartners]);
     
     
 
@@ -23,10 +53,17 @@ export const DisplayPagePartner = () => {
     
     
     const pagesPartner =[
-        <AllPartners setInfoModifyPartner={setInfoModifyPartner} setActiveComponentPartner={setActiveComponentPartner} />,
-        <AddNewPartner setActiveComponentPartner={setActiveComponentPartner}/>,
+        <AllPartners setInfoModifyPartner={setInfoModifyPartner} setActiveComponentPartner={setActiveComponentPartner} dataPartners={dataPartners} message={message} categoryPartner={categoryPartner} handleAllPartners={handleAllPartners} />,
+        <AddNewPartner setActiveComponentPartner={setActiveComponentPartner} categoryPartner={categoryPartner} />,
         <ModifyPartner partnerData = {infoForModifyPartner} setActiveComponentPartner={setActiveComponentPartner}/>
     ];
+
+
+
+    
+
+
+    
 
 
 

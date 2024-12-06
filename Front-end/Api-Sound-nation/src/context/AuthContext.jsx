@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   
     const handleUserInformation = async () => {
       try {
-          const response = await axios.get('http://localhost:3000/api/users/connectInformation', { withCredentials: true });
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/connectInformation`, { withCredentials: true });
           if (response.status === 200) {
               setConnectInformation(response.data.data);
           } else {
@@ -23,13 +23,18 @@ export const AuthProvider = ({ children }) => {
           setLoading(false);
       }
   }
+
+    const refreshUserInformation = async () => {
+      setLoading(true);
+      await handleUserInformation();
+    };
   
     useEffect(() => {
       handleUserInformation();
     }, []);
   
     return (
-      <AuthContext.Provider value={{ connectInformation, setConnectInformation, loading }}>
+      <AuthContext.Provider value={{ connectInformation, setConnectInformation, loading, refreshUserInformation }}>
         {children}
       </AuthContext.Provider>
     );

@@ -76,7 +76,7 @@ export const AddNewPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
 
 
         try{
-            const response = await axios.post ("http://localhost:3000/api/places/addPlace", formData, {
+            const response = await axios.post (`${import.meta.env.VITE_API_URL}/api/places/addPlace`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -142,7 +142,7 @@ export const AddNewPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="markerColor" className="text-white sm:text-[1.3rem]">Couleur du marqueur</label>
-                    <select className="rounded bg-white sm:w-[15em] sm:h-7" id="category" onChange={(e)=>{setColor(e.target.value); handleColorChange(e)}} required>
+                    <select className="rounded bg-white sm:w-[15em] sm:h-7" id="category" onChange={(e)=>{setColor(e.target.value)}} required>
                         <option value="">Choisir une couleur</option>
                         <option value="#FF0000">Rouge</option>
                         <option value="#2DC31B">Vert</option>

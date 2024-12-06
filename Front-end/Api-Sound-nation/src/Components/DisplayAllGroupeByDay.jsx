@@ -2,9 +2,9 @@ import React from "react";
 import { DeleteGroupe } from "./DeleteGroupe";
 import { useState } from "react";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 // Affiche les groupe en fonction du jour de leur concert
-// Affiche le bouton modifier si modifyGroupe est à true
 // Affiche le bouton supprimer si deleteGroupe est à true et execute l'appel à l'api pour supprimer le groupe
 export const DisplayAllGroupeByDay = ({jour, dateConcert, setInfoModifyGroupe, handleAllGroupes}) => {
     const [displayDeleteGroupe, setDisplayDeleteGroupe] = useState(false);
@@ -31,7 +31,7 @@ export const DisplayAllGroupeByDay = ({jour, dateConcert, setInfoModifyGroupe, h
     const handleDeleteGroupe = async ()=>{
        
         try{
-            const response = await axios.post("http://localhost:3000/api/groupes/deleteGroupe", {id:idToDelete});
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/groupes/deleteGroupe`, {id:idToDelete});
 
             if(response.data.status){
                 setMessageDeleteGroupe(response.data.message);
@@ -64,7 +64,7 @@ export const DisplayAllGroupeByDay = ({jour, dateConcert, setInfoModifyGroupe, h
                 <div key={index} className="border border-white flex flex-col items-center rounded-md">
                     <h2 className="text-white text-[1.4rem] p-2">{groupe.groupe_name}</h2>
                     <div>
-                        <img src={`http://localhost:3000/${groupe.groupe_image_path}`} alt={groupe.groupe_image_alt} className="text-white w-[16em] p-3 rounded sm:w-[12em]"/>
+                        <img src={`${import.meta.env.VITE_API_URL}/${groupe.groupe_image_path}`} alt={groupe.groupe_image_alt} className="text-white w-[16em] p-3 rounded sm:w-[12em]"/>
                     </div>
                     <div className="flex flex-col gap-3 p-3 w-[100%] ml-6">
                         <div className="flex gap-3">
@@ -77,9 +77,9 @@ export const DisplayAllGroupeByDay = ({jour, dateConcert, setInfoModifyGroupe, h
                         </div>
                     </div>
                     <div className="flex gap-4 mt-2 sm:p-2">
-                        <div>
-                                    <button className="text-white w-[6em] bg-[#023E33] p-2 mb-4 rounded-md" onClick={()=>handleClikModifyButton(groupe)} >Modifier</button>
-                                </div>
+                        <div className="flex items-center">
+                             <NavLink to='/ModifyGroupePage' state={groupe} className="text-white w-[6em] bg-[#023E33] p-2 mb-4 rounded-md text-center" onClick={()=>handleClikModifyButton(groupe)} >Modifier</NavLink>
+                        </div>
                         
                         <div>
                             <button className="text-white w-[6em] bg-red-600 p-2 mb-4 rounded-md" onClick={()=>{handleClickDeleteGroupeButton(groupe) ;displayDeleteGroupeComponent(true)}} >Supprimer</button>

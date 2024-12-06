@@ -31,8 +31,22 @@ router.post('/addGroupe', auth, multer.single('imageGroupe'), async (req, res) =
 
 
 
-// Récupérer tous les groupes du festival
-router.get('/', async (req, res) => {
+// Récupérer tous les groupes du festival côté front
+router.get('/public/groupes', async (req, res) => {
+    const sql = 'SELECT * FROM Groupe';
+
+    try {
+        const [result] = await mysqlClient.query(sql);
+        res.status(200).json({ status: true, data: result });
+    } catch (error) {
+        console.error("Erreur dans la récupération des groupes:", error);
+        res.status(500).json({ status: false, message: 'Erreur serveur, merci d\'essayer ultérieurement' });
+    }
+});
+
+
+// Récupérer tous les groupes du festival côté back-office
+router.get('/', auth, async (req, res) => {
     const sql = 'SELECT * FROM Groupe';
 
     try {
@@ -96,12 +110,12 @@ router.post('/deleteGroupe', auth, async (req, res) => {
 // Route qui permet de récupérer un groupe par son id
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
+    
 
     const sql = 'SELECT * FROM Groupe WHERE id = ?';
 
     try {
         const [result] = await mysqlClient.query(sql, [id]);
-
         if (result.length === 0) {
             return res.status(404).json({ status: false, message: 'Groupe non trouvé' });
         }

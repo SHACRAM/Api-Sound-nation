@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 
-export const AddNewPartner = ({setActiveComponentPartner})=>{
+export const AddNewPartner = ({setActiveComponentPartner, categoryPartner})=>{
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
     const [imagePartner, setImagePartner] = useState(null);
@@ -48,7 +48,7 @@ export const AddNewPartner = ({setActiveComponentPartner})=>{
 
 
         try{
-            const response = await axios.post("http://localhost:3000/api/partners/addPartner", formData, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/partners/addPartner`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -82,11 +82,12 @@ export const AddNewPartner = ({setActiveComponentPartner})=>{
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="category" className="text-white sm:text-[1.3rem]">Catégorie</label>
                     <select className="rounded bg-white sm:w-[15em] sm:h-7" id="category" onChange={(e) => {setCategory(e.target.value); handleCategoryChange(e)}} required>
-                        <option value="">Choisir une catégorie</option>
-                        <option value="Banque">Banque</option>
-                        <option value="Alimentaire">Alimentaire</option>
-                        <option value="Service">Service</option>
-                        <option value="Audio">Audio</option>
+                    <option value="">Choisir une catégorie</option>
+                        {categoryPartner.map((category, index) => {
+                            return (
+                                <option key={index} value={category}>{category}</option>
+                            )
+                        })}
                         <option value="newCat">Ajouter une nouvelle catégorie</option>
                     </select>
                 </div>

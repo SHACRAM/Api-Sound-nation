@@ -26,7 +26,7 @@ export const AddUserComponent = () => {
         }
     
         try {
-            const response = await axios.post('http://localhost:3000/api/user/signup', 
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/signup`, 
                 { email, identifiant, password, role },
                 { headers: { 'Content-Type': 'application/json' }}
             );
@@ -35,7 +35,7 @@ export const AddUserComponent = () => {
                 setMessage(response.data.message);
                 setIsSuccess(true);
                 setTimeout(() => {
-                    navigate('/DisplayMainContent');
+                    navigate('/Utilisateur');
                 }, 2000);
             } else {
                 setMessage(response.data.message);
@@ -52,22 +52,21 @@ export const AddUserComponent = () => {
     };
 
 
-
-    return (<div className="flex flex-col items-center gap-[3em]">
+    return (<div className="flex flex-col items-center gap-[3em] mt-5">
         <h1 className="text-white text-[1.5rem]">Ajouter un utilisateur</h1>
         <div className="border rounded-md w-fit p-5 flex flex-col">
             <form className="flex flex-col gap-5 items-center">
                 <div className="flex flex-col items-start gap-1">
                     <label className="text-white" htmlFor="email">Email</label>
-                    <input onChange={(e)=>setEmail(e.target.value)} className="bg-[#71A984] rounded-md" type="email" id="email" required />
+                    <input onChange={(e)=>setEmail(e.target.value)} className="bg-[#71A984] rounded-md w-[15em] p-1" type="email" id="email" required />
                 </div>
                 <div className="flex flex-col items-start gap-1">
                     <label className="text-white" htmlFor="identifiant">Identifiant</label>
-                    <input onChange={(e)=>setIdentifiant(e.target.value)} className="bg-[#71A984] rounded-md" type="text" id="identifiant" required />
+                    <input onChange={(e)=>setIdentifiant(e.target.value)} className="bg-[#71A984] rounded-md w-[15em] p-1" type="text" id="identifiant" required />
                 </div>
                 <div className="flex flex-col items-start">
                     <label className="text-white" htmlFor="password">Mot de passe</label>
-                    <input onChange={(e)=>setPassword(e.target.value)} className="bg-[#71A984] rounded-md" type="password" id="password" required />
+                    <input onChange={(e)=>setPassword(e.target.value)} className="bg-[#71A984] rounded-md w-[15em] p-1" type="password" id="password" required />
                 </div>
                 <button onClick={handleSubmit} className="bg-[#71A984] rounded-md w-[10em] hover:opacity-70 mt-2">Créer un utilisateur</button>
             </form>

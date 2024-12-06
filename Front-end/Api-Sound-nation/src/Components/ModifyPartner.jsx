@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // Composant qui permet de modifier un partenaire
 export const ModifyPartner = ({partnerData, setActiveComponentPartner})=>{
@@ -13,6 +14,7 @@ export const ModifyPartner = ({partnerData, setActiveComponentPartner})=>{
         const [category, setCategory] = useState(partnerData.partner_category);
         const [messageModifyPartner, setMessageModifyPartner] = useState("");
         const [isSuccess, setIsSuccess] = useState(false);
+        const navigate = useNavigate();
 
         const handleFileChange = (e) => {
                 const file = e.target.files[0];
@@ -50,7 +52,7 @@ export const ModifyPartner = ({partnerData, setActiveComponentPartner})=>{
                 formData.append("alt", partnerImageAlt);
 
                 try {
-                const response = await axios.post('http://localhost:3000/api/partners/modifyPartner', formData, {
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/partners/modifyPartner`, formData, {
                         headers: {
                         'Content-Type': 'multipart/form-data'
                         }
@@ -59,7 +61,7 @@ export const ModifyPartner = ({partnerData, setActiveComponentPartner})=>{
                         setMessageModifyPartner(response.data.message);
                         setIsSuccess(true);
                         setTimeout(() => {
-                        setActiveComponentPartner(0);
+                        navigate('/Partenaire');
                         }, 2000);
                 } else {
                         setMessageModifyPartner(response.data.message);

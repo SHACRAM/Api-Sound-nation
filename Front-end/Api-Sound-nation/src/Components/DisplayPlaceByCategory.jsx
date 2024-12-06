@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { DeletePlace } from "./DeletePlace";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -22,7 +23,7 @@ export const DisplayPlaceByCategory = ({dataPlace, placeCategory, handleAllPlace
     const submitDeletePlace = async () => {
 
         try{
-            const response = await axios.post('http://localhost:3000/api/places/deletePlace', {id:idToDelete});
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/places/deletePlace`, {id:idToDelete});
 
             if(response.data.status){
                 setMessageDeletePlace(response.data.message);
@@ -63,7 +64,7 @@ export const DisplayPlaceByCategory = ({dataPlace, placeCategory, handleAllPlace
                             {dataPlace.map((place, index)=>{
                                 if(place.place_category === category){
                                     return(
-                                    <div key={index} className="border flex flex-col p-2 gap-4">
+                                    <div key={index} className="border rounded-md flex flex-col p-2 gap-4">
                                         <div className="md:flex md:flex-row md:gap-[4em]">
                                             <div className="flex gap-4">
                                                 <div className="flex flex-col gap-3">
@@ -86,11 +87,11 @@ export const DisplayPlaceByCategory = ({dataPlace, placeCategory, handleAllPlace
                                             
                                             <div className="flex flex-col gap-4 mt-5">
                                                 <div className="flex flex-col gap-3 md:flex-row md:items-center">
-                                                    <img src={`http://localhost:3000/${place.place_logo_path}`} alt={place.place_logo_alt} className="w-[3em] h-[3em] md:w-[6em] md:h-[6em]"/>
+                                                    <img src={`${import.meta.env.VITE_API_URL}/${place.place_logo_path}`} alt={place.place_logo_alt} className="w-[3em] h-[3em] md:w-[6em] md:h-[6em]"/>
                                                     <p className="text-white"><strong>Texte alternatif du logo: </strong> {place.place_logo_alt}</p>
                                                 </div>
                                                 <div className="flex flex-col gap-3 md:flex-row md:items-center">
-                                                    <img src={`http://localhost:3000/${place.place_image_path}`} alt={place.place_image_alt} className="w-[3em] h-[3em] md:w-[6em] md:h-[6em]"/>
+                                                    <img src={`${import.meta.env.VITE_API_URL}/${place.place_image_path}`} alt={place.place_image_alt} className="w-[3em] h-[3em] md:w-[6em] md:h-[6em]"/>
                                                     <p className="text-white"><strong>Texte alternatif de l'image: </strong>{place.place_image_alt}</p>
                                                 </div>
                                             </div>
@@ -101,8 +102,8 @@ export const DisplayPlaceByCategory = ({dataPlace, placeCategory, handleAllPlace
                                         </div>
                                         
                                         <div className="flex justify-center gap-4 mt-2 sm:p-2 md:mt-5">
-                                                <div>
-                                                    <button className="text-white w-[6em] bg-[#023E33] p-2 mb-4 rounded-md" onClick={(e)=>setInfoModifyPlace(place)} >Modifier</button>
+                                                <div className="flex items-center">
+                                                    <NavLink to='/ModifyPlacePage' state={{place, placeCategory }} className="text-white w-[6em] bg-[#023E33] p-2 mb-4 rounded-md text-center" onClick={(e)=>setInfoModifyPlace(place)} >Modifier</NavLink>
                                                 </div>
                                                 
                                                 <div>

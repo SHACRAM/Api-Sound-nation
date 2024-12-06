@@ -23,12 +23,31 @@ router.post('/addPartner', auth, multer.single('imagePartner'), async (req, res)
         res.status(201).json({ status: true, message: 'Le partenaire a bien été ajouté' });
     } catch (error) {
         console.error('Erreur lors de l\'ajout du partenaire:', error);
-        res.status(400).json({ status: false, message: 'Merci de vérifier les informations saisies' });
+        res.status(500).json({ status: false, message: 'Erreur serveur, merci de réessayer ultérieurement' });
     }
 });
 
-// Route qui permet de récupérer tous les partenaires
-router.get('/', async (req, res) => {
+// Route qui permet de récupérer tous les partenaires côté front
+router.get('/public/partners', async (req, res) => {
+    const sql = 'SELECT * FROM Partenaire';
+
+    try {
+        const [result] = await mysqlClient.query(sql);
+
+        if(result.length === 0) {
+            return res.status(404).json({ status: false, message: 'Aucun partenaire trouvé', data: result });
+        } else{
+            res.status(200).json({ status: true, data: result });
+        }
+
+    } catch (error) {
+        console.error('Erreur lors de la récupération des partenaires:', error);
+        res.status(500).json({ status: false, message: 'Erreur serveur, merci d\'essayer ultérieurement' });
+    }
+});
+
+// Route qui permet de récupérer tous les partenaires côté back-office
+router.get('/',auth, async (req, res) => {
     const sql = 'SELECT * FROM Partenaire';
 
     try {
@@ -66,6 +85,27 @@ router.post('/modifyPartner', auth, multer.single('imagePartner'), async (req, r
     } catch (error) {
         console.error('Erreur lors de la modification du partenaire:', error);
         res.status(500).json({ status: false, message: 'Erreur serveur, merci d\'essayer ultérieurement' });
+    }
+});
+
+
+// Route qui permet de supprimer un partenaire en base de données
+router.post('/deletePartner', auth, async (req, res) => {
+    const { id } = req.body;
+
+    const sql = 'DELETE FROM Partenaire WHERE id = ?';
+
+    try {
+        const [result] = await mysqlClient.query(sql, [id]);
+
+        if (result.affectedRows > 0) {
+            res.status(200).json({ status: true, message: 'Le partenaire a bien été supprimé' });
+        } else {
+            res.status(404).json({ status: false, message: 'Aucun partenaire trouvé avec cet ID' });
+        }
+    } catch (error) {
+        console.error('Erreur lors de la suppression du partenaire:', error);
+        res.status(500).json({ status: false, message: 'Erreur serveur lors de la suppression du partenaire merci de réessayer ultérieurement' });
     }
 });
 

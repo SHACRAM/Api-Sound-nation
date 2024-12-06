@@ -13,7 +13,7 @@ export const DisplayAllGroupe = ({setInfoModifyGroupe}) => {
     // Fonction pour récupérer tous les groupes
     const handleAllGroupes = useCallback(async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api/groupes");
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/groupes`);
             if (response.data.status) {
                 const tempDatas = [];
                 const tempVendredi = [];

@@ -35,7 +35,7 @@ export const DisplayPageCarte = ({}) => {
     const handleAllPlace = useCallback( async ()=>{
         try{
             const tempdataPlace = [];
-            const response = await axios.get("http://localhost:3000/api/places");
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/places`);
             if(response.data.status){
                 setDataPlace(response.data.data);
                 response.data.data.forEach((data)=>{
@@ -63,7 +63,7 @@ export const DisplayPageCarte = ({}) => {
     const pagesPlace =[
         <DisplayAllPlace dataPlace={dataPlace} placeCategory={placeCategory} messageDisplayPlace={messageDisplayPlace} isLoaded={isLoaded} handleAllPlace={handleAllPlace} setInfoModifyPlace={setInfoModifyPlace} />,
         <AddNewPlace setActiveComponentPlace={setActiveComponentPlace} placeCategory={placeCategory} handleAllPlace={handleAllPlace} />,
-        <ModifyPlace infoForModifyPlace={infoForModifyPlace} setActiveComponentPlace={setActiveComponentPlace} placeCategory={placeCategory} handleAllPlace={handleAllPlace}/>
+        
     ];
 
     return(<div className="flex flex-col items-center">

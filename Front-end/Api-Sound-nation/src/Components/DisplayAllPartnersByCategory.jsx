@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { DeletePartner } from "./DeletePartner";
+import { NavLink } from "react-router-dom";
+
 
 
 // Composant qui affiche tous les partenaires par catégorie
@@ -23,7 +25,7 @@ export const DisplayAllPartnersByCategory = ({dataPartners, categoryPartner, set
     const handleDeletePartner = async ()=>{
        
         try{
-            const response = await axios.post("http://localhost:3000/api/partners/deletePartner", {id:idToDelete});
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/partners/deletePartner`, {id:idToDelete});
 
             if(response.data.status){
                 setMessageDeletePartner(response.data.message);
@@ -61,7 +63,7 @@ export const DisplayAllPartnersByCategory = ({dataPartners, categoryPartner, set
                                     return(
                                         <div key={index} className="border border-white flex flex-col items-center rounded-md w-[15em]">
                                             <h2 className="text-white text-[1.4rem] p-2">{partner.partner_name}</h2>
-                                            <img src={`http://localhost:3000/${partner.partner_image_path}`} alt={partner.partner_image_alt} className="w-[12em] p-3" />
+                                            <img src={`${import.meta.env.VITE_API_URL}/${partner.partner_image_path}`} alt={partner.partner_image_alt} className="w-[12em] p-3" />
                                             <div className="flex items-center gap-2 p-2">
                                                 <img src="src/Images/WebSite.png" alt="Logo représentant le site web du partenaire" className="w-[1.5em]"/>
                                                 <div>
@@ -71,8 +73,8 @@ export const DisplayAllPartnersByCategory = ({dataPartners, categoryPartner, set
                                                 
                                             </div>
                                             <div className="flex gap-4 mt-2 sm:p-2">
-                                            <div>
-                                                <button className="text-white w-[6em] bg-[#023E33] p-2 mb-4 rounded-md" onClick={()=>setInfoModifyPartner(partner)} >Modifier</button>
+                                            <div className="flex items-center">
+                                                <NavLink to='/ModifyPartnerPage' state={partner} className="text-white w-[6em] bg-[#023E33] p-2 mb-4 rounded-md text-center" onClick={()=>setInfoModifyPartner(partner)} >Modifier</NavLink>
                                             </div>
                                             
                                             <div>

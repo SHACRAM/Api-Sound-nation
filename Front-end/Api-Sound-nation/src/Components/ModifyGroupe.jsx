@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 //Composant qui affiche le formulaire de modification d'un groupe
 export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
@@ -14,6 +15,7 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
     const [bio, setBio] = useState(groupeData.groupe_bio);
     const [messageModifyGroupe, setMessageModifyGroupe] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);
+    const navigate = useNavigate();
 
 
     const handleFileChange = (e) => {
@@ -40,7 +42,7 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
         formData.append('bio', bio);
 
         try {
-            const response = await axios.post('http://localhost:3000/api/groupes/modifyGroupe', formData, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/groupes/modifyGroupe`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -49,8 +51,8 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
                 setMessageModifyGroupe(response.data.message);
                 setIsSuccess(true);
                 setTimeout(() => {
-                    setActiveComponentGroupe(0);
-                }, 2000);
+                    navigate('/Groupe');
+                }, 1500);
             } else {
                 setMessageModifyGroupe(response.data.message);
                 setIsSuccess(false);
@@ -120,8 +122,8 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
                     <label htmlFor="bio" className="text-white sm:text-[1.3rem]">Biographie</label>
                     <textarea className="rounded bg-white pl-1 h-[5em] sm:w-[15em] sm:h-[10em]" type="text" id="bio" value={bio} onChange={(e) => setBio(e.target.value)} required />
                 </div>
-                <div className="flex justify-center">
-                    <button type="submit" className="text-white bg-[#023E33] hover:opacity-80 p-2 w-[7em] rounded-md sm:text-[1.2rem]">Modifier</button>
+                <div className="flex justify-center items-end">
+                    <button type="submit" className="text-white bg-[#023E33] h-[2em] flex items-center justify-center hover:opacity-80 p-2 w-[7em] rounded-md sm:text-[1.2rem]">Modifier</button>
                 </div>
             </form>
             {messageModifyGroupe && (

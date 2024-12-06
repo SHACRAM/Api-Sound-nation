@@ -8,8 +8,9 @@ const auth = require('../Middleware/auth');
 // Route qui permet d'ajouter un lieu en base de données
 router.post('/addPlace', auth, multer.fields([{ name: 'images', maxCount: 2 }]), async (req, res) => {
 
-    if (!req.files || req.files['images'].length < 2) {
-        return res.status(400).json({ status: false, message: 'Aucune image envoyée' });
+    
+    if (!req.files || !req.files['images'] || req.files['images'].length < 2) {
+        return res.status(400).json({ status: false, message: 'Vous devez envoyer au moins 2 fichiers.' });
     }
 
     const { name, category, latitude, longitude, markerDiametre, color, altLogo, altImage, info } = req.body;
@@ -27,13 +28,25 @@ router.post('/addPlace', auth, multer.fields([{ name: 'images', maxCount: 2 }]),
         res.status(201).json({ status: true, message: 'Le lieu a bien été ajouté' });
     } catch (error) {
         console.error('Erreur lors de l\'ajout du lieu:', error);
-        res.status(400).json({ status: false, message: 'Merci de vérifier les informations saisies' });
-    }
+        res.status(400).json({ status: false, message: 'Merci de vérifier les informations saisies' });}
 });
 
 
-// Route qui permet de récupérer l'ensemble des lieux en base de données
-router.get('/', async (req, res) => {
+// Route qui permet de récupérer l'ensemble des lieux en base de données coté back-office
+router.get('/',auth, async (req, res) => {
+    const sql = 'SELECT * FROM Lieu';
+
+    try {
+        const [result] = await mysqlClient.query(sql);
+
+        res.status(200).json({ status: true, data: result });
+    } catch (error) {
+        res.status(400).json({ status: false, message: 'Erreur lors de la récupération des données' });
+    }
+});
+
+// Route qui permet de récupérer l'ensemble des lieux en base de données coté front
+router.get('/public/places', async (req, res) => {
     const sql = 'SELECT * FROM Lieu';
 
     try {
