@@ -12,11 +12,12 @@ router.post('/addFaq', auth, async (req,res)=>{
     const {question, reponse} = req.body;
     const sql = 'INSERT INTO Faq (question, reponse) VALUES (?,?)';
 
-    if(!question || !reponse){
-        throw new Error('CHAMP MANQUANT');
-    }
+    
 
     try{
+        if(!question || !reponse){
+            throw new Error('CHAMP MANQUANT');
+        }
 
         const [result] = await mysqlClient.query(sql, [question, reponse]);
 
@@ -29,6 +30,7 @@ router.post('/addFaq', auth, async (req,res)=>{
         if(error.message === 'CHAMP MANQUANT'){
             res.status(400).json({status:false, message:'Merci de remplir tous les champs'});
     } else{
+        console.error('Erreur:', error.message);
         res.status(500).json({status:false, message:'Erreur serveur merci de réessayer plus tard'});
     }
     }
@@ -44,7 +46,8 @@ router.get('/faq', auth, async (req,res)=>{
         if(result.length > 0){
             res.status(200).json({status:true, data:result});
         }
-    }catch{
+    }catch(error){
+        console.error('Erreur:', error.message);
         res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
     }
 })
@@ -60,6 +63,7 @@ router.get('/public/faq',  async (req,res)=>{
             res.status(200).json({status:true, data:result});
         }
     }catch{
+        console.error('Erreur:', error.message);
         res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
     }
 })
@@ -70,11 +74,12 @@ router.post('/modifyFaq', auth, async (req,res)=>{
 
     const {id, question, reponse} = req.body;
     const sql = 'UPDATE Faq SET question =? , reponse = ? WHERE id =?';
+        
+
+    try{
         if(!id || !question || !reponse){
             throw new Error('CHAMP MANQUANT');
         }
-
-    try{
         const [result] = await mysqlClient.query(sql, [question, reponse, id]);
 
         if(result.affectedRows === 1){
@@ -85,6 +90,7 @@ router.post('/modifyFaq', auth, async (req,res)=>{
         if(error.message === 'CHAMP MANQUANT'){
             res.status(400).json({status:false, message:'Merci de remplir tous les champs'});
         } else{
+            console.error('Erreur:', error.message);
             res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
         }
     }
@@ -95,11 +101,12 @@ router.post('/deleteFaq', auth, async (req,res)=>{
     const {id} = req.body;
     const sql = 'DELETE FROM Faq WHERE id = ?';
 
+
+    try{
+
     if(!id){
         throw new Error('ID MANQUANT');
     }
-
-    try{
         const [result] = await mysqlClient.query(sql, [id]);
         if(result.affectedRows === 1){
             res.status(200).json({status:true, message:'La question / réponse a bien été supprimée'});
@@ -109,6 +116,7 @@ router.post('/deleteFaq', auth, async (req,res)=>{
         if(error.message === 'ID MANQUANT'){
             res.status(400).json({status:false, message:'Merci de renseigner un id'});
         }else{
+            console.error('Erreur:', error.message);
             res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
         }
     }
@@ -121,11 +129,13 @@ router.post('/addInfoPratique', auth, async (req,res)=>{
 
     const sql='INSERT INTO InfoPratique (title, information) VALUES (?,?)';
 
-    if(!title || !information){
-        throw new Error('CHAMP MANQUANT');
-    }
+    
 
     try{
+        if(!title || !information){
+            throw new Error('CHAMP MANQUANT');
+        }
+
         const [result] = await mysqlClient.query(sql, [title, information]);
         if(result.affectedRows === 1){
             res.status(201).json({status:true, message:'L\'information pratique a bien été ajoutée'});
@@ -135,6 +145,7 @@ router.post('/addInfoPratique', auth, async (req,res)=>{
         if(error.message === 'CHAMP MANQUANT'){
             res.status(400).json({status:false, message:'Merci de remplir tous les champs'});
         } else {
+            console.error('Erreur:', error.message);
             res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
         }
     }
@@ -151,6 +162,7 @@ router.get('/getInfoPratique', auth, async (req,res)=>{
             res.status(200).json({status:true, data:result});
         }
     }catch(error){
+        console.error('Erreur:', error.message);
         res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
     }
 })
@@ -165,6 +177,7 @@ router.get('/public/getInfoPratique', async (req,res)=>{
             res.status(200).json({status:true, data:result});
         }
     }catch(error){
+        console.error('Erreur:', error.message);
         res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
     }
 })
@@ -175,20 +188,23 @@ router.post('/modifyInfoPratique', auth, async (req,res)=>{
     const {id, title, information} = req.body;
     const sql = 'UPDATE InfoPratique SET title = ? , information = ? WHERE id = ?';
 
-    if(!id || !title || !information){
-        throw new Error('CHAMP MANQUANT');
-    }
+    
 
     try{
+        if(!id || !title || !information){
+            throw new Error('CHAMP MANQUANT');
+        }
+
         const [result] = await mysqlClient.query(sql, [title, information, id]);
         if(result.affectedRows === 1){
             res.status(200).json({status:true, message:'L\'information pratique a bien été modifiée'});
         }
 
-    }catch(erro){
+    }catch(error){
         if(error.message === 'CHAMP MANQUANT'){
             res.status(400).json({status:false, message:'Merci de remplir tous les champs'});
         } else{
+            console.error('Erreur:', error.message);
             res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
         }
     }
@@ -199,11 +215,13 @@ router.post('/deleteInfoPratique', auth, async (req,res)=>{
     const {id} = req.body;
     const sql ='DELETE FROM InfoPratique WHERE id =?';
 
-    if(!id){
-        throw new Error('ID MANQUANT');
-    }
+   
 
     try{
+        if(!id){
+            throw new Error('ID MANQUANT');
+        }
+
         const [result] = await mysqlClient.query(sql, [id]);
         if(result.affectedRows === 1){
             res.status(200).json({status:true, message:'L\'information pratique a bien été supprimée'});
@@ -213,6 +231,7 @@ router.post('/deleteInfoPratique', auth, async (req,res)=>{
         if(error.message === 'ID MANQUANT'){
             res.status(400).json({status:false, message:'Merci de renseigner un id'});
         } else{
+            console.error('Erreur:', error.message);
             res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
         }
     }
@@ -224,12 +243,12 @@ router.post('/addCguCookie', auth, async (req,res)=>{
     const {cat, title, content} = req.body;
     const sql='INSERT INTO CguCookie (category, title, content) VALUES (?,?,?)';
 
-    if(!cat || !title || !content || cat === ''){
-        throw new Error('CHAMP MANQUANT');
-    }
-
+   
     try{
-        console.log('test')
+        if(!cat || !title || !content || cat === ''){
+            throw new Error('CHAMP MANQUANT');
+        }
+
         const [result] = await mysqlClient.query(sql, [cat, title, content]);
         if (result.affectedRows === 1) {
             if (cat === 'cgu') {
@@ -245,6 +264,7 @@ router.post('/addCguCookie', auth, async (req,res)=>{
         if(error.message === 'CHAMP MANQUANT'){
             res.status(400).json({status:false, message:'Merci de remplir tous les champs'});
         }else{
+            console.error('Erreur:', error.message);
             res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
         }
     }
@@ -260,6 +280,7 @@ router.get('/getCguCookie', auth, async (req, res)=>{
             res.status(200).json({status:true, data:result});
         }
     }catch(error){
+        console.error('Erreur:', error.message);
         res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
     }
 })
@@ -274,6 +295,7 @@ router.get('/public/getCguCookie', async (req, res)=>{
             res.status(200).json({status:true, data:result});
         }
     }catch(error){
+        console.error('Erreur:', error.message);
         res.status(500).json({status:false, message:'Erreur serveur merci de réessayer ultérieurement'});
     }
 })
@@ -283,21 +305,26 @@ router.post('/deleteCguCookie', auth, async (req,res)=>{
     const {id, cat} = req.body;
     const sql = 'DELETE FROM CguCookie WHERE id =?';
 
-    if(!id || !cat){
-        throw new Error('CHAMPS MANQUANT')
-    }
+    
 
     try{
+        if(!id || !cat){
+            throw new Error('CHAMPS MANQUANT')
+        }
+
         const [result] = await mysqlClient.query(sql, [id]);
         if(result.affectedRows === 1 && cat === 'cgu'){
             res.status(200).json({status : true, message:'La CGU à été supprimée'})
-        } else{
+        } else if(result.affectedRows === 1 && cat === 'cookie'){
             res.status(200).json({status: true, message:'Le cookie à bien été supprimé'})
+        }else {
+            res.status(200).json({status: true, message:'La donnée personnelle à bien été supprimé'})
         }
     }catch(error){
         if(error.message === 'CHAMPS MANQUANT'){
-            res.status(500).json({status:false, message:'Merci de remplir tous les champs'})
+            res.status(400).json({status:false, message:'Merci de remplir tous les champs'})
         }else{
+            console.error('Erreur:', error.message);
             res.status(500).json({status:false, message:'Erreur serveur, merci d\'essayer ultérieurement'})
         }
     }
@@ -308,23 +335,28 @@ router.post('/modifyCguCookie', auth, async (req,res)=>{
     const {id, cat, title, content} = req.body;
     const sql = 'UPDATE CguCookie SET category = ?, title = ?, content = ? WHERE id = ?';
 
-    if(!id || !cat || !title || !content){
-        throw new Error('CHAMPS MANQUANT')
-    }
+    
     try{
+        if(!id || !cat || !title || !content){
+            throw new Error('CHAMPS MANQUANT')
+        }
+
         const [result] = await mysqlClient.query(sql, [cat, title, content, id]);
         if (result.affectedRows > 0) {
-            const message = cat === 'cgu' 
-                ? 'La CGU a bien été modifiée' 
-                : 'Le cookie a bien été modifié';
-            return res.status(200).json({ status: true, message });
-        } else {
-            return res.status(404).json({ status: false, message: 'Aucune modification effectuée ou ID introuvable' });
-        }
+            switch(cat){
+                case 'cgu':
+                    return res.status(200).json({ status: true, message: 'La CGU a bien été modifiée' });
+                case 'cookie':
+                    return res.status(200).json({ status: true, message: 'Le cookie a bien été modifié' });
+                case 'pData':
+                    return res.status(200).json({ status: true, message: 'Les données personnelles ont bien été modifiées' });
+            }
+        } 
     }catch(error){
         if(error.message === 'CHAMPS MANQUANT'){
-            res.status(500).json({status:false, message:'Merci de remplir tous les champs'})
+            res.status(400).json({status:false, message:'Merci de remplir tous les champs'})
         }else{
+            console.error('Erreur:', error.message);
             res.status(500).json({status:false, message:'Erreur serveur, merci d\'essayer ultérieurement'})
         }
     }

@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayPageGroup } from "../Components/DisplayPageGroup";
+import { DisplayPageGroup } from "../Components/groupe/DisplayPageGroup";
 import { Header } from "../Components/Header";
 import { useContext,useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Connection } from "../Components/Connection";
+import { Connection } from "../Components/connection/Connection";
 
 export const ConnectionPage = () => {    
     return (

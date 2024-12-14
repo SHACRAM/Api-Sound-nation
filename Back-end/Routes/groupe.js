@@ -10,20 +10,31 @@ const router = express.Router();
 router.post('/addGroupe', auth, multer.single('imageGroupe'), async (req, res) => {
     const { name, hour, date, scene, alt, bio } = req.body;
 
-    if (!req.file) {
-        return res.status(400).json({ status: false, message: 'Aucune image envoyée' });
-    }
-
-    const imageName = req.file.originalname;
-    const imagePath = req.file.path;
+   
 
     const sql = 'INSERT INTO Groupe (groupe_name, groupe_hour, groupe_date, groupe_scene, groupe_image_name, groupe_image_path, groupe_image_alt, groupe_bio) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
     try {
+        if(!name || !hour || !date || !scene || !alt || !bio){
+            throw new Error('FIELDS_REQUIRED');
+        }
+        if (!req.file) {
+            throw new Error('Aucune image envoyée');
+        }
+    
+        const imageName = req.file.originalname;
+        const imagePath = req.file.path;
+
         const [result] = await mysqlClient.query(sql, [name, hour, date, scene, imageName, imagePath, alt, bio]);
 
         res.status(201).json({ status: true, message: "Le groupe a bien été ajouté" });
     } catch (error) {
+        if(error.message === 'Aucune image envoyée'){
+            return res.status(400).json({ status: false, message: 'Aucune image envoyée' });
+        }
+        if(error.message === 'FIELDS_REQUIRED'){
+            return res.status(400).json({ status: false, message: 'Veuillez renseigner tous les champs' });
+        }
         console.error("Erreur d'insertion dans la base de données:", error);
         res.status(400).json({ status: false, message: 'Merci de vérifier les informations saisies' });
     }
@@ -63,16 +74,19 @@ router.get('/', auth, async (req, res) => {
 router.post('/modifyGroupe', auth, multer.single('imageGroupe'), async (req, res) => {
     const { id, name, hour, date, scene, alt, bio } = req.body;
 
-    if (!req.file) {
-        return res.status(400).json({ status: false, message: 'Aucune image envoyée' });
-    }
-
-    const imageName = req.file.originalname;
-    const imagePath = req.file.path;
 
     const sql = 'UPDATE Groupe SET groupe_name = ?, groupe_hour =?, groupe_date=?, groupe_scene=?, groupe_image_name=?, groupe_image_path=?, groupe_image_alt=?, groupe_bio=? WHERE id = ?';
 
     try {
+        if(!name || !hour || !date || !scene || !alt || !bio){
+            throw new Error('FIELDS_REQUIRED');
+        }
+        if (!req.file) {
+            throw new Error('Aucune image envoyée');
+        }
+        const imageName = req.file.originalname;
+        const imagePath = req.file.path;
+
         const [result] = await mysqlClient.query(sql, [name, hour, date, scene, imageName, imagePath, alt, bio, id]);
 
         if (result.affectedRows === 0) {
@@ -81,6 +95,12 @@ router.post('/modifyGroupe', auth, multer.single('imageGroupe'), async (req, res
 
         res.status(200).json({ status: true, message: 'Le groupe a bien été modifié' });
     } catch (error) {
+        if(error.message === 'Aucune image envoyée'){
+            return res.status(400).json({ status: false, message: 'Aucune image envoyée' });
+        }
+        if(error.message === 'FIELDS_REQUIRED'){
+            return res.status(400).json({ status: false, message: 'Veuillez renseigner tous les champs' });
+        }
         console.error('Erreur dans la modification du groupe:', error);
         res.status(400).json({ status: false, message: 'Merci de vérifier les informations saisies' });
     }

@@ -7,7 +7,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { DeleteAccount } from "../Components/DeleteAccount";
 import { ModifyRole } from "../Components/ModifyRole";
 import { NavLink } from "react-router-dom";
-import { SearchUser } from "../Components/SearchUser";
+import { SearchUser } from "../Components/user/SearchUser";
 
 // Page qui permet d'afficher la liste des utilisateurs en fonction de leur rôle
 export const Utilisateur = () => {

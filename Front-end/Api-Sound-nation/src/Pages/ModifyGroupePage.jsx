@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { Header } from "../Components/Header";
-import { ModifyGroupe } from "../Components/ModifyGroupe";
+import { ModifyGroupe } from "../Components/groupe/ModifyGroupe";
 import { NavLink } from "react-router-dom";
 
 

@@ -33,6 +33,7 @@ export const DisplayAllPartnersByCategory = ({dataPartners, categoryPartner, set
                 setTimeout(()=>{
                     displayDeletePartnerComponent(false);
                     handleAllPartners();
+                    setMessageDeletePartner("");
                 }, 2000)
             } else{
                 setMessageDeletePartner(response.data.message);

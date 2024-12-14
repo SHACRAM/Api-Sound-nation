@@ -4,12 +4,12 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const auth = require('../Middleware/auth');
+require('dotenv').config();
 
 // Création d'un jeton JWT à partir des données fournies
 const createTokenFromJson = (jsonData) => {
     try {
-        // TODO enregistrer la clé secrète dans un fichier de configuration
-        const secretKey = "secretKey";
+        const secretKey = process.env.TOKEN_SECRET;
         const expirationTime = 60 * 60 * 24;
         const token = jwt.sign(jsonData, secretKey, { expiresIn: expirationTime });
         return token;
@@ -25,6 +25,9 @@ router.post('/signin', async (req, res) => {
     const sql = 'SELECT * FROM Users WHERE user_email = ?';
 
     try {
+        if (!email || !password) {
+            throw new Error('CHAMPS_MANQUANTS');
+        }
         const [rows] = await mysqlClient.query(sql, [email]);
 
         if (rows.length === 0) {
@@ -62,10 +65,13 @@ router.post('/signin', async (req, res) => {
         res.status(200).json({ status: true, message: 'Connexion réussie', data: user });
     } catch (error) {
         if (error.message === 'DROITS_INSUFFISANTS') {
-            return res.status(401).json({ status: false, message: 'Vous n\'avez pas les droits pour accéder à cette page' });
+            return res.status(403).json({ status: false, message: 'Vous n\'avez pas les droits pour accéder à cette page' });
         }
         if (error.message === 'IDENTIFIANT_INVALIDE') {
             return res.status(401).json({ status: false, message: 'Erreur, merci de vérifier vos identifiants' });
+        }
+        if (error.message === 'CHAMPS_MANQUANTS') {
+            return res.status(400).json({ status: false, message: 'Veuillez renseigner tous les champs' });
         }
         console.error('Erreur serveur:', error);
         return res.status(500).json({ status: false, message: 'Une erreur est survenue, merci de réessayer plus tard' }); 
@@ -89,21 +95,34 @@ router.get('/logOut', (req,res)=>{
 router.post('/modifyPassword', auth, async (req,res)=>{
     const {password,userEmail} = req.body;
 
-    if(!password || !userEmail){
-        return res.status(400).json({status: false, message: 'Veuillez renseigner tous les champs'})
-    }
+   
 try{
+
+    if(!password || !userEmail){
+        throw new Error('CHAMPS_MANQUANTS');
+    }
+
+    if(password.length < 8){
+        throw new Error('MOT_DE_PASSE_INVALIDE');
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const sql = 'UPDATE Users SET user_password = ? WHERE user_email = ?';
 
-    const rows= await mysqlClient.query(sql, [hashedPassword, userEmail]);
+    const [result]= await mysqlClient.query(sql, [hashedPassword, userEmail]);
 
-    if(rows.affectedRows > 0){
+    if(result.affectedRows > 0){
         return res.status(200).json({status: true, message: 'Votre mot de passe a été modifié avec succès'})
     }
 }catch(error){
-    console.log('Erreur:', error.message);
+    if(error.message === 'CHAMPS_MANQUANTS'){
+        return res.status(400).json({status: false, message: 'Veuillez renseigner tous les champs'})
+    }
+    if(error.message === 'MOT_DE_PASSE_INVALIDE'){
+        return res.status(400).json({status: false, message: 'Le mot de passe doit contenir au moins 8 caractères'})
+    }
+    console.error('Erreur:', error.message);
     return res.status(500).json({status: false, message: 'Erreur serveur, merci d\'essayer ultérieurement'})
 
 }

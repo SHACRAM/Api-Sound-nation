@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useContext, useEffect } from "react";
-import { NavBarMobile } from "./NavBarMobile";
+import { NavBarMobile } from "./navBar/NavBarMobile";
 import { NavLink } from "react-router-dom";
-import { NavBarDesktop } from "./NavBarDesktop";
+import { NavBarDesktop } from "./navBar/NavBarDesktop";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";

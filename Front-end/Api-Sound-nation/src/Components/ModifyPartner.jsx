@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 // Composant qui permet de modifier un partenaire
-export const ModifyPartner = ({partnerData, setActiveComponentPartner})=>{
+export const ModifyPartner = ({partnerData, setActiveComponentPartner, categoryPartner})=>{
         const [partnerId, setPartnerId] = useState(partnerData.id);
         const [partnerName, setPartnerName] = useState(partnerData.partner_name);
         const [partnerSite, setPartnerSite] = useState(partnerData.partner_site);
@@ -79,7 +79,7 @@ export const ModifyPartner = ({partnerData, setActiveComponentPartner})=>{
         
         return(<div>
                 <div className="flex flex-col items-center p-5">
-                    <h2 className="text-white text-center text-[1.2rem] sm:text-[1.5rem]">Ajouter un partenaire</h2>
+                    <h2 className="text-white text-center text-[1.2rem] sm:text-[1.5rem]">Modifier un partenaire</h2>
                     <form className="border border-white p-5 flex flex-col gap-5 mt-5 mb-5 sm:w-[90%] sm:flex-row sm:flex-wrap sm:gap-[4em]" onSubmit={handleSubmit}>
                         <div className="flex flex-col gap-2 sm:w-[15em]">
                             <label htmlFor="name" className="text-white sm:text-[1.3rem]">Nom du partenaire</label>
@@ -89,10 +89,11 @@ export const ModifyPartner = ({partnerData, setActiveComponentPartner})=>{
                             <label htmlFor="category" className="text-white sm:text-[1.3rem]">Catégorie</label>
                             <select className="rounded bg-[#B6B6B6] sm:w-[15em] sm:h-7" id="category" onChange={(e) => {setCategory(e.target.value); handleCategoryChange(e)}} value={category} required>
                                 <option value="">Choisir une catégorie</option>
-                                <option value="Banque">Banque</option>
-                                <option value="Alimentaire">Alimentaire</option>
-                                <option value="Service">Service</option>
-                                <option value="Audio">Audio</option>
+                                {categoryPartner.map((category, index) => {
+                            return (
+                                <option key={index} value={category}>{category}</option>
+                            )
+                        })}
                                 <option value="newCat">Ajouter une nouvelle catégorie</option>
                             </select>
                         </div>
