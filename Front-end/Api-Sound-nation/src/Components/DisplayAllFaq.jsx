@@ -29,7 +29,7 @@ export const DisplayAllFaq = ({infoModifyFaq, handleClickFaq, data, getDataFaq }
         const id = infoForDeleteFaq.id;
 
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/informations/deleteFaq`, {id});
+            const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/informations/${id}`);
             if(response.data.status){
                 setMessageDelete(response.data.message);
                 setIsSuccess(true);

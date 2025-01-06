@@ -28,7 +28,7 @@ router.post('/addPartner', auth, multer.single('imagePartner'), async (req, res)
 });
 
 // Route qui permet de récupérer tous les partenaires côté front
-router.get('/public/partners', async (req, res) => {
+router.get('/getPartners/public', async (req, res) => {
     const sql = 'SELECT * FROM Partenaire';
 
     try {
@@ -62,8 +62,9 @@ router.get('/',auth, async (req, res) => {
 
 
 // Route qui permet de modifier un partenaire
-router.post('/modifyPartner', auth, multer.single('imagePartner'), async (req, res) => {
-    const { id, name, site, category, alt } = req.body;
+router.put('/partner/:id', auth, multer.single('imagePartner'), async (req, res) => {
+    const {name, site, category, alt } = req.body;
+    const { id } = req.params;
 
     if (!req.file) {
         return res.status(400).json({ status: false, message: 'Aucune image envoyée' });
@@ -90,8 +91,8 @@ router.post('/modifyPartner', auth, multer.single('imagePartner'), async (req, r
 
 
 // Route qui permet de supprimer un partenaire en base de données
-router.post('/deletePartner', auth, async (req, res) => {
-    const { id } = req.body;
+router.delete('/partner/:id', auth, async (req, res) => {
+    const { id } = req.params;
 
     const sql = 'DELETE FROM Partenaire WHERE id = ?';
 

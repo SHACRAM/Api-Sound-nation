@@ -17,7 +17,7 @@ export const DisplayModifyCguCookie = ({item}) => {
         const id = item.id;
 
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/informations/modifyCguCookie`, {id, cat, title, content} );
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/informations/cguCookie/${id}`, {cat, title, content} );
             if(response.data.status){
                 setMessage(response.data.message);
                 setIsSuccess(true);

@@ -46,7 +46,7 @@ router.get('/',auth, async (req, res) => {
 });
 
 // Route qui permet de récupérer l'ensemble des lieux en base de données coté front
-router.get('/public/places', async (req, res) => {
+router.get('/places/public', async (req, res) => {
     const sql = 'SELECT * FROM Lieu';
 
     try {
@@ -61,8 +61,8 @@ router.get('/public/places', async (req, res) => {
 
 
 // Route qui permet de supprimer un lieu en base de données
-router.post('/deletePlace', auth, async (req, res) => {
-    const { id } = req.body;
+router.delete('/place/:id', auth, async (req, res) => {
+    const { id } = req.params;
 
     const sql = 'DELETE FROM Lieu WHERE id = ?';
     
@@ -92,11 +92,12 @@ router.post('/deletePlace', auth, async (req, res) => {
 
 
 // Route qui permet de modifier un lieu en base de données
-router.post('/modifyPlace', auth, multer.fields([{ name: 'images', maxCount: 2 }]), async (req, res) => {
+router.put('/place/:id', auth, multer.fields([{ name: 'images', maxCount: 2 }]), async (req, res) => {
 
     
 
-    const { id, name, category, latitude, longitude, markerDiametre, color, altLogo, altImage, info } = req.body;
+    const {name, category, latitude, longitude, markerDiametre, color, altLogo, altImage, info } = req.body;
+    const { id } = req.params;
 
     
 

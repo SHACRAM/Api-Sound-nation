@@ -90,7 +90,7 @@ export const Utilisateur = () => {
 
     const handleModify = async (emailToModify, newRole) => {
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/modifyRole`, {newRole, emailToModify}, {withCredentials: true});
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/users/role/${emailToModify}`, {newRole}, {withCredentials: true});
             
             if(response.data.status){
                 setMessageModifyRole(response.data.message);

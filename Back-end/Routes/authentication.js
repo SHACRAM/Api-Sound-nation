@@ -92,13 +92,14 @@ router.get('/logOut', (req,res)=>{
 })
 
 // Route de modification du mot de passe
-router.post('/modifyPassword', auth, async (req,res)=>{
-    const {password,userEmail} = req.body;
+router.put('/:email', auth, async (req,res)=>{
+    const {password} = req.body;
+    const {email} = req.params;
 
    
 try{
 
-    if(!password || !userEmail){
+    if(!password || !email){
         throw new Error('CHAMPS_MANQUANTS');
     }
 
@@ -110,7 +111,7 @@ try{
 
     const sql = 'UPDATE Users SET user_password = ? WHERE user_email = ?';
 
-    const [result]= await mysqlClient.query(sql, [hashedPassword, userEmail]);
+    const [result]= await mysqlClient.query(sql, [hashedPassword, email]);
 
     if(result.affectedRows > 0){
         return res.status(200).json({status: true, message: 'Votre mot de passe a été modifié avec succès'})

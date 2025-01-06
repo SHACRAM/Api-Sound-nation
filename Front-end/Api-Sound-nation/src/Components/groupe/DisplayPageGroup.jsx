@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { AddNewGroupe } from "./AddNewGroupe";
 import { DisplayAllGroupe } from "./DisplayAllGroupe";
@@ -7,7 +7,7 @@ import { DisplayAllGroupe } from "./DisplayAllGroupe";
 
 
 // Page qui permet d'afficher les différentes fonctionnalités liées aux groupes
-export const DisplayPageGroup = () => {
+export const DisplayPageGroup = ({isComingFromModifyGroupe}) => {
     const [activeComponentGroupe, setActiveComponentGroupe] = useState(0);
     const [infoForModifyGroupe, setInfoForModifyGroupe] = useState({});
     
@@ -21,6 +21,16 @@ export const DisplayPageGroup = () => {
         setInfoForModifyGroupe(groupe);
         handleClickGroupe(2);
     }
+
+    useEffect(()=>{
+        if(isComingFromModifyGroupe){
+            setActiveComponentGroupe(1)
+        }else{
+            setActiveComponentGroupe(0)
+
+        }
+       
+    },[]);
     
     
     const pagesGroupe =[

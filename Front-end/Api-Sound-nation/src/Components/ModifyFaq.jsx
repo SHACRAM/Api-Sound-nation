@@ -18,7 +18,7 @@ export const ModifyFaq = ({data, setActiveComponentFaq, getDataFaq}) => {
         e.preventDefault();
 
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/informations/modifyFaq`, {id, question, reponse});
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/informations/${id}`, {question, reponse});
             if(response.data.status){
                 setMessage(response.data.message);
                 setIsSuccess(true);

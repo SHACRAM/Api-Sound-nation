@@ -27,7 +27,7 @@ export const DisplayPageInfoPratique = ({fromModifyPage}) => {
     const getData = async ()=>{
 
         try{
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/informations/getInfoPratique`);
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/informations/`);
             if(response.data.status){
                 setData(response.data.data);
             }

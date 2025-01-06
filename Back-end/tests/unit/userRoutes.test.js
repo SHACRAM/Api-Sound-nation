@@ -295,5 +295,18 @@ describe('POST /modifyRole for modify user role', ()=>{
         expect(response.body).toBeInstanceOf(Object);
         expect(response.body.message).toBe('Impossible de modifier le rôle, veuillez ressayer ultérieurement');
     })
+
+    it('Should return 500 if there is a server error', async () => {
+        mysqlClient.query = vi.fn().mockRejectedValue(new Error('Database error'));
+        const response = await request(app).post('/api/users/signup').send({
+            email: 'test@test.com',
+            password: 'testPassword',
+            identifiant: 'test',
+            role: 'user',
+        });
+    
+        expect(response.statusCode).toBe(500);
+        expect(response.body.message).toBe('Erreur serveur, merci d\'essayer ultérieurement');
+    }); 
 })
         

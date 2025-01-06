@@ -8,7 +8,7 @@ import axios from "axios";
 
 
 // Page qui permet d'afficher les différentes fonctionnalités liées aux lieux
-export const DisplayPageCarte = ({}) => {
+export const DisplayPageCarte = ({isComingFromModifyPlace}) => {
     const [activeComponentPlace, setActiveComponentPlace] = useState(0);
     const [infoForModifyPlace, setInfoForModifyPlace] = useState({});
     const [dataPlace, setDataPlace] = useState([]);
@@ -56,6 +56,9 @@ export const DisplayPageCarte = ({}) => {
     }, []);
 
     useEffect(()=>{
+        if(isComingFromModifyPlace){
+            handleClickPlace(1)
+        }
         handleAllPlace();
     },[handleAllPlace]);
  

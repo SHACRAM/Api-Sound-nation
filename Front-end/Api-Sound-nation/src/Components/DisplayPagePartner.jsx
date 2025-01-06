@@ -7,7 +7,7 @@ import { ModifyPartner } from "./ModifyPartner";
 import axios from "axios";
 
 // Composant qui affiche les pages de gestion des partenaires
-export const DisplayPagePartner = () => {
+export const DisplayPagePartner = ({isComingFromPageModifyPartner}) => {
     const [activeComponentPartner, setActiveComponentPartner] = useState(0);
     const [infoForModifyPartner, setInfoForModifyPartner] = useState({});
     const [dataPartners, setDataPartners] = useState([]);
@@ -37,6 +37,9 @@ export const DisplayPagePartner = () => {
     }, []);
 
     useEffect(()=>{
+        if(isComingFromPageModifyPartner){
+            handleClickPartner(1);
+        }
         handleAllPartners();
     },[handleAllPartners]);
     
@@ -55,7 +58,6 @@ export const DisplayPagePartner = () => {
     const pagesPartner =[
         <AllPartners setInfoModifyPartner={setInfoModifyPartner} setActiveComponentPartner={setActiveComponentPartner} dataPartners={dataPartners} message={message} categoryPartner={categoryPartner} handleAllPartners={handleAllPartners} />,
         <AddNewPartner setActiveComponentPartner={setActiveComponentPartner} categoryPartner={categoryPartner} />,
-        <ModifyPartner partnerData = {infoForModifyPartner} setActiveComponentPartner={setActiveComponentPartner}/>
     ];
 
 

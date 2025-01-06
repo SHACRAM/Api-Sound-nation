@@ -90,7 +90,7 @@ router.get('/connectInformation', async (req,res)=>{
 })
 
 // Route pour modifier les informations d'un utilisateur
-router.post('/updateUser/:email', async (req, res) => {
+router.put('/updateUser/:email', async (req, res) => {
     const userEmail = req.params.email;
     const { name, email } = req.body;
 
@@ -148,7 +148,7 @@ router.post('/updateUser/:email', async (req, res) => {
 });
 
 
-// Route pour ajouter un groupe dans les favoris de l'utilisateur
+// Route pour ajouter ou supprimer un groupe dans les favoris de l'utilisateur
 router.post('/favoris', async (req, res) => {
     const { groupeId, userEmail } = req.body;
 
@@ -218,7 +218,7 @@ router.get('/favoris/:email', auth, async (req,res)=>{
 
 
 // Route pour supprimer un utilisateur
-router.post('/deleteAccount/:email', auth, async (req,res)=>{
+router.delete('/account/:email', auth, async (req,res)=>{
     const email = req.params.email;
     const sql = 'DELETE FROM Users WHERE user_email = ?'
     
@@ -267,14 +267,15 @@ router.get('/', auth, async (req,res)=>{
 })
 
 // Route pour modifier le rôle d'un utilisateur
-router.post('/modifyRole', auth, async (req,res)=>{
-    const {newRole, emailToModify} = req.body;
+router.put('/role/:email', auth, async (req,res)=>{
+    const {newRole} = req.body;
+    const {email} = req.params;
     const sql = 'UPDATE Users SET user_role = ? WHERE user_email = ?';
     try{
-        if(!newRole || !emailToModify){
+        if(!newRole || !email){
             throw new Error('MISSING_FIELDS');
         }
-        const [result] = await mysqlClient.query(sql, [newRole, emailToModify]);
+        const [result] = await mysqlClient.query(sql, [newRole, email]);
         if(result.affectedRows > 0){
             return res.status(200).json({status:true, message: 'Le rôle a été modifié avec succès'});
         }

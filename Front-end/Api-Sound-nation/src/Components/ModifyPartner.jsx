@@ -44,15 +44,15 @@ export const ModifyPartner = ({partnerData, setActiveComponentPartner, categoryP
                 e.preventDefault();
         
                 const formData = new FormData();
-                formData.append('id', partnerId);
                 formData.append("name", partnerName);
                 formData.append("site", partnerSite);
                 formData.append("category", category);
                 formData.append("imagePartner", partnerImage);
                 formData.append("alt", partnerImageAlt);
 
+
                 try {
-                const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/partners/modifyPartner`, formData, {
+                const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/partners/partner/${partnerId}`, formData, {
                         headers: {
                         'Content-Type': 'multipart/form-data'
                         }

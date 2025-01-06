@@ -108,7 +108,7 @@ describe('POST /api/groupes/addGroupe', () => {
 });
 
 // TESTS unitaires de la route /modifyGroupe
-describe('POST /modifyGroupe', () => {
+describe('PUT /:id', () => {
     afterEach(() => {
         vi.clearAllMocks();
     });
@@ -135,7 +135,7 @@ describe('POST /modifyGroupe', () => {
         const token = generateToken();
 
         const response = await request(app)
-            .post('/api/groupes/modifyGroupe')
+            .put('/api/groupes/17')
             .set('Cookie', [`auth_token=${token}`])
             .set(headers)
             .send(formBuffer);
@@ -160,7 +160,7 @@ describe('POST /modifyGroupe', () => {
         const formBuffer = form.getBuffer();
         const headers = form.getHeaders();
         const response = await request(app)
-            .post('/api/groupes/modifyGroupe')
+            .post('/api/groupes/17')
             .set('Cookie', [`auth_token=${token}`])
             .set(headers)
             .send(formBuffer)
@@ -192,7 +192,7 @@ describe('POST /modifyGroupe', () => {
         const token = generateToken();
 
         const response = await request(app)
-            .post('/api/groupes/modifyGroupe')
+            .post('/api/groupes/800')
             .set('Cookie', [`auth_token=${token}`])
             .set(headers)
             .send(formBuffer);
@@ -206,14 +206,14 @@ describe('POST /modifyGroupe', () => {
 
 // TESTS unitaires de la route /deleteGroupe
 
-describe('POST /deleteGroupe', () => {
+describe('DELETE /:id', () => {
     it('Should return a 200 status code and a confimation message if the groupe is deleted', async ()=>{
         mysqlClient.query = vi.fn().mockResolvedValue([{ affectedRows: 1 }]);
         const token = generateToken();
         const response = await request(app)
-        .post('/api/groupes/deleteGroupe')
+        .delete('/api/groupes/17')
         .set('Cookie', [`auth_token=${token}`])
-        .send({id: 1});
+        .send();
         expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
         expect(response.body.status).toBe(true);
@@ -224,9 +224,9 @@ describe('POST /deleteGroupe', () => {
         mysqlClient.query = vi.fn().mockResolvedValue([{ affectedRows: 0 }]);
         const token = generateToken();
         const response = await request(app)
-        .post('/api/groupes/deleteGroupe')
+        .post('/api/groupes/800')
         .set('Cookie', [`auth_token=${token}`])
-        .send({id: 2});
+        .send();
         expect(response.status).toBe(404);
         expect(response.body).toBeInstanceOf(Object);
         expect(response.body.status).toBe(false);

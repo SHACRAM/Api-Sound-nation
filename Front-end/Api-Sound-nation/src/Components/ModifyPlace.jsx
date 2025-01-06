@@ -64,7 +64,6 @@ export const ModifyPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('id', placeId);
         formData.append("name", name);
         formData.append("category", category);
         formData.append("latitude", latitude);
@@ -80,7 +79,7 @@ export const ModifyPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
 
 
         try{
-            const response = await axios.post (`${import.meta.env.VITE_API_URL}/api/places/modifyPlace`, formData, {
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/places/place/${placeId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

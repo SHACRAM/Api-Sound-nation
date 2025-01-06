@@ -23,7 +23,7 @@ export const DisplayPlaceByCategory = ({dataPlace, placeCategory, handleAllPlace
     const submitDeletePlace = async () => {
 
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/places/deletePlace`, {id:idToDelete});
+            const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/places/place/${idToDelete}`);
 
             if(response.data.status){
                 setMessageDeletePlace(response.data.message);

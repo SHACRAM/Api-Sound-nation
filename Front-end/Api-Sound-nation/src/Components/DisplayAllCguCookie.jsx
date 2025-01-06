@@ -21,10 +21,9 @@ export const DisplayAllCguCookie = ({cgu, cookie, pData, getData}) => {
 
     const handleDelete = async (itemToDelete)=>{
         const id = itemToDelete.id;
-        const cat = itemToDelete.category;
 
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/informations/deleteCguCookie`, {id, cat});
+            const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/informations/cguCookie/${id}`);
             if(response.data.status){
                 setMessageDelete(response.data.message)
                 setIsSuccess(true)

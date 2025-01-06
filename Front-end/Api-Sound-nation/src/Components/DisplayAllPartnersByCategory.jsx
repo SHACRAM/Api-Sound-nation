@@ -25,7 +25,7 @@ export const DisplayAllPartnersByCategory = ({dataPartners, categoryPartner, set
     const handleDeletePartner = async ()=>{
        
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/partners/deletePartner`, {id:idToDelete});
+            const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/partners/partner/${idToDelete}`);
 
             if(response.data.status){
                 setMessageDeletePartner(response.data.message);

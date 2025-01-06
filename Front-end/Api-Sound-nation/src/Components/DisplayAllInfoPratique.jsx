@@ -29,7 +29,7 @@ export const DisplayAllInfoPratique = ({data, handleInfoModifyInfoPratique,getDa
         const id = infoForDeleteInfoPratique.id;
 
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/informations/deleteInfoPratique`, {id});
+            const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/informations/infoPratique/${id}`);
             if(response.data.status){
                 setMessageDelete(response.data.message);
                 setIsSuccess(true);

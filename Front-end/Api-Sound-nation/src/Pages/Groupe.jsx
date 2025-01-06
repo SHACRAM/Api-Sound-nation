@@ -3,10 +3,13 @@ import { DisplayPageGroup } from "../Components/groupe/DisplayPageGroup";
 import { Header } from "../Components/Header";
 import { useContext,useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import { useLocation } from "react-router-dom";
 
 
 export const Groupe = () => {
     const {connectInformation} = useContext(AuthContext);
+    const location = useLocation();
+    const {state} = location;
 
     useEffect(() => {}, [connectInformation]);
     return (
@@ -19,7 +22,7 @@ export const Groupe = () => {
                 </div>
                 {connectInformation ?
                 <div className="sm:ml-[12em]">
-                    <DisplayPageGroup/>
+                    <DisplayPageGroup isComingFromModifyGroupe={state}/>
                 </div>
                 :null}   
             </div>

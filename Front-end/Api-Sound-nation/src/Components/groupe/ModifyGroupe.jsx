@@ -32,7 +32,6 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
         e.preventDefault();
         
         const formData = new FormData();
-        formData.append('id', id);
         formData.append('name', name);
         formData.append('hour', hour);
         formData.append('date', date);
@@ -42,7 +41,7 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
         formData.append('bio', bio);
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/groupes/modifyGroupe`, formData, {
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/groupes/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

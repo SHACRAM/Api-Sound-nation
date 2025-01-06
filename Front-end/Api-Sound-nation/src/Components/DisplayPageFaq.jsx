@@ -7,7 +7,7 @@ import { ModifyFaq } from "../Components/ModifyFaq";
 import axios from "axios";
 // Composant qui affiche les éléments de la page Faq
 
-export const DisplayPageFaq = () => {
+export const DisplayPageFaq = ({isComingFromModifyFaq}) => {
     const [activeComponentFaq, setActiveComponentFaq] = useState(0);
     const [infoForModifyFaq, setInfoForModifyFaq] = useState({});
     const [data, setData] = useState([]);
@@ -42,6 +42,9 @@ export const DisplayPageFaq = () => {
     
 
     useEffect(() => {
+        if(isComingFromModifyFaq){
+            handleClickFaq(1)
+        }
         getDataFaq()
     },[]);
 
@@ -51,7 +54,6 @@ export const DisplayPageFaq = () => {
     const pageFaq = [
         <DisplayAllFaq infoModifyFaq={infoModifyFaq} handleClickFaq={handleClickFaq} data={data} getDataFaq={getDataFaq} />,
         <AddNewFaq handleClickFaq={handleClickFaq} getDataFaq={getDataFaq}/>,
-        <ModifyFaq data={infoForModifyFaq} setActiveComponentFaq={setActiveComponentFaq} getDataFaq={getDataFaq}/>
     ]
 
     return(

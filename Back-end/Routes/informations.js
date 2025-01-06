@@ -70,9 +70,10 @@ router.get('/public/faq',  async (req,res)=>{
 
 
 // Route qui permet de modifier une question / réponse en base de données
-router.post('/modifyFaq', auth, async (req,res)=>{
+router.put('/:id', auth, async (req,res)=>{
 
-    const {id, question, reponse} = req.body;
+    const {question, reponse} = req.body;
+    const {id} = req.params;
     const sql = 'UPDATE Faq SET question =? , reponse = ? WHERE id =?';
         
 
@@ -97,8 +98,8 @@ router.post('/modifyFaq', auth, async (req,res)=>{
 })
 
 // Route qui permet de supprimer une question / réponse en base de données
-router.post('/deleteFaq', auth, async (req,res)=>{
-    const {id} = req.body;
+router.delete('/:id', auth, async (req,res)=>{
+    const {id} = req.params;
     const sql = 'DELETE FROM Faq WHERE id = ?';
 
 
@@ -153,7 +154,7 @@ router.post('/addInfoPratique', auth, async (req,res)=>{
 
 
 // Route qui permet de récupérer toutes les informations pratiques en base de données côté back
-router.get('/getInfoPratique', auth, async (req,res)=>{
+router.get('/', auth, async (req,res)=>{
     const sql = 'SELECT * FROM InfoPratique';
 
     try{
@@ -168,7 +169,7 @@ router.get('/getInfoPratique', auth, async (req,res)=>{
 })
 
 // Route qui permet de récupérer toutes les informations pratiques en base de données côté front
-router.get('/public/getInfoPratique', async (req,res)=>{
+router.get('/public', async (req,res)=>{
     const sql = 'SELECT * FROM InfoPratique';
 
     try{
@@ -184,12 +185,11 @@ router.get('/public/getInfoPratique', async (req,res)=>{
 
 
 // Route qui permet de modifier une information pratique en base de données
-router.post('/modifyInfoPratique', auth, async (req,res)=>{
-    const {id, title, information} = req.body;
+router.put('/infoPratique/:id', auth, async (req,res)=>{
+    const {title, information} = req.body;
+    const {id} = req.params;
     const sql = 'UPDATE InfoPratique SET title = ? , information = ? WHERE id = ?';
-
     
-
     try{
         if(!id || !title || !information){
             throw new Error('CHAMP MANQUANT');
@@ -211,8 +211,8 @@ router.post('/modifyInfoPratique', auth, async (req,res)=>{
 });
 
 // Route qui permet de supprimer une information pratique en base de données
-router.post('/deleteInfoPratique', auth, async (req,res)=>{
-    const {id} = req.body;
+router.delete('/infoPratique/:id', auth, async (req,res)=>{
+    const {id} = req.params;
     const sql ='DELETE FROM InfoPratique WHERE id =?';
 
    
@@ -286,7 +286,7 @@ router.get('/getCguCookie', auth, async (req, res)=>{
 })
 
 // Route qui permet de récupérer toutes les cgu et cookies en base de données côté front
-router.get('/public/getCguCookie', async (req, res)=>{
+router.get('/getCguCookie/public', async (req, res)=>{
     const sql = 'SELECT * FROM CguCookie';
 
     try{
@@ -301,27 +301,22 @@ router.get('/public/getCguCookie', async (req, res)=>{
 })
 
 // Route qui permet de supprimer des cgu ou cookies en base de données
-router.post('/deleteCguCookie', auth, async (req,res)=>{
-    const {id, cat} = req.body;
+router.delete('/cguCookie/:id', auth, async (req,res)=>{
+    const {id} = req.params;
     const sql = 'DELETE FROM CguCookie WHERE id =?';
 
     
 
     try{
-        if(!id || !cat){
-            throw new Error('CHAMPS MANQUANT')
+        if(!id){
+            throw new Error('CHAMP MANQUANT')
         }
-
         const [result] = await mysqlClient.query(sql, [id]);
-        if(result.affectedRows === 1 && cat === 'cgu'){
-            res.status(200).json({status : true, message:'La CGU à été supprimée'})
-        } else if(result.affectedRows === 1 && cat === 'cookie'){
-            res.status(200).json({status: true, message:'Le cookie à bien été supprimé'})
-        }else {
-            res.status(200).json({status: true, message:'La donnée personnelle à bien été supprimé'})
+        if(result.affectedRows === 1 ){
+            res.status(200).json({status:true, message:'La ressource a bien été supprimé'})
         }
     }catch(error){
-        if(error.message === 'CHAMPS MANQUANT'){
+        if(error.message === 'CHAMP MANQUANT'){
             res.status(400).json({status:false, message:'Merci de remplir tous les champs'})
         }else{
             console.error('Erreur:', error.message);
@@ -331,8 +326,9 @@ router.post('/deleteCguCookie', auth, async (req,res)=>{
 })
 
 // Route qui permet de modifier une cgu ou un cookie en base de données
-router.post('/modifyCguCookie', auth, async (req,res)=>{
-    const {id, cat, title, content} = req.body;
+router.put('/cguCookie/:id', auth, async (req,res)=>{
+    const {cat, title, content} = req.body;
+    const {id} = req.params;
     const sql = 'UPDATE CguCookie SET category = ?, title = ?, content = ? WHERE id = ?';
 
     

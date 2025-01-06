@@ -112,16 +112,16 @@ describe('GET /logOut to log out', ()=>{
 })
 
 // TESTS unitaires pour la modification du mot de passe de l'utilisateur
-describe('POST /modifyPassword to modify the password of the user', ()=>{
+describe('PUT /:email to modify the password of the user', ()=>{
     it('Should return 200 status code and a confirmation message if the password is modified', async ()=>{
         const token = generateToken();
         mysqlClient.query = vi.fn().mockResolvedValue([{affectedRows: 1}]);
         vi.spyOn(bcrypt, 'compare').mockResolvedValue(true);
 
         const response = await request(app)
-            .post('/api/authentication/modifyPassword')
+            .put('/api/authentication/test@test.com')
             .set('Cookie', `auth_token=${token}`)
-            .send({password: 'testNewPassword', userEmail: 'test@test.com'});
+            .send({password: 'testNewPassword'});
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
@@ -135,9 +135,9 @@ describe('POST /modifyPassword to modify the password of the user', ()=>{
         vi.spyOn(bcrypt, 'compare').mockResolvedValue(false);
 
         const response = await request(app)
-            .post('/api/authentication/modifyPassword')
+            .put('/api/authentication/test@test.com')
             .set('Cookie', `auth_token=${token}`)
-            .send({password: 'test', userEmail: 'test@test.com'});
+            .send({password: 'test'});
 
         expect(response.statusCode).toBe(400);
         expect(response.body).toBeInstanceOf(Object);
@@ -151,9 +151,9 @@ describe('POST /modifyPassword to modify the password of the user', ()=>{
         vi.spyOn(bcrypt, 'compare').mockResolvedValue(false);
 
         const response = await request(app)
-            .post('/api/authentication/modifyPassword')
+            .put('/api/authentication/test@test.com')
             .set('Cookie', `auth_token=${token}`)
-            .send({password: 'testNewPassword'});
+            .send();
 
         expect(response.statusCode).toBe(400);
         expect(response.body).toBeInstanceOf(Object);

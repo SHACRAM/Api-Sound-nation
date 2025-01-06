@@ -31,7 +31,7 @@ export const DisplayAllGroupeByDay = ({jour, dateConcert, setInfoModifyGroupe, h
     const handleDeleteGroupe = async ()=>{
        
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/groupes/deleteGroupe`, {id:idToDelete});
+            const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/groupes/${idToDelete}`);
 
             if(response.data.status){
                 setMessageDeleteGroupe(response.data.message);

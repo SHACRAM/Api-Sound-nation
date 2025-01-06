@@ -15,7 +15,7 @@ export const DisplayModifyInfoPratique = ({infoPratique}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/informations/modifyInfoPratique`, {id, title, information});
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/informations/infoPratique/${id}`, {title, information});
             if(response.data.status){
                 setMessage(response.data.message);
                 setIsSuccess(true);
