@@ -1,8 +1,8 @@
-const mysqlClient = require('../Config/dbConfig');
+const mysqlClient = require('../config/dbConfig');
 const express = require("express");
 const router = express.Router();
-const multer = require('../Middleware/multerConfig');
-const auth = require('../Middleware/auth');
+const multer = require('../middleware/multerConfig');
+const auth = require('../middleware/auth');
 
 // Route qui permet d'ajouter un partenaire en base de données
 router.post('/addPartner', auth, multer.single('imagePartner'), async (req, res) => {

@@ -1,10 +1,10 @@
-const mysqlClient = require('../Config/dbConfig');
+const mysqlClient = require('../config/dbConfig');
 const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { sendWelcomeMail } = require('../Config/nodeMailerConfig');
-const auth = require('../Middleware/auth');
+const { sendWelcomeMail } = require('../config/nodeMailerConfig');
+const auth = require('../middleware/auth');
 require('dotenv').config();
 
 

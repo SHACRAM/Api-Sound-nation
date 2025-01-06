@@ -1,9 +1,9 @@
-const mysqlClient = require('../Config/dbConfig');
+const mysqlClient = require('../config/dbConfig');
 const express = require("express");
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const auth = require('../Middleware/auth');
+const auth = require('../middleware/auth');
 require('dotenv').config();
 
 // Création d'un jeton JWT à partir des données fournies
