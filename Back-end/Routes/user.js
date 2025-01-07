@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { sendWelcomeMail } = require('../config/nodeMailerConfig');
 const auth = require('../middleware/auth');
+const validator = require('validator');
 require('dotenv').config();
 
 
@@ -17,6 +18,10 @@ router.post('/signup', async (req, res) => {
     try {
         if(!email || !identifiant || !password || !role){
             throw new Error('MISSING_FIELDS');
+        }
+
+        if(!validator.isEmail(email)){
+            throw new Error ('INVALID_EMAIL');
         }
 
         if(password.length < 8){
@@ -40,6 +45,9 @@ router.post('/signup', async (req, res) => {
         }
         if(error.message === 'MISSING_FIELDS'){
              return res.status(400).json({ status: false, message: 'Veuillez remplir tous les champs' });
+        }
+        if(error.message === 'INVALID_EMAIL'){
+            return res.status(400).json({ status: false, message: 'Email invalide' });
         }
         console.error('Erreur serveur:', error);
         return res.status(500).json({ status: false, message: 'Erreur serveur, merci d\'essayer ultérieurement' });
