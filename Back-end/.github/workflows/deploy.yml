@@ -28,12 +28,12 @@ jobs:
     # 4. Construire l'image Docker
     - name: Build Docker image
       run: |
-        docker build -t api-sound-nation .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest .
 
     # 5. Pousser l'image Docker vers Docker Hub (ou un autre registre)
     - name: Push Docker image
       run: |
-        docker push your-docker-image-name
+        docker push ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest
 
     # 6. Se connecter à votre VPS via SSH et déployer
     - name: Deploy to VPS
@@ -45,11 +45,11 @@ jobs:
         port: 22
         script: |
           # Mettre à jour l'image Docker sur le VPS
-          docker pull api-sound-nation
+          docker pull ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest
 
           # Arrêter le conteneur existant (si nécessaire)
           docker stop api-sound-nation-container || true
           docker rm api-sound-nation-container || true
 
           # Lancer le nouveau conteneur
-          docker run -d --name api-sound-nation-container -p 3000:3000 api-sound-nation
+          docker run -d --name api-sound-nation-container -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest
