@@ -28,11 +28,13 @@ jobs:
     # 4. Construire l'image Docker
     - name: Build Docker image
       run: |
+        cd Back-end
         docker build -t ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest .
 
     # 5. Pousser l'image Docker vers Docker Hub (ou un autre registre)
     - name: Push Docker image
       run: |
+        cd Back-end
         docker push ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest
 
     # 6. Se connecter à votre VPS via SSH et déployer
