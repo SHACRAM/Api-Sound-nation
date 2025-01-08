@@ -4,7 +4,16 @@ const router = express.Router();
 const multer = require('../middleware/multerConfig');
 const auth = require('../middleware/auth');
 
-// Route qui permet d'ajouter un partenaire en base de données
+
+/**
+ * Route qui permet d'ajouter un partenaire en base de données
+ * @param {string} name - Nom du partenaire
+ * @param {string} site - Lien du site web du partenaire
+ * @param {string} category - Catégorie du partenaire
+ * @param {string} alt - Texte alternatif de l'image
+ * @param {file} imagePartner - Image du partenaire
+ * @return {json} - Retourne un message de succès ou d'erreur ainsi que le statut de la requête
+ */
 router.post('/addPartner', auth, multer.single('imagePartner'), async (req, res) => {
 
     if (!req.file) {
@@ -27,7 +36,13 @@ router.post('/addPartner', auth, multer.single('imagePartner'), async (req, res)
     }
 });
 
-// Route qui permet de récupérer tous les partenaires côté front
+
+/**
+ * Route qui permet de récupérer tous les partenaires côté front
+ * @param {object} req - Requête de l'utilisateur
+ * @param {object} res - Réponse renvoyée à l'utilisateur
+ * @return {json} - Retourne les partenaires enregistrés en base de données ainsi que le statut de la requête
+ */
 router.get('/getPartners/public', async (req, res) => {
     const sql = 'SELECT * FROM Partenaire';
 
@@ -46,7 +61,13 @@ router.get('/getPartners/public', async (req, res) => {
     }
 });
 
-// Route qui permet de récupérer tous les partenaires côté back-office
+
+/**
+ * Route qui permet de récupérer tous les partenaires côté back-office
+ * @param {object} req - Requête de l'utilisateur
+ * @param {object} res - Réponse renvoyée à l'utilisateur
+ * @return {json} - Retourne les partenaires enregistrés en base de données ainsi que le statut de la requête
+ */
 router.get('/',auth, async (req, res) => {
     const sql = 'SELECT * FROM Partenaire';
 
@@ -61,7 +82,17 @@ router.get('/',auth, async (req, res) => {
 });
 
 
-// Route qui permet de modifier un partenaire
+
+/**
+ * Route qui permet de modifier un partenaire en base de données
+ * @param {number} id - ID du partenaire
+ * @param {string} name - Nom du partenaire
+ * @param {string} site - Lien du site web du partenaire
+ * @param {string} category - Catégorie du partenaire
+ * @param {string} alt - Texte alternatif de l'image
+ * @param {file} imagePartner - Image du partenaire
+ * @return {json} - Retourne un message de succès ou d'erreur ainsi que le statut de la requête
+ */
 router.put('/partner/:id', auth, multer.single('imagePartner'), async (req, res) => {
     const {name, site, category, alt } = req.body;
     const { id } = req.params;
@@ -90,7 +121,12 @@ router.put('/partner/:id', auth, multer.single('imagePartner'), async (req, res)
 });
 
 
-// Route qui permet de supprimer un partenaire en base de données
+
+/**
+ * Route qui permet de supprimer un partenaire en base de données
+ * @param {number} id - ID du partenaire
+ * @return {json} - Retourne un message de succès ou d'erreur ainsi que le statut de la requête
+ */
 router.delete('/partner/:id', auth, async (req, res) => {
     const { id } = req.params;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-
+// Composant qui permet d'ajouter une nouvelle cgu ou cookie
 export const AddNewCguCookie = ({handleClickCguCookie, getData}) => {
     const [message, setMessage] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);

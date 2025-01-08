@@ -68,8 +68,9 @@ export const Utilisateur = () => {
 
 
     const handleDelete = async (email) => {
+        
         try{
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/deleteAccount/${email}`, {withCredentials: true});
+            const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/account/${email}`, {withCredentials: true});
             if(response.data.status){
                 setMessageDeleteAccount(response.data.message);
                 setIsSuccess(true);

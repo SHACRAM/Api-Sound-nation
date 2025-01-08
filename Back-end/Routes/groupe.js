@@ -5,8 +5,17 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 
-
-// Route qui permet d'ajouter un groupe en base de données
+/**
+ * Route qui permet d'ajouter un groupe en base de données
+ * @param {string} name - Nom du groupe
+ * @param {number} hour - Heure de passage du groupe
+ * @param {string} date - Date de passage du groupe
+ * @param {number} scene - Numéro de la scène où se produira le groupe
+ * @param {string} alt - Texte alternatif de l'image du groupe
+ * @param {string} bio - Biographie du groupe
+ * @param {file} imageGroupe - Image du groupe
+ * @return {json} - Retourne un message de succès ou d'erreur et le statut de la requête
+ */
 router.post('/addGroupe', auth, multer.single('imageGroupe'), async (req, res) => {
     const { name, hour, date, scene, alt, bio } = req.body;
 
@@ -42,7 +51,12 @@ router.post('/addGroupe', auth, multer.single('imageGroupe'), async (req, res) =
 
 
 
-// Récupérer tous les groupes du festival côté front
+/**
+ * Route qui permet de récupérer tous les groupes du festival côté front
+ * @param {object} req - Requête de l'utilisateur
+ * @param {object} res - Réponse renvoyée à l'utilisateur
+ * @return {json} - Retourne un message de succès ou d'erreur, le statut de la requête et les données des groupes
+ */
 router.get('/public/groupes', async (req, res) => {
     const sql = 'SELECT * FROM Groupe';
 
@@ -56,7 +70,13 @@ router.get('/public/groupes', async (req, res) => {
 });
 
 
-// Récupérer tous les groupes du festival côté back-office
+
+/**
+ * Route qui permet de récupérer tous les groupes du festival côté back-office
+ * @param {object} req - Requête de l'utilisateur
+ * @param {object} res - Réponse renvoyée à l'utilisateur
+ * @return {json} - Retourne un message de succès ou d'erreur, le statut de la requête et les données des groupes
+ */
 router.get('/', auth, async (req, res) => {
     const sql = 'SELECT * FROM Groupe';
 
@@ -70,7 +90,18 @@ router.get('/', auth, async (req, res) => {
 });
 
 
-// Route qui permet de modifier un groupe
+/**
+ * Route qui permet de modifier un groupe
+ * @param {number} id - ID du groupe à modifier
+ * @param {string} name - Nom du groupe
+ * @param {number} hour - Heure de passage du groupe
+ * @param {string} date - Date de passage du groupe
+ * @param {number} scene - Numéro de la scène où se produira le groupe
+ * @param {string} alt - Texte alternatif de l'image du groupe
+ * @param {string} bio - Biographie du groupe
+ * @param {file} imageGroupe - Image du groupe
+ * @return {json} - Retourne un message de succès ou d'erreur et le statut de la requête
+ */
 router.put('/:id', auth, multer.single('imageGroupe'), async (req, res) => {
     
 
@@ -111,7 +142,11 @@ router.put('/:id', auth, multer.single('imageGroupe'), async (req, res) => {
 });
 
 
-// Route qui permet de supprimer un groupe
+/**
+ * Route qui permet de supprimer un groupe
+ * @param {number} id - ID du groupe à supprimer
+ * @return {json} - Retourne un message de succès ou d'erreur et le statut de la requête
+ */
 router.delete('/:id', auth, async (req, res) => {
     const { id } = req.params;
 
@@ -131,7 +166,13 @@ router.delete('/:id', auth, async (req, res) => {
     }
 });
 
-// Route qui permet de récupérer un groupe par son id
+
+
+/**
+ * Route qui permet de récupérer un groupe par son ID
+ * @param {number} id - ID du groupe à récupérer
+ * @return {json} - Retourne un message de succès ou d'erreur, le statut de la requête et les données du groupe
+ */
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     

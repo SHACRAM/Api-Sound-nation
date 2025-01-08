@@ -19,6 +19,14 @@ const createTokenFromJson = (jsonData) => {
     }
 };
 
+/**
+ * Route de connexion d'un utilisateur
+ * @param {string} email - Email de l'utilisateur
+ * @param {string} password - Mot de passe de l'utilisateur
+ * @param {boolean} backEndConnect - Booléen pour savoir si l'utilisateur se connecte depuis le back-end
+ * @returns {JSON} - Renvoie un message de succès et un token ou un message d'erreur
+ */
+
 router.post('/signin', async (req, res) => {
     const { email, password, backEndConnect } = req.body;
 
@@ -80,18 +88,29 @@ router.post('/signin', async (req, res) => {
 
 
 
-// Route qui vérifie l'authentification
+// Route qui vérifie si un utilisateur est authentifié
 router.get('/verify-auth', auth, (req, res) => {
     res.status(200).json({ status: true, message: 'Utilisateur authentifié' });
 });
 
-// Route de déconnexion d'un utilisateur
+
+/**
+ * Route de déconnexion d'un utilisateur
+ * @param {object} req - Requête de l'utilisateur
+ * @param {object} res - Réponse renvoyée à l'utilisateur
+ * @returns {JSON} - Renvoie un message de succès
+ */
 router.get('/logOut', (req,res)=>{
     res.clearCookie('auth_token');
     res.status(200).json({status: true, message: 'Déconnexion réussie'})
 })
 
-// Route de modification du mot de passe
+/**
+ * Route de modification du mot de passe
+ * @param {string} email - Email de l'utilisateur
+ * @param {string} password - Nouveau mot de passe de l'utilisateur
+ * @returns {JSON} - Renvoie un message de succès ou d'erreur
+ */
 router.put('/:email', auth, async (req,res)=>{
     const {password} = req.body;
     const {email} = req.params;

@@ -5,7 +5,22 @@ const multer = require('../middleware/multerConfig');
 const auth = require('../middleware/auth');
 
 
-// Route qui permet d'ajouter un lieu en base de données
+
+/**
+ * Route qui permet d'ajouter un lieu en base de données
+ * @param {string} name - Nom du lieu
+ * @param {string} category - Catégorie du lieu
+ * @param {string} latitude - Latitude du lieu
+ * @param {string} longitude - Longitude du lieu
+ * @param {string} markerDiametre - Diamètre du marqueur
+ * @param {string} color - Couleur du marqueur
+ * @param {string} altLogo - Texte alternatif pour le logo
+ * @param {string} altImage - Texte alternatif pour l'image
+ * @param {string} info - Informations sur le lieu
+ * @param {file} images - Images du lieu
+ * @param {file} images - Logo du lieu
+ * @return {json} - Message de succès ou d'erreur ainsi que le statut de la requête
+ */
 router.post('/addPlace', auth, multer.fields([{ name: 'images', maxCount: 2 }]), async (req, res) => {
 
     
@@ -32,7 +47,13 @@ router.post('/addPlace', auth, multer.fields([{ name: 'images', maxCount: 2 }]),
 });
 
 
-// Route qui permet de récupérer l'ensemble des lieux en base de données coté back-office
+
+/**
+ * Route qui permet de récupérer l'ensemble des lieux en base de données coté back-office
+ * @param {object} req - Requête de l'utilisateur
+ * @param {object} res - Réponse renvoyée à l'utilisateur
+ * @return {json} - Liste des lieux en base de données ainsi que le statut de la requête
+ */
 router.get('/',auth, async (req, res) => {
     const sql = 'SELECT * FROM Lieu';
 
@@ -45,7 +66,13 @@ router.get('/',auth, async (req, res) => {
     }
 });
 
-// Route qui permet de récupérer l'ensemble des lieux en base de données coté front
+
+/**
+ * Route qui permet de récupérer l'ensemble des lieux en base de données coté front
+ * @param {object} req - Requête de l'utilisateur
+ * @param {object} res - Réponse renvoyée à l'utilisateur
+ * @return {json} - Liste des lieux en base de données ainsi que le statut de la requête
+ */
 router.get('/places/public', async (req, res) => {
     const sql = 'SELECT * FROM Lieu';
 
@@ -60,7 +87,12 @@ router.get('/places/public', async (req, res) => {
 });
 
 
-// Route qui permet de supprimer un lieu en base de données
+
+/**
+ * Route qui permet de supprimer un lieu en base de données
+ * @param {number} id - ID du lieu à supprimer
+ * @return {json} - Message de succès ou d'erreur ainsi que le statut de la requête
+ */
 router.delete('/place/:id', auth, async (req, res) => {
     const { id } = req.params;
 
@@ -89,12 +121,23 @@ router.delete('/place/:id', auth, async (req, res) => {
 });
 
 
-
-
-// Route qui permet de modifier un lieu en base de données
+/**
+ * Route qui permet de modifier un lieu en base de données
+ * @param {number} id - ID du lieu à modifier
+ * @param {string} name - Nom du lieu
+ * @param {string} category - Catégorie du lieu
+ * @param {string} latitude - Latitude du lieu
+ * @param {string} longitude - Longitude du lieu
+ * @param {string} markerDiametre - Diamètre du marqueur
+ * @param {string} color - Couleur du marqueur
+ * @param {string} altLogo - Texte alternatif pour le logo
+ * @param {string} altImage - Texte alternatif pour l'image
+ * @param {string} info - Informations sur le lieu
+ * @param {file} images - Images du lieu
+ * @param {file} images - Logo du lieu
+ * @return {json} - Message de succès ou d'erreur ainsi que le statut de la requête
+ */
 router.put('/place/:id', auth, multer.fields([{ name: 'images', maxCount: 2 }]), async (req, res) => {
-
-    
 
     const {name, category, latitude, longitude, markerDiametre, color, altLogo, altImage, info } = req.body;
     const { id } = req.params;
@@ -129,13 +172,6 @@ router.put('/place/:id', auth, multer.fields([{ name: 'images', maxCount: 2 }]),
         }  
     }
 });
-
-
-
-
-
-
-
 
 
 

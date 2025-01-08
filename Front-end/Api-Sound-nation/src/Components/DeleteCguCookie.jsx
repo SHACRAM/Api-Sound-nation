@@ -1,5 +1,5 @@
 import React from "react";
-
+// Composant qui affiche la fenêtre de confirmation de suppression 
 export const DeleteCguCookie = ({messageDelete, isSuccess, handleDeleteDiv,handleDelete, itemToDelete })=>{
     return(
         <div className="bg-black border flex flex-col items-center w-[20em] p-3 gap-[5em] ">

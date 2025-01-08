@@ -11,7 +11,15 @@ require('dotenv').config();
 
 
 
-// Route pour ajouter un utilisateur en base de données
+
+/**
+ * Route pour ajouter un utilisateur en base de données
+ * @param {string} email - Adresse mail de l'utilisateur
+ * @param {string} identifiant - Identifiant de l'utilisateur
+ * @param {string} password - Mot de passe de l'utilisateur
+ * @param {string} role - Rôle de l'utilisateur
+ * @returns {json} - Retourne un message de succès ou d'erreur ainsi qu'un code de statut
+ */
 router.post('/signup', async (req, res) => {
     const { email, identifiant, password, role } = req.body;
 
@@ -56,7 +64,11 @@ router.post('/signup', async (req, res) => {
 
 
 
-// Route pour récupérer les informations d'un utilisateur en fonction de son adresse mail
+/**
+ * Route pour récupérer les informations d'un utilisateur en fonction de son adresse mail
+ * @param {string} email - Adresse mail de l'utilisateur
+ * @returns {json} - Retourne les informations de l'utilisateur ou un message d'erreur ainsi qu'un code de statut
+ */
 router.get('/information/:email', async (req, res) => {
     const userEmail = req.params.email;
 
@@ -84,7 +96,12 @@ router.get('/information/:email', async (req, res) => {
 
 
 
-// Route qui permet de récupérer les informations du token
+
+/**
+ * Route pour récupérer les informations du token
+ * @param {string} token - Token de l'utilisateur
+ * @returns {json} - Retourne les informations du token ou un message d'erreur ainsi qu'un code de statut
+ */
 router.get('/connectInformation', async (req,res)=>{
     const token = req.cookies['auth_token'];
     try{
@@ -97,7 +114,14 @@ router.get('/connectInformation', async (req,res)=>{
     }
 })
 
-// Route pour modifier les informations d'un utilisateur
+
+/**
+ * Route pour modifier les informations d'un utilisateur
+ * @param {string} email - Adresse mail de l'utilisateur
+ * @param {string} name - Nom de l'utilisateur
+ * @param {string} email - Nouvelle adresse mail de l'utilisateur
+ * @returns {json} - Retourne un message de succès ou d'erreur ainsi qu'un code de statut
+ */
 router.put('/updateUser/:email', async (req, res) => {
     const userEmail = req.params.email;
     const { name, email } = req.body;
@@ -156,7 +180,13 @@ router.put('/updateUser/:email', async (req, res) => {
 });
 
 
-// Route pour ajouter ou supprimer un groupe dans les favoris de l'utilisateur
+
+/**
+ * Route pour ajouter ou supprimer un groupe dans les favoris de l'utilisateur
+ * @param {number} groupeId - ID du groupe
+ * @param {string} userEmail - Adresse mail de l'utilisateur
+ * @returns {json} - Retourne un message de succès ou d'erreur ainsi qu'un code de statut
+ */
 router.post('/favoris', async (req, res) => {
     const { groupeId, userEmail } = req.body;
 
@@ -208,7 +238,12 @@ router.post('/favoris', async (req, res) => {
 });
 
 
-// Route pour récupérer les groupes favoris d'un utilisateur
+
+/**
+ * Route pour récupérer les groupes favoris d'un utilisateur
+ * @param {string} email - Adresse mail de l'utilisateur
+ * @returns {json} - Retourne les groupes favoris de l'utilisateur ou un message d'erreur, ainsi qu'un code de statut
+ */
 router.get('/favoris/:email', auth, async (req,res)=>{
 
     const userEmail = req.params.email;
@@ -225,11 +260,15 @@ router.get('/favoris/:email', auth, async (req,res)=>{
 })
 
 
-// Route pour supprimer un utilisateur
+
+/**
+ * Route pour supprimer un utilisateur
+ * @param {string} email - Adresse mail de l'utilisateur
+ * @returns {json} - Retourne un message de succès ou d'erreur, ainsi qu'un code de statut
+ */
 router.delete('/account/:email', auth, async (req,res)=>{
-    const email = req.params.email;
+    const {email} = req.params;
     const sql = 'DELETE FROM Users WHERE user_email = ?'
-    
 
 
     try{
@@ -255,7 +294,13 @@ router.delete('/account/:email', auth, async (req,res)=>{
 
 
 
-// Route qui permet de récupérer l'ensemble des utilisateurs en base de données
+
+/**
+ * Route pour récupérer l'ensemble des utilisateurs en base de données
+ * @param {object} req - Requête de l'utilisateur
+ * @param {object} res - Réponse renvoyée à l'utilisateur
+ * @returns {json} - Retourne la liste des utilisateurs ou un message d'erreur, ainsi qu'un code de statut
+ */
 router.get('/', auth, async (req,res)=>{
 
     const sql = 'SELECT user_email, user_name, user_role FROM Users';
@@ -274,7 +319,13 @@ router.get('/', auth, async (req,res)=>{
     }
 })
 
-// Route pour modifier le rôle d'un utilisateur
+
+/**
+ * Route pour modifier le rôle d'un utilisateur
+ * @param {string} email - Adresse mail de l'utilisateur
+ * @param {string} newRole - Nouveau rôle de l'utilisateur
+ * @returns {json} - Retourne un message de succès ou d'erreur, ainsi qu'un code de statut
+ */
 router.put('/role/:email', auth, async (req,res)=>{
     const {newRole} = req.body;
     const {email} = req.params;

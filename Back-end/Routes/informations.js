@@ -7,7 +7,12 @@ const router = express.Router();
 
 
 
-// Route qui permet d'ajouter une question / réponse en base de données
+/**
+ * Route qui permet d'ajouter une question / réponse en base de données
+ * @param {string} question - La question posée
+ * @param {string} reponse - La réponse à la question posée
+ * @return {json} - Un message de confirmation ou d'erreur ainsi que le statut de la requête
+ */
 router.post('/addFaq', auth, async (req,res)=>{
     const {question, reponse} = req.body;
     const sql = 'INSERT INTO Faq (question, reponse) VALUES (?,?)';
@@ -36,7 +41,13 @@ router.post('/addFaq', auth, async (req,res)=>{
     }
 })
 
-// Route qui permet de récupérer toutes les questions / réponses en base de données coté back
+
+/**
+ * Route qui permet de récupérer toutes les questions / réponses en base de données côté back
+ * @param {object} req - Les informations de la requête
+ * @param {object} res - Les informations de la réponse
+ * @return {json} - Les questions / réponses en base de données ainsi que le statut de la requête
+ */
 router.get('/faq', auth, async (req,res)=>{
 
     const sql = 'SELECT * FROM Faq';
@@ -52,7 +63,13 @@ router.get('/faq', auth, async (req,res)=>{
     }
 })
 
-// Route qui permet de récupérer toutes les questions / réponses en base de données coté front
+
+/**
+ * Route qui permet de récupérer toutes les questions / réponses en base de données côté front
+ * @param {object} req - Les informations de la requête
+ * @param {object} res - Les informations de la réponse
+ * @return {json} - Les questions / réponses en base de données ainsi que le statut de la requête
+ */
 router.get('/public/faq',  async (req,res)=>{
 
     const sql = 'SELECT * FROM Faq';
@@ -69,7 +86,13 @@ router.get('/public/faq',  async (req,res)=>{
 })
 
 
-// Route qui permet de modifier une question / réponse en base de données
+/**
+ * Route qui permet de modifier une question / réponse en base de données
+ * @param {number} id - L'id de la question / réponse à modifier
+ * @param {string} question - La question modifiée
+ * @param {string} reponse - La réponse à modifiée
+ * @return {json} - Un message de confirmation ou d'erreur ainsi que le statut de la requête
+ */
 router.put('/:id', auth, async (req,res)=>{
 
     const {question, reponse} = req.body;
@@ -97,7 +120,12 @@ router.put('/:id', auth, async (req,res)=>{
     }
 })
 
-// Route qui permet de supprimer une question / réponse en base de données
+
+/**
+ * Route qui permet de supprimer une question / réponse en base de données
+ * @param {number} id - L'id de la question / réponse à supprimer
+ * @return {json} - Un message de confirmation ou d'erreur ainsi que le statut de la requête
+ */
 router.delete('/:id', auth, async (req,res)=>{
     const {id} = req.params;
     const sql = 'DELETE FROM Faq WHERE id = ?';
@@ -124,7 +152,13 @@ router.delete('/:id', auth, async (req,res)=>{
 })
 
 
-// Route qui permet d'ajouter une information pratique en base de données
+
+/**
+ * Route qui permet d'ajouter une information pratique en base de données
+ * @param {string} title - Le titre de l'information pratique
+ * @param {string} information - L'information pratique
+ * @return {json} - Un message de confirmation ou d'erreur ainsi que le statut de la requête
+ */
 router.post('/addInfoPratique', auth, async (req,res)=>{
     const {title, information} = req.body;
 
@@ -153,7 +187,13 @@ router.post('/addInfoPratique', auth, async (req,res)=>{
 })
 
 
-// Route qui permet de récupérer toutes les informations pratiques en base de données côté back
+
+/**
+ * Route qui permet de récupérer toutes les informations pratiques en base de données côté back
+ * @param {object} req - Les informations de la requête
+ * @param {object} res - Les informations de la réponse
+ * @return {json} - Les informations pratiques en base de données ainsi que le statut de la requête
+ */
 router.get('/', auth, async (req,res)=>{
     const sql = 'SELECT * FROM InfoPratique';
 
@@ -168,7 +208,13 @@ router.get('/', auth, async (req,res)=>{
     }
 })
 
-// Route qui permet de récupérer toutes les informations pratiques en base de données côté front
+
+/**
+ * Route qui permet de récupérer toutes les informations pratiques en base de données côté front
+ * @param {object} req - Les informations de la requête
+ * @param {object} res - Les informations de la réponse
+ * @return {json} - Les informations pratiques en base de données ainsi que le statut de la requête
+ */
 router.get('/public', async (req,res)=>{
     const sql = 'SELECT * FROM InfoPratique';
 
@@ -184,7 +230,14 @@ router.get('/public', async (req,res)=>{
 })
 
 
-// Route qui permet de modifier une information pratique en base de données
+
+/**
+ * Route qui permet de modifier une information pratique en base de données
+ * @param {number} id - L'id de l'information pratique à modifier
+ * @param {string} title - Le titre de l'information pratique modifiée
+ * @param {string} information - L'information pratique modifiée
+ * @return {json} - Un message de confirmation ou d'erreur ainsi que le statut de la requête
+ */
 router.put('/infoPratique/:id', auth, async (req,res)=>{
     const {title, information} = req.body;
     const {id} = req.params;
@@ -210,12 +263,15 @@ router.put('/infoPratique/:id', auth, async (req,res)=>{
     }
 });
 
-// Route qui permet de supprimer une information pratique en base de données
+
+/**
+ * Route qui permet de supprimer une information pratique en base de données
+ * @param {number} id - L'id de l'information pratique à supprimer
+ * @return {json} - Un message de confirmation ou d'erreur ainsi que le statut de la requête
+ */
 router.delete('/infoPratique/:id', auth, async (req,res)=>{
     const {id} = req.params;
     const sql ='DELETE FROM InfoPratique WHERE id =?';
-
-   
 
     try{
         if(!id){
@@ -238,7 +294,13 @@ router.delete('/infoPratique/:id', auth, async (req,res)=>{
 })
 
 
-// Route qui permet d'ajouter une cgu, un cookie ou des données personnelles en base de données
+/**
+ * Route qui permet d'ajouter une cgu, un cookie ou des données personnelles en base de données
+ * @param {string} cat - La catégorie du contenu ( cgu, cookie ou données personnelles)
+ * @param {string} title - Le titre du contenu
+ * @param {string} content - Le contenu
+ * @return {json} - Un message de confirmation ou d'erreur ainsi que le statut de la requête
+ */
 router.post('/addCguCookie', auth, async (req,res)=>{
     const {cat, title, content} = req.body;
     const sql='INSERT INTO CguCookie (category, title, content) VALUES (?,?,?)';
@@ -270,7 +332,13 @@ router.post('/addCguCookie', auth, async (req,res)=>{
     }
 })
 
-// Route qui permet de récupérer toutes les cgu et cookies en base de données côté back
+
+/**
+ * Route qui permet de récupérer toutes les cgu et cookies en base de données côté back
+ * @param {object} req - Les informations de la requête
+ * @param {object} res - Les informations de la réponse
+ * @return {json} - Les cgu et cookies en base de données ainsi que le statut de la requête
+ */
 router.get('/getCguCookie', auth, async (req, res)=>{
     const sql = 'SELECT * FROM CguCookie';
 
@@ -285,7 +353,13 @@ router.get('/getCguCookie', auth, async (req, res)=>{
     }
 })
 
-// Route qui permet de récupérer toutes les cgu et cookies en base de données côté front
+
+/**
+ * Route qui permet de récupérer toutes les cgu et cookies en base de données côté front
+ * @param {object} req - Les informations de la requête
+ * @param {object} res - Les informations de la réponse
+ * @return {json} - Les cgu et cookies en base de données ainsi que le statut de la requête
+ */
 router.get('/getCguCookie/public', async (req, res)=>{
     const sql = 'SELECT * FROM CguCookie';
 
@@ -300,7 +374,12 @@ router.get('/getCguCookie/public', async (req, res)=>{
     }
 })
 
-// Route qui permet de supprimer des cgu ou cookies en base de données
+
+/**
+ * Route qui permet de supprimer une cgu, un cookie ou des données personnelles en base de données
+ * @param {number} id - L'id de la cgu, du cookie ou des données personnelles à supprimer
+ * @return {json} - Un message de confirmation ou d'erreur ainsi que le statut de la requête
+ */
 router.delete('/cguCookie/:id', auth, async (req,res)=>{
     const {id} = req.params;
     const sql = 'DELETE FROM CguCookie WHERE id =?';
@@ -325,7 +404,15 @@ router.delete('/cguCookie/:id', auth, async (req,res)=>{
     }
 })
 
-// Route qui permet de modifier une cgu ou un cookie en base de données
+
+/**
+ * Route qui permet de modifier une cgu, un cookie ou des données personnelles en base de données
+ * @param {number} id - L'id de la cgu, du cookie ou des données personnelles à modifier
+ * @param {string} cat - La catégorie du contenu ( cgu, cookie ou données personnelles)
+ * @param {string} title - Le titre du contenu modifié
+ * @param {string} content - Le contenu modifié
+ * @return {json} - Un message de confirmation ou d'erreur ainsi que le statut de la requête
+ */
 router.put('/cguCookie/:id', auth, async (req,res)=>{
     const {cat, title, content} = req.body;
     const {id} = req.params;
@@ -357,24 +444,6 @@ router.put('/cguCookie/:id', auth, async (req,res)=>{
         }
     }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;

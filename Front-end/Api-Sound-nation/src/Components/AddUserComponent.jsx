@@ -5,7 +5,7 @@ import { DisplayMainContent } from "../Pages/DisplayMainContent";
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
-
+// Composant qui permet d'ajouter un utilisateur à la base de données
 export const AddUserComponent = () => {
     const [email, setEmail] = useState('');
     const [identifiant, setIdentifiant] = useState('');

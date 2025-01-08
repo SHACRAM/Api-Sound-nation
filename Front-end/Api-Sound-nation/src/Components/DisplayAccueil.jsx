@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { ConnectionPage } from "../Pages/ConnectionPage";
-
+// Composant qui affiche le message d'accueil
 export const DisplayAccueil = () => {
     return(<div className="flex flex-col items-center">
         <div className="border rounded-sm p-3 flex flex-col gap-7 items-center m-5 mt-[3em]">
