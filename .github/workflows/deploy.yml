@@ -39,7 +39,7 @@ jobs:
 
     # 6. Se connecter à votre VPS via SSH et déployer
     - name: Deploy to VPS
-      uses: appleboy/ssh-action@v0.1.4
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.VPS_HOST }}
         username: ${{ secrets.VPS_USERNAME }}
