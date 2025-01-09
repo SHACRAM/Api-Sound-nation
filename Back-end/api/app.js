@@ -10,15 +10,15 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const cors = require('cors');
 
-// app.use(cors({
-//     origin: 'https://back-office-api-sound-nation.vercel.app', 
-//     credentials: true, 
-//   }));
-
 app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
-}));
+    origin: 'https://back-office-api-sound-nation.vercel.app', 
+    credentials: true, 
+  }));
+
+// app.use(cors({
+//   origin: 'http://localhost:5173',
+//   credentials: true
+// }));
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.json());
