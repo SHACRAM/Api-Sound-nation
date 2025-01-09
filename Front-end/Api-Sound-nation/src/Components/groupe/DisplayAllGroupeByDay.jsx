@@ -68,11 +68,11 @@ export const DisplayAllGroupeByDay = ({jour, dateConcert, setInfoModifyGroupe, h
                     </div>
                     <div className="flex flex-col gap-3 p-3 w-[100%] ml-6">
                         <div className="flex gap-3">
-                            <img src="src/Images/Hour.svg" alt="Icone représentant une horloge" className="w-[1.5em]"/>
+                            <img src="src/images/Hour.svg" alt="Icone représentant une horloge" className="w-[1.5em]"/>
                             <p className="text-white">{groupe.groupe_hour} h</p>
                         </div>
                         <div className="flex gap-3">
-                            <img src="src/Images/Stage.svg" alt="Logo d'une scène de concert" className="w-[1.5em]"/>
+                            <img src="src/images/Stage.svg" alt="Logo d'une scène de concert" className="w-[1.5em]"/>
                             <p className="text-white">Scène {groupe.groupe_scene}</p>
                         </div>
                     </div>

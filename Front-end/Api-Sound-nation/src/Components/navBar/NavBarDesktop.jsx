@@ -17,7 +17,7 @@ export const NavBarDesktop = ({handleLogOut, isInfoClicked, setIsInfoClicked}) =
         </div>
         <div className='absolute top-O right-0 flex p-3 gap-8'>
             <div className='flex gap-2'>
-                <img className='w-6 h-6' src="src/Images/User.png" alt="Logo d'un utilisateur" />
+                <img className='w-6 h-6' src="src/images/User.png" alt="Logo d'un utilisateur" />
                 {connectInformation ? <p className='text-white'>{connectInformation.user_name}</p>:null}
             </div>
             

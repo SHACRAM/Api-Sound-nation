@@ -15,6 +15,11 @@ app.use(cors({
     credentials: true, 
   }));
 
+  app.use((req, res, next) => {
+    res.removeHeader('Permissions-Policy');
+    next();
+  });
+
 // app.use(cors({
 //   origin: 'http://localhost:5173',
 //   credentials: true

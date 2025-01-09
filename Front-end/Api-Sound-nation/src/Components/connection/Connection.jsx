@@ -44,7 +44,7 @@ export const Connection = () => {
 
     return (
         <div className="flex flex-col items-center gap-[3em]">
-            <img className="w-[6em]" src="/src/Images/Logo.png" alt="Image représentant le logo du festival Sound-nation" />
+            <img className="w-[6em]" src="/src/images/Logo.png" alt="Image représentant le logo du festival Sound-nation" />
             <div className="flex flex-col border p-5 rounded-md gap-6 items-center">
                 <h1 className="text-white text-[1.5rem]">Connexion</h1>
                 <form className="flex flex-col gap-4">
