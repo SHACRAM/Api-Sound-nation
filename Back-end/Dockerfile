@@ -25,4 +25,4 @@ COPY . .
 EXPOSE 3000
 
 # Exécuter l'application.
-CMD node Back-end/api/server.js
+CMD node api/server.js
