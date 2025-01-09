@@ -52,7 +52,7 @@ export const Header = () => {
     <div className=' border-b border-[#707070] sm:h-[12em] '>
         <div className='flex justify-between sm:hidden'>
             <div>
-                <NavLink to="/DisplayMainContent"><img src="src/images/Logo.png" alt="Image du logo du festival" className="w-[5em] m-2"/></NavLink>
+                <NavLink to="/DisplayMainContent"><img src="/images/Logo.png" alt="Image du logo du festival" className="w-[5em] m-2"/></NavLink>
             </div>
             <div>
                 <NavBarMobile  burgerClass={burgerClass} menuClass={menuClass} updateMenu={updateMenu} handleLogOut={handleLogOut} setMenuClass={setMenuClass} setBurgerClass={setBurgerClass} isInfoClicked={isInfoClicked} setIsInfoClicked={setIsInfoClicked} />

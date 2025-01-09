@@ -66,9 +66,9 @@ export const DisplayAllPartnersByCategory = ({dataPartners, categoryPartner, set
                                             <h2 className="text-white text-[1.4rem] p-2">{partner.partner_name}</h2>
                                             <img src={`${import.meta.env.VITE_API_URL}/${partner.partner_image_path}`} alt={partner.partner_image_alt} className="w-[12em] p-3" />
                                             <div className="flex items-center gap-2 p-2">
-                                                <img src="src/images/WebSite.png" alt="Logo représentant le site web du partenaire" className="w-[1.5em]"/>
+                                                <img src="/images/WebSite.png" alt="Logo représentant le site web du partenaire" className="w-[1.5em]"/>
                                                 <div>
-                                                    <a href={partner.partner_site} className="text-white flex gap-1 items-center hover:text-[#FDA900]">Visiter le site  <img src="src/images/FlecheDroite.png" alt="Logo d'une flèche" className="w-[1em] h-[1em]" /></a>
+                                                    <a href={partner.partner_site} className="text-white flex gap-1 items-center hover:text-[#FDA900]">Visiter le site  <img src="/images/FlecheDroite.png" alt="Logo d'une flèche" className="w-[1em] h-[1em]" /></a>
                                                    
                                                 </div>
                                                 

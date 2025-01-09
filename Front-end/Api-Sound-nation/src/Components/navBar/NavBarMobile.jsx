@@ -44,7 +44,7 @@ export const NavBarMobile = ({burgerClass, menuClass,updateMenu, handleLogOut, s
             <NavLink className='text-white w-[100%] flex justify-center pb-2 pt-2 text-[1.3rem]' to='/InfoPratique'>Infos pratiques</NavLink>
             <NavLink className='text-white w-[100%] flex justify-center pb-2 pt-2 text-[1.3rem]' to='/CguCookie'>CGU & cookies</NavLink>
             <div className="flex gap-2 justify-start w-full ml-2" onClick={()=>handleInfoClick(false)}>
-                <img src="src/images/FlecheDroite2.png" alt="Fleche de retour au menu précédant" className="rotate-180 w-6" />
+                <img src="/images/FlecheDroite2.png" alt="Fleche de retour au menu précédant" className="rotate-180 w-6" />
                 <p className="text-white">Retour</p>
             </div>
             

@@ -9,7 +9,7 @@ export const ModifyRole = ({messageModifyRole, handleModifyDiv, handleModify, is
                 <p className="text-gray-500">Rôle actuel</p>
                 <p className="text-white">{role}</p>
             </div>
-            <img src="src/images/flecheDroite2.png" alt="Image d'une flèche vers la droite" />
+            <img src="/images/flecheDroite2.png" alt="Image d'une flèche vers la droite" />
             <div className="flex flex-col items-center">
                 <p className="text-gray-500">Nouveau rôle</p>
                 <p  className="text-white">{newRole}</p>
