@@ -1,9 +1,9 @@
 import React from "react";
-import {Header} from "../Components/Header";
+import {Header} from "../components/Header";
 import { useLocation } from "react-router-dom";
 import { useContext,useEffect } from "react";
-import { AuthContext } from "../Context/AuthContext";
-import { DisplayPageFaq } from "../Components/DisplayPageFaq";
+import { AuthContext } from "../context/AuthContext";
+import { DisplayPageFaq } from "../components/DisplayPageFaq";
 
 
 

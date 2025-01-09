@@ -2,8 +2,8 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { DisplayAllFaq } from "./DisplayAllFaq";
-import { AddNewFaq } from "../Components/AddNewFaq";
-import { ModifyFaq } from "../Components/ModifyFaq";
+import { AddNewFaq } from "./AddNewFaq";
+import { ModifyFaq } from "./ModifyFaq";
 import axios from "axios";
 // Composant qui affiche les éléments de la page Faq
 

@@ -1,8 +1,8 @@
 import React from "react";
-import {Header} from "../Components/Header";
-import { AuthContext } from "../Context/AuthContext";
+import {Header} from "../components/Header";
+import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
-import { DisplayPageInfoPratique } from "../Components/DisplayPageInfoPratique";
+import { DisplayPageInfoPratique } from "../components/DisplayPageInfoPratique";
 import { useLocation } from "react-router-dom";
 // Page de la section Informations pratiques
 export const InfoPratique = () => {

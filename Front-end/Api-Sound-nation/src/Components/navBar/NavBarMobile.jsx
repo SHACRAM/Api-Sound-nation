@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useContext,useEffect } from "react";
 import {NavLink} from "react-router-dom";
-import { AuthContext } from "../../Context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 
 // Menu de navigation pour les écrans inférieurs à 640px

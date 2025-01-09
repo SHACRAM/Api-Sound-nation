@@ -1,6 +1,6 @@
 import React, {useEffect } from "react";
-import { DisplayAccueil } from "../Components/DisplayAccueil";
-import { Header } from "../Components/Header";
+import { DisplayAccueil } from "../components/DisplayAccueil";
+import { Header } from "../components/Header";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 axios.defaults.withCredentials = true;

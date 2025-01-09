@@ -1,9 +1,9 @@
 import React from "react";
 import { useLocation, NavLink } from "react-router-dom";
-import { Header } from "../Components/Header";
+import { Header } from "../components/Header";
 import { useContext } from "react";
-import { AuthContext } from "../Context/AuthContext";
-import { ModifyPlace } from "../Components/ModifyPlace";
+import { AuthContext } from "../context/AuthContext";
+import { ModifyPlace } from "../components/ModifyPlace";
 
 export const ModifyPlacePage = () => {
     const {connectInformation} = useContext(AuthContext);

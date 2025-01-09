@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { DisplayAllInfoPratique } from "../Components/DisplayAllInfoPratique";
-import { AddNewInfoPratique } from "../Components/AddNewInfoPratique";
+import { DisplayAllInfoPratique } from "./DisplayAllInfoPratique";
+import { AddNewInfoPratique } from "./AddNewInfoPratique";
 import { NavLink } from "react-router-dom";
 
 

@@ -1,9 +1,9 @@
 import React from "react";
 import { useLocation, NavLink } from "react-router-dom";
-import { Header } from "../Components/Header";
+import { Header } from "../components/Header";
 import { useContext,useState, useEffect, useCallback } from "react";
-import { AuthContext } from "../Context/AuthContext";
-import { ModifyPartner } from "../Components/ModifyPartner";
+import { AuthContext } from "../context/AuthContext";
+import { ModifyPartner } from "../components/ModifyPartner";
 import axios from "axios";
 
 export const ModifyPartnerPage = () => {

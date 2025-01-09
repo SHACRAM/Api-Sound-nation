@@ -4,7 +4,7 @@ import { SearchUser } from './SearchUser';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthContext } from '../../Context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import userEvent from '@testing-library/user-event';
 // Test unitaire du composant SearchUser
 describe('SearchUser Component', ()=>{

@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useContext } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 //Composant page de connexion
 export const Connection = () => {  

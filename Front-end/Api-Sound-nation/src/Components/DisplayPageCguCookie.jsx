@@ -1,6 +1,6 @@
 import React from "react";
-import { DisplayAllCguCookie } from "../Components/DisplayAllCguCookie";
-import { AddNewCguCookie } from "../Components/AddNewCguCookie";
+import { DisplayAllCguCookie } from "./DisplayAllCguCookie";
+import { AddNewCguCookie } from "./AddNewCguCookie";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";

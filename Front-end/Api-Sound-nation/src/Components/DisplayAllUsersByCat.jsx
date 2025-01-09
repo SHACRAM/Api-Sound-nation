@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 // Composant qui affiche les utilisateurs et qui permet de mettre à jour ou supprimer un utilisateur
 export const DisplayAllUsersByCat = ({data, handleDeleteDiv, handleModifyDiv}) => {
     const {connectInformation} = useContext(AuthContext);

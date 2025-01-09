@@ -1,13 +1,13 @@
 import react from "react";
 import { useState, useContext,useEffect } from "react";
 import axios from "axios";
-import { Header } from "../Components/Header";
-import { DisplayAllUsersByCat } from "../Components/DisplayAllUsersByCat";
-import { AuthContext } from "../Context/AuthContext";
-import { DeleteAccount } from "../Components/DeleteAccount";
-import { ModifyRole } from "../Components/ModifyRole";
+import { Header } from "../components/Header";
+import { DisplayAllUsersByCat } from "../components/DisplayAllUsersByCat";
+import { AuthContext } from "../context/AuthContext";
+import { DeleteAccount } from "../components/DeleteAccount";
+import { ModifyRole } from "../components/ModifyRole";
 import { NavLink } from "react-router-dom";
-import { SearchUser } from "../Components/user/SearchUser";
+import { SearchUser } from "../components/user/SearchUser";
 
 // Page qui permet d'afficher la liste des utilisateurs en fonction de leur rôle
 export const Utilisateur = () => {

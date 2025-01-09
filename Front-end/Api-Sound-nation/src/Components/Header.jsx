@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { NavBarDesktop } from "./navBar/NavBarDesktop";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 //Composant qui gère l'affichage des différents éléments de la barre de navigation en version mobile et desktop
 export const Header = () => {
     const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../Context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 
 export const SearchUser = ({data, handleDeleteDiv, handleModifyDiv}) => {

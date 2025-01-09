@@ -1,9 +1,9 @@
 import React from "react";
-import { DisplayModifyInfoPratique } from "../Components/DisplayModifyInfoPratique";
+import { DisplayModifyInfoPratique } from "../components/DisplayModifyInfoPratique";
 import { useLocation, NavLink } from "react-router-dom";
-import { Header } from "../Components/Header";
+import { Header } from "../components/Header";
 import { useContext } from "react";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 
 export const ModifyInfoPratique = () => {
     const {connectInformation} = useContext(AuthContext);

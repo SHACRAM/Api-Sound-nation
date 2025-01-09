@@ -1,8 +1,8 @@
 import React from "react";
-import { DisplayPageGroup } from "../Components/groupe/DisplayPageGroup";
-import { Header } from "../Components/Header";
+import { DisplayPageGroup } from "../components/groupe/DisplayPageGroup";
+import { Header } from "../components/Header";
 import { useContext,useEffect } from "react";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { useLocation } from "react-router-dom";
 
 

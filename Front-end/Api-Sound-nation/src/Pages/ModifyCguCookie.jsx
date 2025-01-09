@@ -2,8 +2,8 @@ import React from "react";
 import { useLocation, useNavigate,NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import {Header} from "../Components/Header";
-import { DisplayModifyCguCookie } from "../Components/DisplayModifyCguCookie";
+import {Header} from "../components/Header";
+import { DisplayModifyCguCookie } from "../components/DisplayModifyCguCookie";
 
 
 export const ModifyCguCookie = ()=>{

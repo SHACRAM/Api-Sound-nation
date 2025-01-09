@@ -1,8 +1,8 @@
 import React from "react";
-import {Header} from "../Components/Header";
-import { DisplayPageCguCookie } from "../Components/DisplayPageCguCookie";
+import {Header} from "../components/Header";
+import { DisplayPageCguCookie } from "../components/DisplayPageCguCookie";
 import { useContext, useEffect } from "react";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { useLocation } from "react-router-dom";
 
 export const CguCookie = () => {

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useEffect, useContext,useState } from 'react';
-import { AuthContext } from '../../Context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 // Menu de navigation pour les écrans supérieurs à 640px
 export const NavBarDesktop = ({handleLogOut, isInfoClicked, setIsInfoClicked}) => {
