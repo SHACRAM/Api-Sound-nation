@@ -8,21 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    env:
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_PORT: ${{ secrets.DB_PORT }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_NAME: ${{ secrets.DB_NAME }}
-      DB_CONNECTION_LIMIT: ${{ secrets.DB_CONNECTION_LIMIT }}
-      DB_QUEUE_LIMIT: ${{ secrets.DB_QUEUE_LIMIT }}
-      NODE_MAILER_HOST: ${{ secrets.NODE_MAILER_HOST }}
-      NODE_MAILER_PORT: ${{ secrets.NODE_MAILER_PORT }}
-      NODE_MAILER_SECURE: ${{ secrets.NODE_MAILER_SECURE }}
-      NODE_MAILER_AUTH_USER: ${{ secrets.NODE_MAILER_AUTH_USER }}
-      NODE_MAILER_AUTH_PASS: ${{ secrets.NODE_MAILER_AUTH_PASS }}
-      TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
     
     steps:
     # 1. Vérifier le code source
@@ -64,26 +49,29 @@ jobs:
           # Mettre à jour l'image Docker sur le VPS
           docker pull ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest
 
+          # Créer le fichier .env sur le VPS
+          echo "DB_HOST=${{ secrets.DB_HOST }}" > /home/ubuntu/.env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> /home/ubuntu/.env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> /home/ubuntu/.env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> /home/ubuntu/.env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> /home/ubuntu/.env
+          echo "DB_CONNECTION_LIMIT=${{ secrets.DB_CONNECTION_LIMIT }}" >> /home/ubuntu/.env
+          echo "DB_QUEUE_LIMIT=${{ secrets.DB_QUEUE_LIMIT }}" >> /home/ubuntu/.env
+          echo "NODE_MAILER_HOST=${{ secrets.NODE_MAILER_HOST }}" >> /home/ubuntu/.env
+          echo "NODE_MAILER_PORT=${{ secrets.NODE_MAILER_PORT }}" >> /home/ubuntu/.env
+          echo "NODE_MAILER_SECURE=${{ secrets.NODE_MAILER_SECURE }}" >> /home/ubuntu/.env
+          echo "NODE_MAILER_AUTH_USER=${{ secrets.NODE_MAILER_AUTH_USER }}" >> /home/ubuntu/.env
+          echo "NODE_MAILER_AUTH_PASS=${{ secrets.NODE_MAILER_AUTH_PASS }}" >> /home/ubuntu/.env
+          echo "TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}" >> /home/ubuntu/.env
+
           # Arrêter le conteneur existant (si nécessaire)
           docker stop api-sound-nation-container || true
           docker rm api-sound-nation-container || true
 
-          # Lancer le nouveau conteneur
+          # Lancer le nouveau conteneur avec le fichier .env
           docker run -d --restart unless-stopped \
-          --name api-sound-nation-container \
+            --name api-sound-nation-container \
             -p 3000:3000 \
-            -e DB_HOST=${{ secrets.DB_HOST }} \
-            -e DB_PORT=${{ secrets.DB_PORT }} \
-            -e DB_USER=${{ secrets.DB_USER }} \
-            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            -e DB_NAME=${{ secrets.DB_NAME }} \
-            -e DB_CONNECTION_LIMIT=${{ secrets.DB_CONNECTION_LIMIT }} \
-            -e DB_QUEUE_LIMIT=${{ secrets.DB_QUEUE_LIMIT }} \
-            -e NODE_MAILER_HOST=${{ secrets.NODE_MAILER_HOST }} \
-            -e NODE_MAILER_PORT=${{ secrets.NODE_MAILER_PORT }} \
-            -e NODE_MAILER_SECURE=${{ secrets.NODE_MAILER_SECURE }} \
-            -e NODE_MAILER_AUTH_USER=${{ secrets.NODE_MAILER_AUTH_USER }} \
-            -e NODE_MAILER_AUTH_PASS=${{ secrets.NODE_MAILER_AUTH_PASS }} \
-            -e TOKEN_SECRET=${{ secrets.TOKEN_SECRET }} \
+            --env-file /home/ubuntu/.env \
             -v /home/ubuntu/uploads:/app/Back-end/uploads \
             ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest
