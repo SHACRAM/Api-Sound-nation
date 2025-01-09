@@ -57,5 +57,18 @@ jobs:
           docker run -d --restart unless-stopped \
           --name api-sound-nation-container \
             -p 3000:3000 \
+            -e DB_HOST= ${{ secrets.DB_HOST }} \
+            -e DB_PORT= ${{ secrets.DB_PORT }} \
+            -e DB_USER= ${{ secrets.DB_USER }} \
+            -e DB_PASSWORD= ${{ secrets.DB_PASSWORD }} \
+            -e DB_NAME= ${{ secrets.DB_NAME }} \
+            -e DB_CONNECTION_LIMIT= ${{ secrets.DB_CONNECTION_LIMIT }} \
+            -e DB_QUEUE_LIMIT= ${{ secrets.DB_QUEUE_LIMIT }} \
+            -e NODE_MAILER_HOST= ${{ secrets.NODE_MAILER_HOST }} \
+            -e NODE_MAILER_PORT= ${{ secrets.NODE_MAILER_PORT }} \
+            -e NODE_MAILER_SECURE= ${{ secrets.NODE_MAILER_SECURE }} \
+            -e NODE_MAILER_AUTH_USER= ${{ secrets.NODE_MAILER_AUTH_USER }} \
+            -e NODE_MAILER_AUTH_PASS= ${{ secrets.NODE_MAILER_AUTH_PASS }} \
+            -e TOKEN_SECRET= ${{ secrets.TOKEN_SECRET }} \
             -v /home/ubuntu/uploads:/app/Back-end/uploads \
             ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest
