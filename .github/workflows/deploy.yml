@@ -70,8 +70,10 @@ jobs:
 
           # Lancer le nouveau conteneur avec le fichier .env
           docker run -d --restart unless-stopped \
-            --name api-sound-nation-container \
-            -p 3000:3000 \
-            --env-file /home/ubuntu/.env \
-            -v /home/ubuntu/uploads:/app/Back-end/uploads \
-            ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest
+          --name api-sound-nation-container \
+          -p 443:443 \
+          --env-file /home/ubuntu/.env \
+          -v /home/ubuntu/uploads:/app/Back-end/uploads \
+          -v /etc/letsencrypt:/etc/letsencrypt:ro \
+          ${{ secrets.DOCKER_USERNAME }}/api-sound-nation:latest
+

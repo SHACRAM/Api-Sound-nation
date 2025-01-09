@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   server:
     build:
@@ -7,16 +5,10 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 3000:3000  # Port interne du conteneur
-    labels:
-      - "traefik.enable=true"  # Activer le routage via Traefik
-      - "traefik.http.routers.nodeapp.rule=Host(`soundnation.duckdns.org`)"  # Le domaine que tu utilises
-      - "traefik.http.routers.nodeapp.entrypoints=websecure"  # Entrée HTTPS
-      - "traefik.http.routers.nodeapp.tls.certresolver=myresolver"  # Utilisation de Let's Encrypt pour le SSL
-      - "traefik.http.services.nodeapp.loadbalancer.server.port=3000"  # Port du conteneur sur lequel ton app Node écoute
-    networks:
-      - web
-
-networks:
-  web:
-    driver: bridge
+      - 443:443 # Port HTTPS
+      - 80:80   # Port HTTP pour redirection
+    volumes:
+      # Montez les certificats Let's Encrypt dans le conteneur
+      - /etc/letsencrypt/live/soundnation.duckdns.org:/etc/letsencrypt/live/soundnation.duckdns.org:ro
+      - /etc/letsencrypt/archive/soundnation.duckdns.org:/etc/letsencrypt/archive/soundnation.duckdns.org:ro
+      - /etc/letsencrypt/keys:/etc/letsencrypt/keys:ro
