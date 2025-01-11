@@ -11,7 +11,7 @@ const app = express();
 const cors = require('cors');
 
 app.use(cors({
-    origin: ['https://back-office-api-sound-nation.vercel.app', 'https://sound-nation.vercel.app'], 
+    origin: ['https://back-office-api-sound-nation.vercel.app', 'https://sound-nation.vercel.app', 'http://localhost:5173'], 
     credentials: true, 
   }));
 
