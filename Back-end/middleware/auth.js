@@ -6,7 +6,7 @@ const auth = (req, res, next) => {
 
     if (!token) {
         res.clearCookie('auth_token');
-        res.status(401).json({ status: false, message: 'Vous n\'êtes pas autorisé à accéder à cette ressource' });
+        // res.status(401).json({ status: false, message: 'Vous n\'êtes pas autorisé à accéder à cette ressource' });
         return res.redirect('/');
     }
 
