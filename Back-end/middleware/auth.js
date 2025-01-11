@@ -6,15 +6,13 @@ const auth = (req, res, next) => {
 
     if (!token) {
         res.clearCookie('auth_token');
-        res.status(401).json({ status: false, message: 'Vous n\'êtes pas autorisé à accéder à cette ressource' });
-        return res.redirect('/');
+        return res.redirect(req.get('origin'));
     }
 
     jwt.verify(token, process.env.TOKEN_SECRET, (error, user) => {
         if (error) {
             res.clearCookie('auth_token');
-            res.status(403).json({ status: false, message: 'Token invalide' });
-            return res.redirect('/'); 
+            return res.redirect(req.get('origin')); 
         }
         req.user = user;
         next();
