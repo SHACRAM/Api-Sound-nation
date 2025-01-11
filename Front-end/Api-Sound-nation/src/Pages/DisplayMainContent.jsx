@@ -10,21 +10,22 @@ export const DisplayMainContent = () => {
     const navigate = useNavigate();
     
     
-    // const checkAuth = async () => {
-    //     try {
-    //         await axios.get(`${import.meta.env.VITE_API_URL}/api/authentication/verify-auth`, { withCredentials: true });
-    //     } catch (error) {
-    //         if (error.response && error.response.status === 401) {
-    //             navigate("/");
-    //         }
-    //     }
-    // };
+    const checkAuth = async () => {
+        try {
+            await axios.get(`${import.meta.env.VITE_API_URL}/api/authentication/verify-auth`, { withCredentials: true });
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                console.log(error);
+                navigate("/");
+            }
+        }
+    };
 
-    // useEffect(() => {
-    //     checkAuth();
-    //     const interval = setInterval(checkAuth, 120000);
-    //     return () => clearInterval(interval);
-    // }, [navigate]);
+    useEffect(() => {
+        checkAuth();
+        const interval = setInterval(checkAuth, 120000);
+        return () => clearInterval(interval);
+    }, [navigate]);
     
 
     return (
