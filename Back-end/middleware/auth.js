@@ -6,15 +6,13 @@ const auth = (req, res, next) => {
 
     if (!token) {
         res.clearCookie('auth_token');
-        const baseUrl = `${req.protocol}://${req.get('host')}`;
-        return res.redirect(baseUrl); // Redirige vers l'URL de base si le token est manquant
+        return res.redirect(req.get('origin'));
     }
 
     jwt.verify(token, process.env.TOKEN_SECRET, (error, user) => {
         if (error) {
             res.clearCookie('auth_token');
-            const baseUrl = `${req.protocol}://${req.get('host')}`;
-            return res.redirect(baseUrl); // Redirige vers l'URL de base si le token est invalide
+            return res.redirect(req.get('origin')); 
         }
         req.user = user;
         next();
