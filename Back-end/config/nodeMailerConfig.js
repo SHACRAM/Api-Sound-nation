@@ -15,6 +15,7 @@ const transporter = nodemailer.createTransport({
 const sendWelcomeMail = async (email, username)=>{
 
     try{
+        console.log('envoie du mail');
         const mailOptions = {
             from: process.env.NODE_MAILER_AUTH_USER,
             to: email,
