@@ -9,6 +9,9 @@ ENV NODE_ENV development
 
 WORKDIR /usr/src/app
 
+RUN chown -R node:node /usr/src/app/uploads
+
+
 # Télécharger les dépendances comme une étape séparée pour tirer parti du cache de Docker
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
