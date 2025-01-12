@@ -15,6 +15,8 @@ COPY . .
 # Changer la propriété du dossier 'uploads' pour l'utilisateur 'node' après la copie des fichiers
 RUN chown -R node:node /usr/src/app/uploads
 
+RUN chmod -R 755 /usr/src/app/images
+
 # Télécharger les dépendances comme une étape séparée pour tirer parti du cache de Docker
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
