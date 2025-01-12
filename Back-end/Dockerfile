@@ -9,9 +9,11 @@ ENV NODE_ENV development
 
 WORKDIR /usr/src/app
 
+# Copier les fichiers sources dans l'image.
+COPY . .
+
+# Changer la propriété du dossier 'uploads' pour l'utilisateur 'node' après la copie des fichiers
 RUN chown -R node:node /usr/src/app/uploads
-
-
 
 # Télécharger les dépendances comme une étape séparée pour tirer parti du cache de Docker
 RUN --mount=type=bind,source=package.json,target=package.json \
@@ -21,9 +23,6 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 
 # Exécuter l'application en tant qu'utilisateur non-root.
 USER node
-
-# Copier le reste des fichiers sources dans l'image.
-COPY . .
 
 # Exposer le port sur lequel l'application écoute.
 EXPOSE 3000
