@@ -18,6 +18,13 @@ import { ModifyGroupePage } from './Pages/ModifyGroupePage';
 import { ModifyPartnerPage } from './Pages/ModifyPartnerPage';
 import { ModifyPlacePage } from './Pages/ModifyPlacePage';
 import { ModifyFaqPage } from './Pages/ModifyFaqPage';
+import { AddGroupe } from './Pages/AddGroupe';
+import {AddPartner} from './Pages/AddPartner';
+import {AddPlace} from './Pages/AddPlace';
+import {AddFaq} from './Pages/AddFaq';
+import {AddInfoPratique} from './Pages/AddInfoPratique';
+import { AddCguCookie } from './Pages/AddCguCookie';
+
 
 
 
@@ -43,6 +50,12 @@ function App() {
       <Route path='/ModifyPartnerPage' element={<ModifyPartnerPage/>}/>
       <Route path='/ModifyPlacePage' element={<ModifyPlacePage/>}/>
       <Route path='/ModifyFaqPage' element={<ModifyFaqPage/>}/>
+      <Route path='/AddGroupe' element={<AddGroupe/>}/>
+      <Route path='/AddPartner' element={<AddPartner/>}/>
+      <Route path='/AddPlace' element={<AddPlace/>}/>
+      <Route path='/AddFaq' element={<AddFaq/>}/>
+      <Route path='/AddInfoPratique' element={<AddInfoPratique/>}/>
+      <Route path='/AddCguCookie' element={<AddCguCookie/>}/>
       </Routes>
     </Router>
   )

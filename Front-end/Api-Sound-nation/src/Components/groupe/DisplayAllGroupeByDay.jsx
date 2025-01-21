@@ -38,6 +38,7 @@ export const DisplayAllGroupeByDay = ({jour, dateConcert, setInfoModifyGroupe, h
                 setIsSuccess(true);
                 setTimeout(()=>{
                     displayDeleteGroupeComponent(false);
+                    setMessageDeleteGroupe("")
                     handleAllGroupes();
                 }, 2000)
             } else{

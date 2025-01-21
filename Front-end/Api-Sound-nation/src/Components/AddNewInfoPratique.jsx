@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 // Composant qui permet d'ajouter une nouvelle information pratique
 export const AddNewInfoPratique = ({handleClickInfoPratique, getData}) => {
     const navigate = useNavigate();
@@ -21,8 +22,7 @@ export const AddNewInfoPratique = ({handleClickInfoPratique, getData}) => {
                 setMessage(response.data.message);
                 setIsSuccess(true);
                 setTimeout(()=>{
-                    handleClickInfoPratique(0);
-                    getData();
+                    navigate('/InfoPratique');
                 }, 2000);
             }
 

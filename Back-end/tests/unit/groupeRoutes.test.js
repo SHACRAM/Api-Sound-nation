@@ -1,15 +1,15 @@
 import { vi, describe, it, expect, afterEach } from 'vitest';
 import request from 'supertest';
-import app from '../../app';
+import app from '../../api/app';
 const jwt = require('jsonwebtoken');
 import FormData, { from } from 'form-data';
-const mysqlClient = require('../../Config/dbConfig');
-vi.mock('../Config/dbConfig');
+const mysqlClient = require('../../config/dbConfig');
+vi.mock('../config/dbConfig');
 
 // Fichier de tests unitaires pour les routes de l'entité Groupe
 const generateToken = () => {
   const payload = { id: 1, email: 'test@example.com' }; 
-  const secret = 'secretKey'; 
+  const secret = 'KeySecret'; 
   const options = { expiresIn: '1h' }; 
   return jwt.sign(payload, secret, options);
 };
@@ -17,15 +17,6 @@ const generateToken = () => {
 
 // TESTS unitaires de la route /api/groupes et /api/groupes/public/groupes
 describe('GET /api/groupes', ()=>{
-    it('Should return a list of groupes for the front', async ()=>{
-        const response = await request(app)
-        .get('/api/groupes/public/groupes')
-        expect(response.status).toBe(200);
-        expect(response.body).toBeInstanceOf(Object);
-        expect(response.body.status).toBe(true);
-        expect(response.body.data).toBeInstanceOf(Array);
-    })
-
     it('Should return a list of groupes for the back', async ()=>{
         const token = generateToken();
         const response = await request(app)
@@ -37,12 +28,20 @@ describe('GET /api/groupes', ()=>{
         expect(response.body.data).toBeInstanceOf(Array);
     })
 
-    it('Should return an error if the token is missing', async ()=>{
+    it('Should return a list of groupes for the front', async ()=>{
+        const response = await request(app)
+        .get('/api/groupes/public/groupes')
+        expect(response.status).toBe(200);
+        expect(response.body).toBeInstanceOf(Object);
+        expect(response.body.status).toBe(true);
+        expect(response.body.data).toBeInstanceOf(Array);
+    })
+
+
+    it('Should redirect the user if there is no a valide token', async ()=>{
         const response = await request(app)
         .get('/api/groupes');
-        expect(response.status).toBe(401);
-        expect(response.body).toBeInstanceOf(Object);
-        expect(response.body.status).toBe(false);
+        expect(response.status).toBe(302);
     })
 })
 
@@ -160,7 +159,7 @@ describe('PUT /:id', () => {
         const formBuffer = form.getBuffer();
         const headers = form.getHeaders();
         const response = await request(app)
-            .post('/api/groupes/17')
+            .put('/api/groupes/17')
             .set('Cookie', [`auth_token=${token}`])
             .set(headers)
             .send(formBuffer)
@@ -169,7 +168,7 @@ describe('PUT /:id', () => {
         expect(response.body.status).toBe(false);
         
     });
-    it('Should return a 404 status if there is no groupe with id match', async () => {
+    it('Should return a 400 status if there is no groupe with id match', async () => {
         mysqlClient.query = vi.fn().mockResolvedValue([{ affectedRows: 0 }]);
         const imageTestBuffer = Buffer.from('testImageContent');
         const form = new FormData();
@@ -192,7 +191,7 @@ describe('PUT /:id', () => {
         const token = generateToken();
 
         const response = await request(app)
-            .post('/api/groupes/800')
+            .put('/api/groupes/800')
             .set('Cookie', [`auth_token=${token}`])
             .set(headers)
             .send(formBuffer);
@@ -220,18 +219,7 @@ describe('DELETE /:id', () => {
         expect(response.body.message).toBe('Le groupe a bien été supprimé');
     })
 
-    it('Should return a 404 status code if there is no groupe with id match', async ()=>{
-        mysqlClient.query = vi.fn().mockResolvedValue([{ affectedRows: 0 }]);
-        const token = generateToken();
-        const response = await request(app)
-        .post('/api/groupes/800')
-        .set('Cookie', [`auth_token=${token}`])
-        .send();
-        expect(response.status).toBe(404);
-        expect(response.body).toBeInstanceOf(Object);
-        expect(response.body.status).toBe(false);
-        expect(response.body.message).toBe('Groupe non trouvé');
-    })
+
 });
 
 

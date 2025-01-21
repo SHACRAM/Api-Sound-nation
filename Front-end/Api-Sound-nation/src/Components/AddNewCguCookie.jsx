@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 // Composant qui permet d'ajouter une nouvelle cgu ou cookie
 export const AddNewCguCookie = ({handleClickCguCookie, getData}) => {
     const [message, setMessage] = useState("");
@@ -8,6 +9,7 @@ export const AddNewCguCookie = ({handleClickCguCookie, getData}) => {
     const [cat, setCat] = useState("");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,8 +27,7 @@ export const AddNewCguCookie = ({handleClickCguCookie, getData}) => {
                 setIsSuccess(true);
                 setTimeout(()=>{
                     setMessage('');
-                    handleClickCguCookie(0);
-                    getData();
+                    navigate('/CguCookie');
                 }, 2000);
             }
         }catch(error){

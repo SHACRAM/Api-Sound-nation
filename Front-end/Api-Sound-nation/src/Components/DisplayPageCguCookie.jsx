@@ -66,18 +66,17 @@ useEffect(()=>{
 
 
     const pageCguCookie = [
-        <DisplayAllCguCookie cgu={cgu} cookie={cookie} pData={pData} getData={getData} />,
-        <AddNewCguCookie handleClickCguCookie={handleClickCguCookie} getData={getData} />,
+        <DisplayAllCguCookie cgu={cgu} cookie={cookie} pData={pData} getData={getData} />
     ] 
 
     return(
         <div className="">
         <h1 className="text-white text-[1.5rem] text-center p-2" onClick={() => handleClickCguCookie(0)}>CGU / cookies / données personnelles</h1>
         <div className="hidden sm:flex sm:flex-col sm:fixed sm:left-0 sm:gap-[3em] sm:ml-2 sm:mt-[1em] sm:text-[1rem] border rounded-md">
-            <NavLink onClick={() => handleClickCguCookie(1)} className='text-white flex justify-center rounded hover:bg-[#858383] w-[11em] pl-1'>Ajouter une CGU, un cookie ou une donnée personnelle</NavLink>
+            <NavLink to='/AddCguCookie' className='text-white flex justify-center rounded hover:bg-[#858383] w-[11em] pl-1'>Ajouter une CGU, un cookie ou une donnée personnelle</NavLink>
         </div>
         <div className="bg-[#5D5D5D] flex justify-around p-2 sm:hidden ">
-        <NavLink onClick={() => handleClickCguCookie(1)} className='text-white border p-1 rounded-md text-center'>Ajouter une CGU, un cookie ou une donnée personnelle</NavLink>
+        <NavLink to='/AddCguCookie' className='text-white border p-1 rounded-md text-center'>Ajouter une CGU, un cookie ou une donnée personnelle</NavLink>
         </div>
         <div className="">
             {pageCguCookie[activeComponentCguCookie]}

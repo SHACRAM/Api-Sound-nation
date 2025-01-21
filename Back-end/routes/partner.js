@@ -1,4 +1,4 @@
-const mysqlClient = require('../config/dbConfig');
+const mysqlClient = require('../config/dbConfig'); 
 const express = require("express");
 const router = express.Router();
 const multer = require('../middleware/multerConfig');

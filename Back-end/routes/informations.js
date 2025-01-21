@@ -27,7 +27,7 @@ router.post('/addFaq', auth, async (req,res)=>{
         const [result] = await mysqlClient.query(sql, [question, reponse]);
 
         if(result.affectedRows === 1){
-            console.log('enttrée dans la fonction')
+            console.log('entrée dans la fonction')
             res.status(201).json({status:true, message:'La question / réponse a bien été ajoutée'});
         }
 
@@ -387,7 +387,7 @@ router.delete('/cguCookie/:id', auth, async (req,res)=>{
     
 
     try{
-        if(!id){
+        if(!id || isNaN(id)){
             throw new Error('CHAMP MANQUANT')
         }
         const [result] = await mysqlClient.query(sql, [id]);

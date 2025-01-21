@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // Permet d'ajouter un nouveau groupe
 export const AddNewGroupe = ({setActiveComponentGroupe}) => {
@@ -11,6 +12,7 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
     const [alt, setAlt] = useState("");
     const [bio, setBio] = useState("");
     const [messageAddGroupe, setMessageAddGroupe] = useState("");
+    const navigate = useNavigate();
     
 
     const handleFileChange = (e) => {
@@ -48,7 +50,7 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
             if (response.data.status) {
                 setMessageAddGroupe(response.data.message);
                 setTimeout(() => {
-                    setActiveComponentGroupe(0);
+                    navigate('/Groupe');
                 }, 2000);
             } else {
                 setMessageAddGroupe(response.data.message);

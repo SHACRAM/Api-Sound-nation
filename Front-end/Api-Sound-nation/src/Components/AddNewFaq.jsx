@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 export const AddNewFaq = ({handleClickFaq, getDataFaq}) => {
@@ -8,6 +9,8 @@ export const AddNewFaq = ({handleClickFaq, getDataFaq}) => {
     const [reponse, setReponse] = useState("");
     const [message, setMessage] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);
+    const navigate = useNavigate();
+    
     // Composant qui permet d'ajouter une question / réponse à la faq
 
 
@@ -20,9 +23,8 @@ export const AddNewFaq = ({handleClickFaq, getDataFaq}) => {
                 setMessage(response.data.message);
                 setIsSuccess(true);
                 setTimeout(()=>{
-                    handleClickFaq(0);
-                    getDataFaq(); 
-                }, 2000);
+                    navigate('/Faq');
+                }, 1500);
                 
             }else{
                 setMessage(response.data.message);
