@@ -107,7 +107,7 @@ router.put('/:id', auth, multer.single('imageGroupe'), async (req, res) => {
 
     const { id } = req.params;
     const { name, hour, date, scene, alt, bio } = req.body;
-    console.log('PUT /:id appelé avec ID :', id);
+    
 
 
     const sql = 'UPDATE Groupe SET groupe_name = ?, groupe_hour =?, groupe_date=?, groupe_scene=?, groupe_image_name=?, groupe_image_path=?, groupe_image_alt=?, groupe_bio=? WHERE id = ?';

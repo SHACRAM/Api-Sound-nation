@@ -56,8 +56,7 @@ export const DisplayPagePartner = ({isComingFromPageModifyPartner}) => {
     
     
     const pagesPartner =[
-        <AllPartners setInfoModifyPartner={setInfoModifyPartner} setActiveComponentPartner={setActiveComponentPartner} dataPartners={dataPartners} message={message} categoryPartner={categoryPartner} handleAllPartners={handleAllPartners} />,
-        <AddNewPartner setActiveComponentPartner={setActiveComponentPartner} categoryPartner={categoryPartner} />,
+        <AllPartners setInfoModifyPartner={setInfoModifyPartner} setActiveComponentPartner={setActiveComponentPartner} dataPartners={dataPartners} message={message} categoryPartner={categoryPartner} handleAllPartners={handleAllPartners} />
     ];
 
 
@@ -77,11 +76,11 @@ export const DisplayPagePartner = ({isComingFromPageModifyPartner}) => {
             <h1  onClick={() => handleClickPartner(0)}className="text-white text-[1.5rem] sm:hidden">Nos partenaires</h1>
         </div>
         <div className="bg-[#5D5D5D] w-[100vw] flex justify-around p-2 sm:hidden ">
-            <NavLink onClick={() => handleClickPartner(1)} className='text-white border p-1 rounded-md'>Ajouter un partenaire</NavLink>
+            <NavLink to='/AddPartner' state={categoryPartner} className='text-white border p-1 rounded-md'>Ajouter un partenaire</NavLink>
             
         </div>
         <div className="hidden sm:flex sm:flex-col sm:fixed sm:left-0 sm:gap-[3em] sm:ml-2 sm:mt-[3em] sm:text-[1rem] border rounded-md">
-                <NavLink onClick={() => handleClickPartner(1)} className='text-white flex justify-center rounded hover:bg-[#858383] w-[11em] pl-1'>Ajouter un partenaire</NavLink>
+                <NavLink to='/AddPartner' state={categoryPartner} className='text-white flex justify-center rounded hover:bg-[#858383] w-[11em] pl-1'>Ajouter un partenaire</NavLink>
                 
         </div>
         <div className="w-[100%]"> 

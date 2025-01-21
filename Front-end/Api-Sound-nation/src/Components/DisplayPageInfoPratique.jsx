@@ -49,8 +49,7 @@ export const DisplayPageInfoPratique = ({fromModifyPage}) => {
     }, [fromModifyPage]);
 
     const pageInfoPratique = [
-        <DisplayAllInfoPratique data={data}  handleInfoModifyInfoPratique={handleInfoModifyInfoPratique} getData={getData}/>,
-        <AddNewInfoPratique handleClickInfoPratique={handleClickInfoPratique} getData={getData} />,
+        <DisplayAllInfoPratique data={data}  handleInfoModifyInfoPratique={handleInfoModifyInfoPratique} getData={getData}/>
     ]
 
 
@@ -58,10 +57,10 @@ export const DisplayPageInfoPratique = ({fromModifyPage}) => {
         <div className="">
         <h1 className="text-white text-[1.5rem] text-center p-2" onClick={() => handleClickInfoPratique(0)}>Informations pratiques</h1>
         <div className="hidden sm:flex sm:flex-col sm:fixed sm:left-0 sm:gap-[3em] sm:ml-2 sm:mt-[1em] sm:text-[1rem] border rounded-md">
-            <NavLink onClick={() => handleClickInfoPratique(1)} className='text-white flex justify-center rounded hover:bg-[#858383] w-[11em] pl-1'>Ajouter une information</NavLink>
+            <NavLink to='/AddInfoPratique' className='text-white flex justify-center rounded hover:bg-[#858383] w-[11em] pl-1'>Ajouter une information</NavLink>
         </div>
         <div className="bg-[#5D5D5D] flex justify-around p-2 sm:hidden ">
-        <NavLink onClick={() => handleClickInfoPratique(1)} className='text-white border p-1 rounded-md'>Ajouter une information</NavLink>
+        <NavLink to='/AddInfoPratique' className='text-white border p-1 rounded-md'>Ajouter une information</NavLink>
         </div>
         <div className="">
             {pageInfoPratique[activeComponentInfoPratique]}

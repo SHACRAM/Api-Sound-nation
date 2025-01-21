@@ -35,6 +35,7 @@ export const DisplayAllFaq = ({infoModifyFaq, handleClickFaq, data, getDataFaq }
                 setIsSuccess(true);
                 setTimeout(()=>{
                     displayDeletePage(false);
+                    setMessageDelete('');
                     handleClickFaq(0);
                     getDataFaq();
                 }, 2000);

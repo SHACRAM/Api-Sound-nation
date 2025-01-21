@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 // Composant qui permet d'ajouter un nouveau lieu
-export const AddNewPlace = ({setActiveComponentPlace, placeCategory, handleAllPlace}) => {
+export const AddNewPlace = ({setActiveComponentPlace, placeCategory}) => {
     const [messageAddPlace, setMessageAddPlace] = useState("");
     const [newCategory, setNewCategory] = useState(false);
     const [color, setColor] = useState("");
@@ -18,6 +19,8 @@ export const AddNewPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
     const [imagePlace, setImagePlace] = useState(null);
     const [altImage, setAltImage] = useState("");
     const [info, setInfo] = useState("");
+    const navigate = useNavigate();
+    
 
     const handleCategoryChange = (e) => {
         const selectedValue = e.target.value;
@@ -84,9 +87,8 @@ export const AddNewPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
             if(response.data.status){
                 setMessageAddPlace(response.data.message);
                 setTimeout(() => {
-                    setActiveComponentPlace(0);
-                    handleAllPlace();
-                }, 2000);
+                    navigate('/Carte');
+                }, 1500);
             } else{
                 setMessageAddPlace(response.data.message);
             }

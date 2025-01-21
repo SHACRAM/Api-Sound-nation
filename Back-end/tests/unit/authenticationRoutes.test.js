@@ -1,18 +1,18 @@
 import { vi, describe, it, expect, afterEach } from 'vitest';
 import request from 'supertest';
-import app from '../../app';
+import app from '../../api/app';
 const jwt = require('jsonwebtoken');
 import bcrypt from 'bcrypt';
 import FormData, { from } from 'form-data';
 import exp from 'constants';
-const mysqlClient = require('../../Config/dbConfig');
-vi.mock('../Config/dbConfig');
+const mysqlClient = require('../../config/dbConfig');
+vi.mock('../config/dbConfig');
 
 
 // Fichier de test pour les routes de la table authentication
 const generateToken = () => {
     const payload = { id: 1, email: 'test@example.com' }; 
-    const secret = 'secretKey'; 
+    const secret = 'KeySecret'; 
     const options = { expiresIn: '1h' }; 
     return jwt.sign(payload, secret, options);
   };

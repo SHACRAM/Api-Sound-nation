@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AddNewPartner = ({setActiveComponentPartner, categoryPartner})=>{
     const [name, setName] = useState("");
@@ -10,6 +11,7 @@ export const AddNewPartner = ({setActiveComponentPartner, categoryPartner})=>{
     const [alt, setAlt] = useState("");
     const [messageAddPartner, setMessageAddPartner] = useState("");
     const [selectedCategory, setSelectedCategory] = useState(false);
+    const navigate = useNavigate();
 
     const handleCategoryChange = (e) => {
         const selectedValue = e.target.value;
@@ -57,8 +59,8 @@ export const AddNewPartner = ({setActiveComponentPartner, categoryPartner})=>{
             if(response.data.status){
                 setMessageAddPartner(response.data.message);
                 setTimeout(() => {
-                    setActiveComponentPartner(0);
-                }, 2000);
+                    navigate('/Partenaire');
+                }, 1500);
             }else{
                 setMessageAddPartner(response.data.message);
             }

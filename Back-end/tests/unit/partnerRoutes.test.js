@@ -1,15 +1,15 @@
 import { vi, describe, it, expect, afterEach } from 'vitest';
 import request from 'supertest';
-import app from '../../app';
+import app from '../../api/app';
 const jwt = require('jsonwebtoken');
 import FormData, { from } from 'form-data';
-const mysqlClient = require('../../Config/dbConfig');
-vi.mock('../Config/dbConfig');
+const mysqlClient = require('../../config/dbConfig');
+vi.mock('../config/dbConfig');
 
 // Fichier de tests unitaires pour les routes de l'entité Partner
 const generateToken = () => {
     const payload = { id: 1, email: 'test@example.com' }; 
-    const secret = 'secretKey'; 
+    const secret = 'KeySecret'; 
     const options = { expiresIn: '1h' }; 
     return jwt.sign(payload, secret, options);
   };
@@ -49,17 +49,15 @@ describe('Get all partners /api/patners', () => {
         ]);
     });  
     
-    it('Should return an error message if the user is not an Admin', async () => {
+    it('Should return an error and redirect the user if the user is not an Admin', async () => {
         const response = await request(app)
             .get('/api/partners')
-        expect(response.status).toBe(401);
-        expect(response.body).toBeInstanceOf(Object);
-        expect(response.body.status).toBe(false);
+        expect(response.status).toBe(302);
     });
 });
 
 // Route qui permet de récupèrer tous les partenaires côté front
-describe('GET /public/partners' , ()=>{
+describe('GET /getPartners/public' , ()=>{
     it(('Should return all parnters to the front and 200 status code'), async () => {
         mysqlClient.query = vi.fn().mockResolvedValue([[
             { 
@@ -74,7 +72,7 @@ describe('GET /public/partners' , ()=>{
         ]]);
     
         const response = await request(app)
-            .get('/api/partners/public/partners');
+            .get('/api/partners/getPartners/public');
             
         expect(response.status).toBe(200);
         expect(response.body.status).toBe(true);
@@ -94,7 +92,8 @@ describe('GET /public/partners' , ()=>{
     it('Should return a 404 status code if there is no partner', async ()=>{
         mysqlClient.query = vi.fn().mockResolvedValue([[]]);
         const response = await request(app)
-            .get('/api/partners/public/partners');
+            .get('/api/partners/getPartners/public');
+
         expect(response.status).toBe(404);
         expect(response.body).toBeInstanceOf(Object);
         expect(response.body.status).toBe(false);
@@ -174,7 +173,7 @@ describe('POST api/partners/modifyPartner',  ()=>{
         const headers = form.getHeaders();
 
         const response = await request(app)
-            .post('/api/partners/modifyPartner')
+            .put('/api/partners/partner/1')
             .set('Cookie', [`auth_token=${token}`])
             .set(headers)
             .send(formBuffer);
@@ -201,7 +200,7 @@ describe('POST api/partners/modifyPartner',  ()=>{
         const headers = form.getHeaders();
 
         const response = await request(app)
-            .post('/api/partners/modifyPartner')
+            .put('/api/partners/partner/1')
             .set('Cookie', [`auth_token=${token}`])
             .set(headers)
             .send(formBuffer);
@@ -213,7 +212,7 @@ describe('POST api/partners/modifyPartner',  ()=>{
         expect(response.body.message).toBe('Aucune image envoyée');
     });
 
-    it('Should return a 404 status code ans a message error if the parnter is not found', async ()=>{
+    it('Should return a 404 status code ans a message error if the partner is not found', async ()=>{
         const token = generateToken();
         const form = new FormData();
         const imageTestBuffer = Buffer.from('testImageContent');
@@ -228,11 +227,10 @@ describe('POST api/partners/modifyPartner',  ()=>{
         const headers = form.getHeaders();
 
         const response = await request(app)
-            .post('/api/partners/modifyPartner')
+            .put('/api/partners/partner/130')
             .set('Cookie', [`auth_token=${token}`])
             .set(headers)
             .send(formBuffer);
-            console.log(response.body);
 
 
         expect(response.status).toBe(404);
@@ -249,9 +247,9 @@ describe('POST api/partners/deletePartner', ()=>{
         mysqlClient.query = vi.fn().mockResolvedValue([{affectedRows: 1}]);
 
         const response = await request(app)
-        .post('/api/partners/deletePartner')
+        .delete('/api/partners/partner/1')
         .set('Cookie', [`auth_token=${token}`])
-        .set({id: 1});
+        
 
         expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
@@ -264,9 +262,9 @@ describe('POST api/partners/deletePartner', ()=>{
         mysqlClient.query = vi.fn().mockResolvedValue([{affectedRows: 0}]);
 
         const response = await request(app)
-            .post('/api/partners/deletePartner')
+            .delete('/api/partners/partner/130')
             .set('Cookie', [`auth_token=${token}`])
-            .set({id: 130});
+            
 
         expect(response.status).toBe(404);
         expect(response.body).toBeInstanceOf(Object);

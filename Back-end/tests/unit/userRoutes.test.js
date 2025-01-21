@@ -1,16 +1,16 @@
 import { vi, describe, it, expect, afterEach } from 'vitest';
 import request from 'supertest';
-import app from '../../app';
+import app from '../../api/app';
 const jwt = require('jsonwebtoken');
 import FormData, { from } from 'form-data';
 import exp from 'constants';
-const mysqlClient = require('../../Config/dbConfig');
-vi.mock('../Config/dbConfig');
+const mysqlClient = require('../../config/dbConfig');
+vi.mock('../config/dbConfig');
 
 // Fichier de test pour les routes de la table Users
 const generateToken = () => {
     const payload = { id: 1, email: 'test@example.com' }; 
-    const secret = 'secretKey'; 
+    const secret = 'KeySecret'; 
     const options = { expiresIn: '1h' }; 
     return jwt.sign(payload, secret, options);
   };
@@ -22,7 +22,7 @@ describe('POST /signup for add users in database', ()=>{
         mysqlClient.query = vi.fn().mockResolvedValue([{existingUser: 0}]);
         const response = await request(app)
             .post('/api/users/signup')
-            .send({email: 'test',
+            .send({email: 'test@test.com',
                 password: 'testPassword',
                 identifiant: 'test',
                 role: 'user'
@@ -36,7 +36,7 @@ describe('POST /signup for add users in database', ()=>{
     it('Should return 400 status code and a message if the user password is less than 8 characters length ', async ()=>{
         const response = await request(app)
             .post('/api/users/signup')
-            .send({email: 'test',
+            .send({email: 'test@test.com',
                 password: 'test',
                 identifiant: 'test',
                 role: 'user'
@@ -64,9 +64,9 @@ describe('POST /signup for add users in database', ()=>{
         mysqlClient.query = vi.fn().mockResolvedValue([[{existingUser: 1}]]);
         const response = await request(app)
             .post('/api/users/signup')
-            .send({email: 'test',
-                password: 'testPassword',
+            .send({email: 'test@test.com',
                 identifiant: 'test',
+                password: 'testPassword',
                 role: 'user'
             });
         
@@ -112,12 +112,12 @@ describe('GET /information/:email for get user information by email', ()=>{
 })
 
 // TESTS unitaires pour la route de modification des informations d'un utilisateur
-describe('POST /updateUser/:email for update user information', ()=>{
+describe('PUT /updateUser/:email for update user information', ()=>{
     it('Should return a 200 status code and message if the user informations are updated', async ()=>{
         mysqlClient.query = vi.fn().mockResolvedValue([[{rows: 1, updateResult: 1}]]);
         const response = await request(app)
-            .post('/api/users/updateUser/:email')
-            .send({userEmail: 'test@test.com', name:'test', email: 'testEmail@test.com'})
+            .put('/api/users/updateUser/test@test.com')
+            .send({name:'test', email: 'testEmail@test.com'})
         
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
@@ -129,7 +129,7 @@ describe('POST /updateUser/:email for update user information', ()=>{
     it('Should return a 400 status code and an error message if the email does not exist', async ()=>{
         mysqlClient.query = vi.fn().mockResolvedValue([[]]);
         const response = await request(app)
-            .post('/api/users/updateUser/test@test.com')
+            .put('/api/users/updateUser/test@test.com')
             .send({ name: 'Test', email: 'new@test.com' });
 
         expect(response.statusCode).toBe(404);
@@ -139,7 +139,7 @@ describe('POST /updateUser/:email for update user information', ()=>{
 
     it('Should return a 400 status code and an error message if name or email is missing', async ()=>{
         const response = await request(app)
-            .post('/api/users/updateUser/test@test.com')
+            .put('/api/users/updateUser/test@test.com')
             .send({name: 'test'})
         
         expect(response.statusCode).toBe(400);
@@ -211,13 +211,13 @@ describe('GET /favoris/:email for get user favorites list', ()=>{
 
 
 // TESTS unitaires pour supprimer un utilisateur de la base de données
-describe('DELETE /deleteAccount/:email for delete user account', ()=>{
+describe('DELETE /account/:email for delete user account', ()=>{
     it('Should return a 200 status code ans a message if the user account is deleted', async ()=>{
         const token = generateToken();
         mysqlClient.query = vi.fn().mockResolvedValueOnce([{affectedRows: 1}]);
 
         const response = await request(app)
-            .post('/api/users/deleteAccount/test@test.com')
+            .delete('/api/users/account/test@test.com')
             .set('Cookie', [`auth_token=${token}`])
 
         expect(response.statusCode).toBe(200);
@@ -259,18 +259,17 @@ describe('GET / for get all users', ()=>{
 })
 
 // TESTS unitaires qui permet de modifier le role d'unutilisateur
-describe('POST /modifyRole for modify user role', ()=>{
+describe('PUT /role for modify user role', ()=>{
     it('Should return a 200 status code and a message if the user role is updated', async ()=>{
         const token = generateToken();
 
         mysqlClient.query = vi.fn().mockResolvedValueOnce([{affectedRows: 1}]);
 
         const response = await request(app)
-            .post('/api/users/modifyRole')
+            .put('/api/users/role/test@test.com')
             .set('Cookie', [`auth_token=${token}`])
             .send({
                 newRole: 'admin',
-                emailToModify: 'test@test.com'
             })
 
         expect(response.statusCode).toBe(200);
@@ -285,7 +284,7 @@ describe('POST /modifyRole for modify user role', ()=>{
         mysqlClient.query = vi.fn().mockResolvedValueOnce([{affectedRows: 1}]);
 
         const response = await request(app)
-            .post('/api/users/modifyRole')
+            .put('/api/users/role/test@test.com')
             .set('Cookie', [`auth_token=${token}`])
             .send({
                
