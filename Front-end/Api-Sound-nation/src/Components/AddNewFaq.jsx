@@ -61,7 +61,7 @@ export const AddNewFaq = ({handleClickFaq, getDataFaq}) => {
                 </form>
             </div>
             {message && (
-                <p className={`flex justify-center w-[80%] p-3 text-white ${isSuccess ? 'bg-green-500' : 'bg-red-600'} md:w-[15em]`}>
+                <p className={`flex justify-center w-[80%] p-3 text-black ${isSuccess ? 'bg-green-500' : 'bg-red-600'} md:w-[15em]`}>
                     {message}
                 </p>
             )}

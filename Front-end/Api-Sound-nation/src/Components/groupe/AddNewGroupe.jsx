@@ -11,6 +11,7 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
     const [scene, setScene] = useState("");
     const [alt, setAlt] = useState("");
     const [bio, setBio] = useState("");
+    const [isSuccess, setIsSuccess] = useState(false);
     const [messageAddGroupe, setMessageAddGroupe] = useState("");
     const navigate = useNavigate();
     
@@ -49,6 +50,7 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
             });
             if (response.data.status) {
                 setMessageAddGroupe(response.data.message);
+                setIsSuccess(true);
                 setTimeout(() => {
                     navigate('/Groupe');
                 }, 2000);
@@ -57,8 +59,10 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
             }
         } catch (error) {
             if (error.response) {
+                setIsSuccess(false);
                 setMessageAddGroupe(error.response.data.message);
             }else{
+                setIsSuccess(false);
                 setMessageAddGroupe('Erreur serveur merci d\'essayer plus tard');
             }
         }
@@ -74,7 +78,7 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="hour" className="text-white sm:text-[1.3rem]">Heure du concert</label> 
-                    <select className="rounded bg-white sm:w-[15em] sm:h-7" id="hour" onChange={(e) => setHour(parseInt(e.target.value))} >
+                    <select className="rounded bg-white sm:w-[15em] sm:h-7 pl-1" id="hour" onChange={(e) => setHour(parseInt(e.target.value))} >
                         <option value="">Choisir une heure</option>
                         <option value="14">14h</option>
                         <option value="15">15h</option>
@@ -90,7 +94,7 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="date" className="text-white sm:text-[1.3rem]">Date du concert</label>
-                    <select className="rounded bg-white sm:w-[15em] sm:h-7" id="date" onChange={(e) => setDate(e.target.value)} >
+                    <select className="rounded bg-white sm:w-[15em] sm:h-7 pl-1" id="date" onChange={(e) => setDate(e.target.value)} >
                         <option value="">Choisir une date</option>
                         <option value="Vendredi 22 juillet">Vendredi 22 juillet</option>
                         <option value="Samedi 23 juillet">Samedi 23 Juillet</option>
@@ -99,7 +103,7 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="scene" className="text-white sm:text-[1.3rem]">Scène</label>
-                    <select className="rounded bg-white sm:w-[15em] sm:h-7" id="scene" onChange={(e) => setScene(e.target.value)} >
+                    <select className="rounded bg-white sm:w-[15em] sm:h-7 pl-1" id="scene" onChange={(e) => setScene(e.target.value)} >
                         <option value="">Choisir une scène</option>
                         <option value="1">Scène 1</option>
                         <option value="2">Scène 2</option>
@@ -110,7 +114,7 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[25em]">
                     <label htmlFor="image" className="text-white sm:text-[1.3rem]">Image du groupe</label>
-                    <input className="rounded bg-white sm:w-[25em] sm:h-7" type="file" id="image" accept="image/*" onChange={handleFileChange} />
+                    <input className="rounded bg-white sm:w-[25em] " type="file" id="image" accept="image/*" onChange={handleFileChange} />
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="alt" className="text-white sm:text-[1.3rem]">Texte alternatif</label>
@@ -124,7 +128,11 @@ export const AddNewGroupe = ({setActiveComponentGroupe}) => {
                     <button type="submit" className="text-white bg-[#023E33] hover:opacity-80 p-2 w-[7em] h-[3em] rounded-md sm:text-[1.2rem]">Ajouter</button>
                 </div>
             </form>
-            {messageAddGroupe && <p className="text-white">{messageAddGroupe}</p>}
+            {messageAddGroupe && (
+                <p className={`flex justify-center w-[80%] p-3 ${isSuccess ? 'bg-green-500 text-black' : 'bg-red-600 text-white'} md:w-[20em]`}>
+                    {messageAddGroupe}
+                </p>
+            )}
         </div>
     );
 };

@@ -41,6 +41,6 @@ export const NavBarDesktop = ({handleLogOut, isInfoClicked, setIsInfoClicked}) =
                         <NavLink className='text-white text-[1.2rem] p-2 hover:bg-[#023E33] rounded-md focus:bg-[#023E33] md:text-[1.2rem]' to='/CguCookie'>CGU & cookies</NavLink>
                     </div>
                     }
-            </div>
+        </div>
     </div>)
 };

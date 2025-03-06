@@ -73,12 +73,16 @@ export const DisplayPageCarte = ({isComingFromModifyPlace}) => {
         </div>
         <div className="bg-[#5D5D5D] w-[100vw] flex justify-around p-2 sm:hidden ">
             <NavLink to='/AddPlace' state={placeCategory} className='text-white border p-1 rounded-md'>Ajouter un lieu</NavLink>
-            
         </div>
+        <div className="bg-[#5D5D5D] w-[100vw] flex justify-around p-2 sm:hidden ">
+                            <NavLink to='https://sound-nation.vercel.app/Carte' className='text-white border p-1 rounded-md' target="blank">Accéder au site</NavLink>
+                        </div>
         <div className="hidden sm:flex sm:flex-col sm:fixed sm:left-0 sm:gap-[3em] sm:ml-2 sm:mt-[3em] sm:text-[1.2rem] border rounded-md">
                 <NavLink to='/AddPlace' state={placeCategory} className='text-white flex justify-center rounded hover:bg-[#858383] w-[9em] pl-1'>Ajouter un lieu</NavLink>
-                
         </div>
+        <div className="hidden sm:flex sm:flex-col sm:fixed sm:left-0 sm:gap-[3em] sm:ml-2 sm:mt-[6em] sm:text-[1.2rem] border rounded-md">
+                                <NavLink to='https://sound-nation.vercel.app/Carte' className='text-white flex justify-center rounded hover:bg-[#858383] w-[9em] pl-1' target="blank">Accéder au site</NavLink>
+                        </div>
         <div className="w-[100%]"> 
             {pagesPlace[activeComponentPlace]} 
 

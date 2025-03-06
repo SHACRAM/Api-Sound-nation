@@ -111,7 +111,7 @@ export const ModifyGroupe = ({groupeData,setActiveComponentGroupe}) => {
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[25em]">
                     <label htmlFor="image" className="text-white sm:text-[1.3rem]">Image du groupe</label>
-                    <input className="rounded bg-[#B6B6B6] sm:w-[25em] sm:h-7" type="file" id="image" accept="image/*" required onChange={handleFileChange}/>
+                    <input className="rounded bg-[#B6B6B6] sm:w-[25em]" type="file" id="image" accept="image/*" required onChange={handleFileChange}/>
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="alt" className="text-white sm:text-[1.3rem]">Texte alternatif</label>

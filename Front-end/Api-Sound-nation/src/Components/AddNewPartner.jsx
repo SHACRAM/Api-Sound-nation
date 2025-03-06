@@ -11,6 +11,7 @@ export const AddNewPartner = ({setActiveComponentPartner, categoryPartner})=>{
     const [alt, setAlt] = useState("");
     const [messageAddPartner, setMessageAddPartner] = useState("");
     const [selectedCategory, setSelectedCategory] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
     const navigate = useNavigate();
 
     const handleCategoryChange = (e) => {
@@ -58,15 +59,18 @@ export const AddNewPartner = ({setActiveComponentPartner, categoryPartner})=>{
 
             if(response.data.status){
                 setMessageAddPartner(response.data.message);
+                setIsSuccess(true);
                 setTimeout(() => {
                     navigate('/Partenaire');
                 }, 1500);
             }else{
                 setMessageAddPartner(response.data.message);
+                setIsSuccess(false);
             }
 
         }catch (error){
             setMessageAddPartner("Erreur serveur, merci d'essayer plus tard");
+            setIsSuccess(false);
         }
     };
 
@@ -105,7 +109,7 @@ export const AddNewPartner = ({setActiveComponentPartner, categoryPartner})=>{
                
                 <div className="flex flex-col gap-2 sm:w-[25em]">
                     <label htmlFor="image" className="text-white sm:text-[1.3rem]">Image du partenaire</label>
-                    <input className="rounded bg-white sm:w-[25em] sm:h-7" type="file" id="image" accept="image/*" onChange={handleFileChange} required />
+                    <input className="rounded bg-white sm:w-[25em] " type="file" id="image" accept="image/*" onChange={handleFileChange} required />
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="alt" className="text-white sm:text-[1.3rem]">Texte alternatif</label>
@@ -115,7 +119,11 @@ export const AddNewPartner = ({setActiveComponentPartner, categoryPartner})=>{
                     <button type="submit" className="text-white bg-[#023E33] hover:opacity-80 p-2 w-[7em] rounded-md sm:text-[1.2rem]">Ajouter</button>
                 </div>
             </form>
-            {messageAddPartner && <p className="text-white">{messageAddPartner}</p>}
+            {messageAddPartner && (
+                <p className={`flex justify-center w-[80%] p-3 ${isSuccess ? 'bg-green-500 text-black' : 'bg-red-600 text-white'} md:w-[20em]`}>
+                    {messageAddPartner}
+                </p>
+            )}
         </div>
     </div>
 )

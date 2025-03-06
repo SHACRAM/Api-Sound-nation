@@ -20,6 +20,7 @@ export const ModifyPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
     const [altImage, setAltImage] = useState(infoForModifyPlace.place_image_alt);
     const [placeId, setPlaceId] = useState(infoForModifyPlace.id);
     const [info, setInfo] = useState(infoForModifyPlace.place_info_popup);
+    const [isSuccess, setIsSuccess] = useState(false);
     const navigate = useNavigate();
 
     const handleCategoryChange = (e) => {
@@ -86,15 +87,18 @@ export const ModifyPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
             })
             if(response.data.status){
                 setMessageModifyPlace(response.data.message);
+                setIsSuccess(true);
                 setTimeout(() => {
                     navigate('/Carte');
                     handleAllPlace();
                 }, 2000);
             } else{
                 setMessageModifyPlace(response.data.message);
+                setIsSuccess(false);
             }
         } catch (error){
             setMessageModifyPlace('Erreur serveur merci de réessayer plus tard');
+            setIsSuccess(false);
 
         }
     }
@@ -159,7 +163,7 @@ export const ModifyPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[25em]">
                     <label htmlFor="logo" className="text-white sm:text-[1.3rem]">Logo du lieu</label>
-                    <input type="file" className="rounded bg-white sm:w-[25em] sm:h-7" id="logo" onChange={handleLogoChange} required/>
+                    <input type="file" className="rounded bg-white sm:w-[25em] " id="logo" onChange={handleLogoChange} required/>
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="altLogo" className="text-white sm:text-[1.3rem]">Texte alternatif du logo</label>
@@ -167,7 +171,7 @@ export const ModifyPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[25em]">
                     <label htmlFor="imagePlace" className="text-white sm:text-[1.3rem]">Image du lieu</label>
-                    <input type="file" className="rounded bg-white sm:w-[25em] sm:h-7" id="imagePlace" onChange={handleImageChange} required />
+                    <input type="file" className="rounded bg-white sm:w-[25em] " id="imagePlace" onChange={handleImageChange} required />
                 </div>
                 <div className="flex flex-col gap-2 sm:w-[15em]">
                     <label htmlFor="altImage" className="text-white sm:text-[1.3rem]">Texte alternatif de l'image</label>
@@ -181,7 +185,11 @@ export const ModifyPlace = ({setActiveComponentPlace, placeCategory, handleAllPl
                     <button type="submit" className="text-white bg-[#023E33] hover:opacity-80 p-2 w-[7em] rounded-md sm:text-[1.2rem]">Modifier</button>
                 </div>
             </form>
-            {messageModifyPlace && <p className="text-white">{messageModifyPlace}</p>}
+            {messageModifyPlace && (
+                <p className={`flex justify-center w-[80%] p-3 ${isSuccess ? 'bg-green-500 text-black' : 'bg-red-600 text-white'} md:w-[20em]`}>
+                    {messageModifyPlace}
+                </p>
+            )}
         </div>
     </div>)
 }

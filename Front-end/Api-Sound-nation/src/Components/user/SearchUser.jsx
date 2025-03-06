@@ -20,7 +20,7 @@ export const SearchUser = ({data, handleDeleteDiv, handleModifyDiv}) => {
                 {data.filter((val)=>{
                     return val.user_email.toLowerCase().includes(searchTerm.toLowerCase()) || val.user_name.toLowerCase().includes(searchTerm.toLowerCase())})
                     .map((val, index)=>{
-                        if(val.user_role !== 'adminSys'){
+                        if(val.user_role !== 'adminSys' && val.user_role !== 'admin'){
                         return (
                         <div key={index} className="flex flex-col border m-4 p-2 rounded-lg md:flex-row md:justify-between md:items-center">
                             <div>
