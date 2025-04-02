@@ -199,14 +199,14 @@ router.post('/favoris', async (req, res) => {
 
         // Vérifie si le groupe est déjà dans les favoris
         const [existingFavoris] = await mysqlClient.query(
-            'SELECT * FROM Favoris WHERE groupe_id = ? AND user_id = (SELECT id FROM Users WHERE user_email = ?)',
+            'SELECT * FROM favoris WHERE groupe_id = ? AND user_id = (SELECT id FROM Users WHERE user_email = ?)',
             [groupeId, userEmail]
         );
 
         if (existingFavoris.length > 0) {
             // Si le groupe est déjà dans les favoris, on le supprime
             const [deleteResult] = await mysqlClient.query(
-                'DELETE FROM Favoris WHERE groupe_id = ? AND user_id = (SELECT id FROM Users WHERE user_email = ?)',
+                'DELETE FROM favoris WHERE groupe_id = ? AND user_id = (SELECT id FROM Users WHERE user_email = ?)',
                 [groupeId, userEmail]
             );
 
@@ -218,7 +218,7 @@ router.post('/favoris', async (req, res) => {
         } else {
             // Sinon, on ajoute le groupe aux favoris
             const [insertResult] = await mysqlClient.query(
-                'INSERT INTO Favoris (groupe_id, user_id) VALUES (?, (SELECT id FROM Users WHERE user_email = ?))',
+                'INSERT INTO favoris (groupe_id, user_id) VALUES (?, (SELECT id FROM Users WHERE user_email = ?))',
                 [groupeId, userEmail]
             );
 
